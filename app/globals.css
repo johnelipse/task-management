@@ -156,3 +156,19 @@ body {
   top: calc(50% - 1.25em);
   left: calc(50% - 1.25em);
 }
+
+@media (max-width: 360px) {
+  .display {
+    display: none;
+  }
+  .font {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .smallfont {
+    font-size: 0.8rem;
+  }
+  .padding {
+    padding: 1rem 0.9rem;
+  }
+}

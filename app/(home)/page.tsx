@@ -22,11 +22,13 @@ import FAQ from "@/components/frontend/FAQ";
 import CustomizationCard from "@/components/frontend/customisation-card";
 import Image from "next/image";
 import { BorderBeam } from "@/components/magicui/border-beam";
+import { HeroSection } from "@/components/frontend/hero-section";
+import { WhatToDo } from "@/components/frontend/whatToDo";
 
 export default async function page() {
   return (
     <section>
-      <ReUsableHero
+      {/* <ReUsableHero
         theme="dark"
         title={
           <>
@@ -55,13 +57,16 @@ export default async function page() {
         ]}
         backgroundStyle="neutral"
         className="min-h-[70vh]"
-      />
-      <GridBackground>
+      /> */}
+      <HeroSection />
+      <WhatToDo />
+      {/* <GridBackground>
         <div className="px-8 py-16 ">
           <TechStackGrid />
         </div>
-      </GridBackground>
-      <div className="py-16 max-w-6xl mx-auto px-8">
+      </GridBackground> */}
+
+      {/* <div className="py-16 max-w-6xl mx-auto px-8">
         <div className="relative rounded-lg overflow-hidden">
           <BorderBeam />
           <Image
@@ -78,8 +83,8 @@ export default async function page() {
       </div>
       <div className="max-w-7xl p-8 mx-auto">
         <TabbedFeatures />
-      </div>
-      <div className="py-8">
+      </div> */}
+      {/* <div className="py-8">
         <PlainFeatures />
       </div>
       <div className="py-16 max-w-6xl mx-auto relative">
@@ -101,7 +106,7 @@ export default async function page() {
           <CustomizationCard theme="light" />
         </div>
       </div>
-      <FAQ />
+      <FAQ /> */}
     </section>
   );
 }

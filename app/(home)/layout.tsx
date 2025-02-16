@@ -1,4 +1,6 @@
 import PromoBanner from "@/components/frontend/PromoBanner";
+import { SecondFooter } from "@/components/frontend/second-footer";
+import { SecondHeader } from "@/components/frontend/second-header";
 import Footer from "@/components/frontend/site-footer";
 import SiteHeader from "@/components/frontend/site-header";
 import { authOptions } from "@/config/auth";
@@ -13,9 +15,11 @@ export default async function HomeLayout({
   return (
     <div className="bg-white">
       {/* <PromoBanner /> */}
-      <SiteHeader session={session} />
+      {/* <SiteHeader session={session} /> */}
+      <SecondHeader />
       {children}
-      <Footer />
+      {/* <Footer /> */}
+      <SecondFooter />
     </div>
   );
 }
