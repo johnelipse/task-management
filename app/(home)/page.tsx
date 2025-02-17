@@ -24,6 +24,7 @@ import Image from "next/image";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { HeroSection } from "@/components/frontend/hero-section";
 import { WhatToDo } from "@/components/frontend/whatToDo";
+import TaskManagement from "@/components/frontend/summery";
 
 export default async function page() {
   return (
@@ -60,6 +61,7 @@ export default async function page() {
       /> */}
       <HeroSection />
       <WhatToDo />
+      <TaskManagement />
       {/* <GridBackground>
         <div className="px-8 py-16 ">
           <TechStackGrid />

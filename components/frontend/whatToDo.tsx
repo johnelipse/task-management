@@ -65,7 +65,7 @@ export function WhatToDo() {
 
   return (
     <div className="min-h-screen relative bg-black  p-4 md:p-8">
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
@@ -77,7 +77,7 @@ export function WhatToDo() {
           fill
           className="object-cover"
         />
-      </motion.div>
+      </motion.div> */}
       <motion.div
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -95,7 +95,7 @@ export function WhatToDo() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto grid max-w-7xl z-50 bg-transparent/90 backdrop-blur-none rounded-3xl p-8 padding gap-6 lg:grid-cols-3"
+        className="mx-auto grid max-w-7xl z-50 bg-transparent/90 backdrop-blur-none rounded-3xl p-2 md:p-8 padding gap-6 lg:grid-cols-3"
       >
         {/* Create New Task Panel */}
         <MotionCard

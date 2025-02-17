@@ -157,7 +157,7 @@ body {
   left: calc(50% - 1.25em);
 }
 
-@media (max-width: 360px) {
+@media (max-width: 428px) {
   .display {
     display: none;
   }
@@ -169,6 +169,6 @@ body {
     font-size: 0.8rem;
   }
   .padding {
-    padding: 1rem 0.9rem;
+    padding: 1rem 0.3rem;
   }
 }
