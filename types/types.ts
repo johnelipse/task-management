@@ -61,3 +61,13 @@ export interface RoleResponse {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface DepartmentProps {
+  name: string;
+  code: string;
+  description: string;
+  location: string;
+  budget: number;
+  employeeCapacity: number;
+  isActive: boolean;
+}

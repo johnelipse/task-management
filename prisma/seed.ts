@@ -1,8 +1,8 @@
 import { db } from "./db";
-import { hashSync } from "bcrypt-ts";
+// import bcrypt from "bcrypt";
 
 // Get current year for password generation
-const currentYear = new Date().getFullYear();
+// const currentYear = new Date().getFullYear();
 
 // Define all possible permissions
 const allPermissions = [
@@ -78,19 +78,19 @@ async function cleanDatabase() {
     await db.$transaction(async (tx) => {
       // Get all users
       const users = await tx.user.findMany({
-        include: {
-          roles: true,
-        },
+        // include: {
+        //   roles: true,
+        // },
       });
       // Disconnect all roles from users
       for (const user of users) {
-        if (user.roles.length > 0) {
+        if (user.role) {
           await tx.user.update({
             where: { id: user.id },
             data: {
-              roles: {
-                disconnect: user.roles.map((role) => ({ id: role.id })),
-              },
+              // roles: {
+              //   disconnect: user.roles.map((role) => ({ id: role.id })),
+              // },
             },
           });
         }
@@ -154,8 +154,8 @@ async function seedDatabase() {
 
     // Create admin user
     console.log("Creating admin user...");
-    const adminPassword = `Admin@${currentYear}`;
-    const hashedAdminPassword = hashSync(adminPassword, 10);
+    const adminPassword = `Admin@2025`;
+    // const hashedPassword = await bcrypt.hash("Admin@2025", 10); // Use async hash
 
     const adminUser = await db.user.create({
       data: {
@@ -164,17 +164,18 @@ async function seedDatabase() {
         firstName: "System",
         lastName: "Admin",
         phone: "1234567890",
-        password: hashedAdminPassword,
-        roles: {
-          connect: { id: adminRole.id },
-        },
+        password: adminPassword,
+        role: "ADMIN",
+        // roles: {
+        //   connect: { id: adminRole.id },
+        // },
       },
     });
 
     // Create regular user
     console.log("Creating regular user...");
-    const userPassword = `User@${currentYear}`;
-    const hashedUserPassword = hashSync(userPassword, 10);
+    const userPassword = `User@2025`;
+    // const hashedUserPassword = await bcrypt.hashSync(userPassword, 10);
 
     const regularUser = await db.user.create({
       data: {
@@ -183,10 +184,11 @@ async function seedDatabase() {
         firstName: "Regular",
         lastName: "User",
         phone: "0987654321",
-        password: hashedUserPassword,
-        roles: {
-          connect: { id: userRole.id },
-        },
+        password: userPassword,
+        role: "USER",
+        // role: {
+        //   connect: { id: userRole.id },
+        // },
       },
     });
 

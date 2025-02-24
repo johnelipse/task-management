@@ -11,22 +11,22 @@ import { compare } from "bcrypt-ts";
 async function getUserWithRoles(userId: string) {
   const user = await db.user.findUnique({
     where: { id: userId },
-    include: {
-      roles: true, // Include roles relation
-    },
+    // include: {
+    //   roles: true, // Include roles relation
+    // },
   });
 
   if (!user) return null;
 
   // Get all permissions from user's roles
-  const permissions = user.roles.flatMap((role) => role.permissions);
+  // const permissions = user.roles.flatMap((role) => role.permissions);
 
   // Remove duplicates from permissions
-  const uniquePermissions = [...new Set(permissions)];
+  // const uniquePermissions = [...new Set(permissions)];
 
   return {
     ...user,
-    permissions: uniquePermissions,
+    // permissions: uniquePermissions,
   };
 }
 
@@ -43,10 +43,6 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       async profile(profile) {
         // Find or create default role
-        const defaultRole = await db.role.findFirst({
-          where: { roleName: "user" },
-        });
-
         return {
           id: profile.id.toString(),
           name: profile.name || profile.login,
@@ -55,8 +51,7 @@ export const authOptions: NextAuthOptions = {
           phone: "",
           image: profile.avatar_url,
           email: profile.email,
-          roles: defaultRole ? [defaultRole] : [],
-          permissions: defaultRole ? defaultRole.permissions : [], // Include permissions from default role
+          role: "USER",
         };
       },
       clientId: process.env.GITHUB_CLIENT_ID || "",
@@ -65,10 +60,6 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       async profile(profile) {
         // Find or create default role
-        const defaultRole = await db.role.findFirst({
-          where: { roleName: "user" },
-        });
-
         return {
           id: profile.sub,
           name: `${profile.given_name} ${profile.family_name}`,
@@ -77,8 +68,7 @@ export const authOptions: NextAuthOptions = {
           phone: "",
           image: profile.picture,
           email: profile.email,
-          roles: defaultRole ? [defaultRole] : [],
-          permissions: defaultRole ? defaultRole.permissions : [], // Include permissions from default role
+          role: "USER",
         };
       },
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -98,9 +88,6 @@ export const authOptions: NextAuthOptions = {
 
           const existingUser = await db.user.findUnique({
             where: { email: credentials.email },
-            include: {
-              roles: true, // Include roles relation
-            },
           });
 
           if (!existingUser) {
@@ -119,14 +106,6 @@ export const authOptions: NextAuthOptions = {
             throw { error: "Password Incorrect", status: 401 };
           }
 
-          // Get all permissions from user's roles
-          const permissions = existingUser.roles.flatMap(
-            (role) => role.permissions
-          );
-
-          // Remove duplicates from permissions
-          const uniquePermissions = [...new Set(permissions)];
-
           return {
             id: existingUser.id,
             name: existingUser.name,
@@ -135,8 +114,7 @@ export const authOptions: NextAuthOptions = {
             phone: existingUser.phone,
             image: existingUser.image,
             email: existingUser.email,
-            roles: existingUser.roles,
-            permissions: uniquePermissions,
+            role: existingUser.role,
           };
         } catch (error) {
           throw { error: "Something went wrong", status: 401 };
@@ -153,26 +131,7 @@ export const authOptions: NextAuthOptions = {
       ) {
         const existingUser = await db.user.findUnique({
           where: { email: user.email! },
-          include: { roles: true },
         });
-
-        if (!existingUser?.roles?.length) {
-          // Assign default user role
-          const defaultRole = await db.role.findFirst({
-            where: { roleName: "user" },
-          });
-
-          if (defaultRole) {
-            await db.user.update({
-              where: { email: user.email! },
-              data: {
-                roles: {
-                  connect: { id: defaultRole.id },
-                },
-              },
-            });
-          }
-        }
       }
       return true;
     },
@@ -186,14 +145,13 @@ export const authOptions: NextAuthOptions = {
         token.firstName = user.firstName;
         token.lastName = user.lastName;
         token.phone = user.phone;
-        token.roles = user.roles;
-        token.permissions = user.permissions;
+        token.role = user.role;
       } else {
         // For subsequent requests, refresh roles and permissions
         const userData = await getUserWithRoles(token.id);
         if (userData) {
-          token.roles = userData.roles;
-          token.permissions = userData.permissions;
+          token.role = userData.role;
+          // token.permissions = userData.permissions;
         }
       }
       return token;
@@ -207,8 +165,8 @@ export const authOptions: NextAuthOptions = {
         session.user.firstName = token.firstName;
         session.user.lastName = token.lastName;
         session.user.phone = token.phone;
-        session.user.roles = token.roles;
-        session.user.permissions = token.permissions;
+        session.user.role = token.role;
+        // session.user.permissions = token.permissions;
       }
       return session;
     },

@@ -49,7 +49,7 @@ model Role {
   roleName    String   @unique // System name (e.g., "store_manager")
   description String?
   permissions String[] // Array of permission strings
-  users       User[]   @relation("UserRoles")
+  // users       User[]   @relation("UserRoles")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -66,8 +66,8 @@ model User {
   emailVerified DateTime?
   image         String?
   jobTitle      String?
-  roles         Role[]    @relation("UserRoles") // Updated to support multiple roles
-  // role          UserRole  @default(USER)
+  // roles         Role[]    @relation("UserRoles") // Updated to support multiple roles
+  role          UserRole  @default(USER)
   password      String?
   status        Boolean   @default(true)
   accounts      Account[]
@@ -78,7 +78,7 @@ model User {
   token         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  roleId        String?
+  // roleId        String?
 }
 
 model Category {

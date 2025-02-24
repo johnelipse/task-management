@@ -9,7 +9,7 @@ export const db =
   new PrismaClient({
     transactionOptions: {
       maxWait: 5000, // default: 2000
-      timeout: 10000, // default: 5000
+      timeout: 30000, // default: 5000
     },
   });
 if (process.env.NODE_ENV !== "production") globalThis.prisma = db;

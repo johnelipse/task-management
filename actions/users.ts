@@ -55,16 +55,16 @@ export async function createUser(data: UserProps) {
       }
 
       // Find or create default role
-      let defaultRole = await tx.role.findFirst({
-        where: { roleName: DEFAULT_USER_ROLE.roleName },
-      });
+      // let defaultRole = await tx.role.findFirst({
+      //   where: { roleName: DEFAULT_USER_ROLE.roleName },
+      // });
 
       // Create default role if it doesn't exist
-      if (!defaultRole) {
-        defaultRole = await tx.role.create({
-          data: DEFAULT_USER_ROLE,
-        });
-      }
+      // if (!defaultRole) {
+      //   defaultRole = await tx.role.create({
+      //     data: DEFAULT_USER_ROLE,
+      //   });
+      // }
 
       // Hash password
       const hashedPassword = hashSync(password, 10);
@@ -79,15 +79,15 @@ export async function createUser(data: UserProps) {
           name,
           phone,
           image,
-          roles: {
-            connect: {
-              id: defaultRole.id,
-            },
-          },
+          // roles: {
+          //   connect: {
+          //     id: defaultRole.id,
+          //   },
+          // },
         },
-        include: {
-          roles: true, // Include roles in the response
-        },
+        // include: {
+        //   roles: true, // Include roles in the response
+        // },
       });
 
       return {
@@ -125,9 +125,9 @@ export async function getAllUsers() {
       orderBy: {
         createdAt: "desc",
       },
-      include: {
-        roles: true,
-      },
+      // include: {
+      //   roles: true,
+      // },
     });
     return users;
   } catch (error) {

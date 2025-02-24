@@ -40,27 +40,27 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
   const user = session.user;
 
   // Helper function to check if user has permission
-  const hasPermission = (permission: string): boolean => {
-    return user.permissions?.includes(permission) ?? false;
-  };
+  // const hasPermission = (permission: string): boolean => {
+  //   return user.permissions?.includes(permission) ?? false;
+  // };
 
   // Filter sidebar links based on permissions
-  const filterSidebarLinks = (links: ISidebarLink[]): ISidebarLink[] => {
-    return links
-      .filter((link) => hasPermission(link.permission))
-      .map((link) => ({
-        ...link,
-        dropdownMenu: link.dropdownMenu?.filter((item) =>
-          hasPermission(item.permission)
-        ),
-      }))
-      .filter(
-        (link) =>
-          !link.dropdown || (link.dropdownMenu && link.dropdownMenu.length > 0)
-      );
-  };
+  // const filterSidebarLinks = (links: ISidebarLink[]): ISidebarLink[] => {
+  //   return links
+  //     .filter((link) => hasPermission(link.permission))
+  //     .map((link) => ({
+  //       ...link,
+  //       dropdownMenu: link.dropdownMenu?.filter((item) =>
+  //         hasPermission(item.permission)
+  //       ),
+  //     }))
+  //     .filter(
+  //       (link) =>
+  //         !link.dropdown || (link.dropdownMenu && link.dropdownMenu.length > 0)
+  //     );
+  // };
 
-  const filteredLinks = filterSidebarLinks(sidebarLinks);
+  const filteredLinks = sidebarLinks;
 
   async function handleLogout() {
     try {

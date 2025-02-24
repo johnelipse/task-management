@@ -10,8 +10,9 @@ import ActionColumn from "@/components/DataTableColumns/ActionColumn";
 import SortableColumn from "@/components/DataTableColumns/SortableColumn";
 import { UserWithRoles } from "@/types/types";
 import UserRoleBtn from "@/components/DataTableColumns/UserRoleBtn";
+import { User } from "@prisma/client";
 
-export const columns: ColumnDef<UserWithRoles>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -49,7 +50,7 @@ export const columns: ColumnDef<UserWithRoles>[] = [
     header: "Role",
     cell: ({ row }) => {
       const item = row.original;
-      return <UserRoleBtn user={item} />;
+      // return <UserRoleBtn user={item} />;
     },
   },
   // {

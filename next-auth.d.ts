@@ -1,6 +1,7 @@
 // types/next-auth.d.ts
 import { DefaultSession } from "next-auth";
 import { Role } from "@prisma/client";
+import { EnumValues } from "zod";
 
 declare module "next-auth" {
   interface Session {
@@ -9,7 +10,7 @@ declare module "next-auth" {
       firstName: string;
       lastName: string;
       phone: string;
-      roles: Role[];
+      role: "USER" | "ADMIN" | "SERVICE_PROVIDER";
       permissions: string[];
     } & DefaultSession["user"];
   }
@@ -19,8 +20,8 @@ declare module "next-auth" {
     firstName: string;
     lastName: string;
     phone: string;
-    roles: Role[];
-    permissions: string[];
+    role: "USER" | "ADMIN" | "SERVICE_PROVIDER";
+    // permissions: string[];
     name?: string | null;
     email?: string | null;
     image?: string | null;
@@ -33,7 +34,7 @@ declare module "next-auth/jwt" {
     firstName: string;
     lastName: string;
     phone: string;
-    roles: Role[];
+    role: "USER" | "ADMIN" | "SERVICE_PROVIDER";
     permissions: string[];
   }
 }
