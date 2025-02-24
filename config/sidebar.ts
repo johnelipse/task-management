@@ -83,6 +83,21 @@ export const sidebarLinks: ISidebarLink[] = [
         href: "/dashboard/inventory/products",
         permission: "products.read",
       },
+      {
+        title: "Departments",
+        href: "/dashboard/departments",
+        permission: "departments.read",
+      },
+      {
+        title: "Teams",
+        href: "/dashboard/teams",
+        permission: "teams.read",
+      },
+      {
+        title: "Tasks",
+        href: "/dashboard/tasks",
+        permission: "tasks.read",
+      },
     ],
   },
   {

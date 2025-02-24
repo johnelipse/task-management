@@ -13,7 +13,7 @@ export default async function HomeLayout({
 }) {
   const session = await getServerSession(authOptions);
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-hidden">
       {/* <PromoBanner /> */}
       {/* <SiteHeader session={session} /> */}
       <SecondHeader />

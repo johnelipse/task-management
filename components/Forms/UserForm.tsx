@@ -32,12 +32,12 @@ import ImageInput from "../FormInputs/ImageInput";
 type UserFormProps = {
   editingId?: string | undefined;
   initialData?: User | undefined | null;
-  roles: Role[];
+  // roles: Role[];
 };
 export default function UserForm({
   editingId,
   initialData,
-  roles,
+  // roles,
 }: UserFormProps) {
   const {
     register,
@@ -61,18 +61,18 @@ export default function UserForm({
     value: initialData?.status == true ? "true" : "false",
     label: initialData?.status == true ? "Active" : "Disabled",
   };
-  const initialRoleId = initialData?.roleId;
-  const initialRole = roles.find((item) => item.id === initialRoleId);
-  const roleOptions = roles.map((role) => {
-    return {
-      label: role.displayName,
-      value: role.id,
-    };
-  });
-  const [role, setRole] = useState<any>({
-    label: initialRole?.displayName,
-    value: initialRole?.id,
-  });
+  // const initialRoleId = initialData?.roleId;
+  // const initialRole = roles.find((item) => item.id === initialRoleId);
+  // const roleOptions = roles.map((role) => {
+  //   return {
+  //     label: role.displayName,
+  //     value: role.id,
+  //   };
+  // });
+  // const [role, setRole] = useState<any>({
+  //   label: initialRole?.displayName,
+  //   value: initialRole?.id,
+  // });
   const [status, setStatus] = useState<any>(initialStatus);
   const options: Options = [
     { value: "true", label: "Active" },
@@ -169,14 +169,14 @@ export default function UserForm({
                     placeholder="password"
                   />
                 )}
-                <FormSelectInput
+                {/* <FormSelectInput
                   label="Roles"
                   options={roleOptions}
                   option={role}
                   setOption={setRole}
                   href="/dashboard/users/roles/new"
                   toolTipText="Create new Role"
-                />
+                /> */}
               </div>
             </CardContent>
           </Card>

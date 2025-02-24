@@ -68,6 +68,7 @@ export interface DepartmentProps {
   description: string;
   location: string;
   budget: number;
+  slug: string;
   employeeCapacity: number;
   isActive: boolean;
 }

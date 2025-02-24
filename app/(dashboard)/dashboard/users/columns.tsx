@@ -9,7 +9,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionColumn from "@/components/DataTableColumns/ActionColumn";
 import SortableColumn from "@/components/DataTableColumns/SortableColumn";
 import { UserWithRoles } from "@/types/types";
-import UserRoleBtn from "@/components/DataTableColumns/UserRoleBtn";
+// import UserRoleBtn from "@/components/DataTableColumns/UserRoleBtn";
 import { User } from "@prisma/client";
 
 export const columns: ColumnDef<User>[] = [

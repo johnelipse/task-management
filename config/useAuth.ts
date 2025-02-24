@@ -1,7 +1,7 @@
 // lib/auth.ts
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import { Role, User } from "@prisma/client";
+import { Role, User, UserRole } from "@prisma/client";
 import { authOptions } from "./auth";
 
 // Type for authenticated user with permissions
@@ -10,7 +10,7 @@ export interface AuthenticatedUser {
   firstName: string;
   lastName: string;
   phone: string;
-  roles: Role[];
+  role: UserRole;
   permissions: string[];
   name?: string | null;
   email?: string | null;
