@@ -199,13 +199,7 @@ export default function TeamMemberForm({
               label="Job Title"
               name="jobTitle"
             />
-            {/* <TextInput
-              type="button"
-              register={register}
-              errors={errors}
-              label="Employee Id"
-              name="employeeId"
-            /> */}
+
             <div>
               <FormSelectInput
                 label="All Departments"
@@ -216,12 +210,7 @@ export default function TeamMemberForm({
                 href="/dashboard/departments/new"
               />
             </div>
-            {/* <TextInput
-              register={register}
-              errors={errors}
-              label="Team"
-              name="team"
-            /> */}
+
             <div>
               <FormSelectInput
                 label="Teams in Department"
