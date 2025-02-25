@@ -1,39 +1,42 @@
 import { db } from "@/prisma/db";
-import { DepartmentProps } from "@/types/types";
-
+import { MemberProps } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data: DepartmentProps = await req.json();
+  const data: MemberProps = await req.json();
   try {
-    const { slug } = data;
-    const existingDepartment = await db.department.findUnique({
+    const { email, phone, teamId } = data;
+    const existingMember = await db.member.findUnique({
       where: {
-        slug,
+        email,
+        phone,
+        teamId,
       },
     });
-    if (existingDepartment) {
+    if (existingMember) {
       return NextResponse.json(
         {
+          error: "Member Already exists in this team",
           data: null,
-          error: "Department already exists",
         },
         { status: 409 }
       );
     }
-    const newDepartment = await db.department.create({
+    const newMember = await db.member.create({
       data,
     });
     return NextResponse.json(
-      { message: "Created Department", data: newDepartment },
+      {
+        message: "Mewmber created",
+        data: newMember,
+      },
       { status: 201 }
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Failed to create department.",
-        error: "Something went wrong.",
+        message: "Failed to create",
       },
       { status: 500 }
     );
@@ -42,18 +45,18 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    const departments = await db.department.findMany({
+    const members = await db.member.findMany({
       orderBy: {
         createdAt: "desc",
       },
       include: {
-        teams: true,
+        Team: true,
       },
     });
     return NextResponse.json(
       {
-        message: "created",
-        data: departments,
+        message: "Failed to Fetch",
+        data: members,
       },
       { status: 200 }
     );
@@ -61,8 +64,7 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Failed",
-        error: "something went wrong",
+        message: "Failed to Fetch",
       },
       { status: 500 }
     );

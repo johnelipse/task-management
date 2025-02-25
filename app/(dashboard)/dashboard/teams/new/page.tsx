@@ -1,10 +1,13 @@
+import { getAllDepartments } from "@/actions/departments";
 import { TeamCreationForm } from "@/components/Forms/create-team";
 import React from "react";
 
-export default function page() {
+export default async function page() {
+  const departments = (await getAllDepartments()) || [];
+
   return (
     <div className="p-8 ">
-      <TeamCreationForm />
+      <TeamCreationForm departments={departments} />
     </div>
   );
 }

@@ -7,7 +7,6 @@ export async function getAllDepartments() {
   try {
     const res = await fetch(api, { cache: "no-store" });
     const departments = await res.json();
-    console.log(departments.data);
     return departments.data as Department[];
   } catch (error) {
     return [];

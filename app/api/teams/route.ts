@@ -1,59 +1,55 @@
 import { db } from "@/prisma/db";
-import { DepartmentProps } from "@/types/types";
-
+import { TeamProps } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data: DepartmentProps = await req.json();
+  const data: TeamProps = await req.json();
   try {
     const { slug } = data;
-    const existingDepartment = await db.department.findUnique({
+    const existingTeam = await db.team.findUnique({
       where: {
         slug,
       },
     });
-    if (existingDepartment) {
+    if (existingTeam) {
       return NextResponse.json(
         {
           data: null,
-          error: "Department already exists",
+          error: "Team already exists",
         },
         { status: 409 }
       );
     }
-    const newDepartment = await db.department.create({
+    const newTeam = await db.team.create({
       data,
     });
     return NextResponse.json(
-      { message: "Created Department", data: newDepartment },
+      { message: "Created Department", data: newTeam },
       { status: 201 }
     );
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      {
-        message: "Failed to create department.",
-        error: "Something went wrong.",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      message: "Failed",
+      error: "Something went wrong.",
+    });
   }
 }
 
 export async function GET() {
   try {
-    const departments = await db.department.findMany({
+    const teams = await db.team.findMany({
       orderBy: {
         createdAt: "desc",
       },
       include: {
-        teams: true,
+        Department: true,
       },
     });
     return NextResponse.json(
       {
-        message: "created",
-        data: departments,
+        data: teams,
+        message: "Fetched successfully",
       },
       { status: 200 }
     );
@@ -61,8 +57,8 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Failed",
-        error: "something went wrong",
+        message: "Failed to fetch",
+        error: "Failed to fetch",
       },
       { status: 500 }
     );

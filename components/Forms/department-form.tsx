@@ -84,6 +84,7 @@ export function DepartmentCreationForm() {
         setLoading(false);
         reset();
         toast.success("Department created successfully.");
+        router.push("/dashboard/departments");
       } else if (res.status === 409) {
         setLoading(false);
         setErr("Department already exists.");

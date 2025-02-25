@@ -134,17 +134,48 @@ model BlogCategory {
   updatedAt DateTime @updatedAt
 }
 
-
 model Department {
-  id        String   @id @default(cuid())
-  name      String 
-  slug      String   @unique
-  code      String
-  description String
-  location String
-  budget Int
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  code             String
+  description      String
+  teams            Team[]
+  location         String
+  budget           Int
   employeeCapacity Int
-  isActive Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive         Boolean
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Team {
+  id           String      @id @default(cuid())
+  name         String
+  slug         String      @unique
+  description  String
+  members      Member[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Department   Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  departmentId String?
+}
+
+model Member {
+  id             String   @id @default(cuid())
+  fullName       String
+  image          String?
+  email          String   @unique
+  phone          String   @unique
+  jobTitle       String
+  department     String
+  employeeId     String
+  employmentType String
+  dateJoined     String
+  description    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  Team   Team?   @relation(fields: [teamId], references: [id],onDelete: Cascade)
+  teamId String?
 }

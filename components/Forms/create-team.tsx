@@ -30,25 +30,73 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import TextInput from "../FormInputs/TextInput";
+import TextArea from "../FormInputs/TextAreaInput";
+import { TeamProps } from "@/types/types";
+import { Department } from "@prisma/client";
+import { useState } from "react";
+import FormSelectInput from "../FormInputs/FormSelectInput";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Loader } from "lucide-react";
 
-const formSchema = z.object({
-  name: z.string().min(1, "Team name is required"),
-  description: z.string().min(1, "Description is required"),
-  department: z.string().min(1, "Department is required"),
-});
+// const formSchema = z.object({
+//   name: z.string().min(1, "Team name is required"),
+//   description: z.string().min(1, "Description is required"),
+//   department: z.string().min(1, "Department is required"),
+// });
 
-export function TeamCreationForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-      //   members: [],
-    },
-  });
+export function TeamCreationForm({
+  departments,
+}: {
+  departments: Department[];
+}) {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TeamProps>();
+  const router = useRouter();
+  const [selectedDepartment, setSelectedDepartment] = useState<any>("");
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const selectDepartment = departments.map((department) => ({
+    value: department.id,
+    label: department.name,
+  }));
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function handleCancel() {
+    router.push("/dashboard/teams");
+  }
+
+  async function onSubmit(data: TeamProps) {
+    data.departmentId = selectedDepartment.value;
+    data.slug = data.name.split(" ").join("-").toLowerCase();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/teams", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.status === 201) {
+        setLoading(false);
+        reset();
+        router.push("/dashboard/teams");
+        toast.success("Team created successfully.");
+      } else if (res.status === 409) {
+        setLoading(false);
+        setErr("Team already exists.");
+        toast.error("Team already exists.");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   }
 
   return (
@@ -57,90 +105,52 @@ export function TeamCreationForm() {
         <CardTitle>Create Team</CardTitle>
         <CardDescription>Set up a new team and add members</CardDescription>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
-            <FormField
-              control={form.control}
+            <TextInput
+              register={register}
+              errors={errors}
+              label="Team Name"
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Team Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter team name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
-              control={form.control}
+            <TextArea
+              register={register}
+              errors={errors}
+              label="Description"
               name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Enter team description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
-              control={form.control}
-              name="department"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Department</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="engineering">Engineering</SelectItem>
-                      <SelectItem value="marketing">Marketing</SelectItem>
-                      <SelectItem value="sales">Sales</SelectItem>
-                      <SelectItem value="hr">Human Resources</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* <FormField
-              control={form.control}
-              name="members"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Team Members</FormLabel>
-                  <Select onValueChange={(value) => field.onChange([...field.value, value])} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select members" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="john">John Doe</SelectItem>
-                      <SelectItem value="jane">Jane Smith</SelectItem>
-                      <SelectItem value="bob">Bob Johnson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+
+            <div>
+              <FormSelectInput
+                label="All Departments"
+                options={selectDepartment}
+                option={selectedDepartment}
+                setOption={setSelectedDepartment}
+                toolTipText="Add Departments"
+                href="/dashboard/departments/new"
+              />
+            </div>
           </CardContent>
           <CardFooter className="justify-between space-x-2">
-            <Button variant="outline">Cancel</Button>
-            <Button type="submit">Create Team</Button>
+            <Button onClick={handleCancel} type="button" variant="outline">
+              Cancel
+            </Button>
+            {loading ? (
+              <Button
+                disabled
+                type="button"
+                className="flex gap-2 items-center"
+              >
+                <Loader className="w-4 h-4 animate-spin" />
+                Creating...
+              </Button>
+            ) : (
+              <Button type="submit">Create Team</Button>
+            )}
           </CardFooter>
         </form>
-      </Form>
+      </div>
     </Card>
   );
 }

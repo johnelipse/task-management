@@ -98,6 +98,11 @@ export const sidebarLinks: ISidebarLink[] = [
         href: "/dashboard/tasks",
         permission: "tasks.read",
       },
+      {
+        title: "Members",
+        href: "/dashboard/members",
+        permission: "members.read",
+      },
     ],
   },
   {

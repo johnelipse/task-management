@@ -72,3 +72,24 @@ export interface DepartmentProps {
   employeeCapacity: number;
   isActive: boolean;
 }
+
+export interface TeamProps {
+  name: string;
+  description: string;
+  departmentId: string;
+  slug: string;
+}
+
+export interface MemberProps {
+  fullName: string;
+  email: string;
+  image: string;
+  phone: string;
+  jobTitle: string;
+  employeeId: string;
+  department: string;
+  employmentType: string;
+  dateJoined: string;
+  description: string;
+  teamId: string;
+}
