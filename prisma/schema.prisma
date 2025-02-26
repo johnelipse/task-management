@@ -155,6 +155,7 @@ model Team {
   slug         String      @unique
   description  String
   members      Member[]
+  tasks        Task[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   Department   Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
@@ -168,6 +169,7 @@ model Member {
   email          String   @unique
   phone          String   @unique
   jobTitle       String
+  // tasks       TaskMember[]
   department     String
   employeeId     String
   employmentType String
@@ -179,3 +181,34 @@ model Member {
   Team   Team?   @relation(fields: [teamId], references: [id],onDelete: Cascade)
   teamId String?
 }
+
+
+
+model Task {
+  id              String    @id @default(cuid())
+  taskName        String
+  slug            String  @unique
+  taskDescription String?
+  priority        String
+  department     String
+  memberIds      String[]
+  startDate         String
+  endDate         String
+  status          String
+  team            Team      @relation(fields: [teamId], references: [id])
+  teamId          String
+   createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  // members         TaskMember[]
+}
+
+// // Join table for Task and Member
+// model TaskMember {
+//   task       Task    @relation(fields: [taskId], references: [id])
+//   taskId     String
+//   member     Member  @relation(fields: [memberId], references: [id])
+//   memberId   String
+
+//   @@id([taskId, memberId])
+// }
+

@@ -158,7 +158,7 @@ export default function TableHeader({
   }
   return (
     <div className=" mb-1">
-      <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 py-3">
+      <div className="flex text-white justify-between items-center border-b border-gray-200 dark:border-gray-600 py-3">
         <h2 className="scroll-m-20  text-2xl font-semibold tracking-tight first:mt-0">
           {title}({data.length})
         </h2>
@@ -167,7 +167,7 @@ export default function TableHeader({
             onClick={handleExportData}
             size="sm"
             variant="outline"
-            className="h-8 gap-1"
+            className="h-8 text-black gap-1"
           >
             <FaFileExcel className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -182,7 +182,7 @@ export default function TableHeader({
                   onClick={() => setUploadSuccess(false)}
                   size="sm"
                   variant="outline"
-                  className="h-8 gap-1"
+                  className="h-8 text-black gap-1"
                 >
                   <RiFileExcel2Line className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">

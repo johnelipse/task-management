@@ -93,3 +93,18 @@ export interface MemberProps {
   description: string;
   teamId: string;
 }
+export type Priority = "high" | "medium" | "low";
+export type Status = "in-progress" | "pending" | "completed";
+export interface Task {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  priority: Priority;
+  department: string;
+  startDate: string;
+  endDate: string;
+  status: Status;
+  team: string;
+  createdAt: string;
+}
