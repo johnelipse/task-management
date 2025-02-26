@@ -8,7 +8,7 @@ export default async function page() {
   const teams = (await getAllTeams()) || [];
   // console.log(departments);
   return (
-    <div className="p-8">
+    <div className="">
       <TableHeader
         title="Teams"
         linkTitle="Add Team"

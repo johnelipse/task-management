@@ -1,5 +1,6 @@
 import { getDashboardOverview } from "@/actions/analytics";
 import { getAllSavings } from "@/actions/savings";
+import DashboardPage from "@/components/dashboard/dashboard-page";
 import DashboardMain from "@/components/dashboard/DashboardMain";
 import OverViewCard from "@/components/OverViewCard";
 import { DashboardWelcome } from "@/components/WelcomeBanner";
@@ -27,7 +28,8 @@ export default async function Dashboard() {
           ))}
         </div>
       </div> */}
-      <DashboardMain />
+      <DashboardPage />
+      {/* <DashboardMain /> */}
     </main>
   );
 }

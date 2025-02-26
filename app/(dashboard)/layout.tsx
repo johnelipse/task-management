@@ -15,7 +15,7 @@ export default async function DashboardLayout({
     redirect("/login");
   }
   return (
-    <div className="min-h-screen w-full ">
+    <div className="min-h-screen bg-black w-full ">
       <Sidebar session={session} />
       <div className="md:ml-[220px] bg-black lg:ml-[280px]">
         <Navbar session={session} />

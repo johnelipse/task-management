@@ -41,18 +41,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
 
-// const formSchema = z.object({
-//   name: z.string().min(2, "Department name must be at least 2 characters"),
-//   code: z.string().min(2, "Department code must be at least 2 characters"),
-//   description: z.string().min(10, "Description must be at least 10 characters"),
-//   location: z.string().min(1, "Location is required"),
-//   budget: z.string().regex(/^\d+$/, "Budget must be a valid number"),
-//   employeeCapacity: z
-//     .string()
-//     .regex(/^\d+$/, "Employee capacity must be a valid number"),
-//   isActive: z.boolean().default(true),
-// });
-
 export function DepartmentCreationForm() {
   const {
     register,
@@ -98,9 +86,9 @@ export function DepartmentCreationForm() {
   }
 
   return (
-    <Card className="w-full mx-auto max-w-2xl">
+    <Card className="w-full mx-auto bg-gray-950 border-gray-800 max-w-2xl">
       <CardHeader>
-        <div className="flex items-center space-x-4">
+        <div className="flex text-slate-300 items-center space-x-4">
           <Building2 className="h-8 w-8" />
           <div>
             <CardTitle>Create Department</CardTitle>
@@ -115,7 +103,9 @@ export function DepartmentCreationForm() {
           <CardContent className="space-y-6">
             {/* Basic Information */}
             <div className="space-y-4">
-              <div className="text-lg font-semibold">Basic Information</div>
+              <div className="text-lg text-slate-300 font-semibold">
+                Basic Information
+              </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-3 pt-3">
                   <TextInput
@@ -147,7 +137,9 @@ export function DepartmentCreationForm() {
 
             {/* Department Details */}
             <div className="space-y-4">
-              <div className="text-lg font-semibold">Department Details</div>
+              <div className="text-lg font-semibold text-slate-300">
+                Department Details
+              </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-3 pt-3">
                   <TextInput
@@ -177,7 +169,7 @@ export function DepartmentCreationForm() {
                 </div>
 
                 <div className="flex flex-col gap-4 mt-4">
-                  <p className="text-xs">Working State</p>
+                  <p className="text-xs text-slate-300">Working State</p>
                   <div className="flex items-center space-x-2">
                     <input
                       type="checkbox"
@@ -187,7 +179,7 @@ export function DepartmentCreationForm() {
                     />
                     <label
                       htmlFor="isActive"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-sm text-slate-300 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       Is Active
                     </label>

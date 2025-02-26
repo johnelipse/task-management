@@ -16,12 +16,12 @@ export default function ImageInput({
   endpoint,
 }: ImageInputProps) {
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden bg-gray-900 border-gray-700">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-slate-300">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2">
+        <div className="grid gap-2 bg-gray-900">
           <Image
             alt={title}
             className="h-40 w-full rounded-md object-cover"
@@ -30,7 +30,7 @@ export default function ImageInput({
             width="300"
           />
           <UploadButton
-            className="col-span-full"
+            className="col-span-full text-slate-300"
             endpoint={endpoint}
             onClientUploadComplete={(res) => {
               // Do something with the response

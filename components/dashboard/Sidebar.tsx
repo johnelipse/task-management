@@ -72,9 +72,9 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
   }
 
   return (
-    <div className="fixed top-0 left-0 h-full w-[220px] lg:w-[280px] border-r bg-muted/40 hidden md:block overflow-y-auto">
+    <div className="fixed top-0 left-0 h-full w-[220px] lg:w-[260px] border-r border-gray-900 bg-black/40 hidden backdrop-blur-md md:block overflow-y-auto">
       <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex flex-shrink-0 h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+        <div className="flex flex-shrink-0 h-14 items-center border-b border-gray-900 px-4 lg:h-[60px] lg:px-6">
           <Logo href="/dashboard" />
           <NotificationMenu notifications={notifications} />
         </div>
@@ -95,7 +95,7 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
                       <CollapsibleTrigger
                         onClick={() => setOpenDropdownIndex(isOpen ? null : i)}
                         className={cn(
-                          "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary w-full",
+                          "flex items-center gap-3 rounded-lg px-3 py-2 text-slate-300 transition-all hover:text-primary w-full",
                           isHrefIncluded && "bg-muted text-primary"
                         )}
                       >
@@ -113,7 +113,7 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
                             key={i}
                             href={menuItem.href}
                             className={cn(
-                              "mx-4 flex items-center gap-3 rounded-lg px-3 py-1 text-muted-foreground transition-all hover:text-primary justify-between text-xs ml-6",
+                              "mx-4 flex items-center gap-3 rounded-lg px-3 py-1 text-slate-300 transition-all hover:text-primary justify-between text-xs ml-6",
                               pathname === menuItem.href &&
                                 "bg-muted text-primary"
                             )}
@@ -130,7 +130,7 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
                     <Link
                       href={item.href ?? "#"}
                       className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                        "flex items-center gap-3 rounded-lg px-3 py-2 text-slate-300 transition-all hover:text-primary",
                         pathname === item.href && "bg-muted text-primary"
                       )}
                     >
@@ -143,7 +143,7 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
             })}
             <Link
               href="/"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-300 transition-all hover:text-primary"
               target="_blank"
             >
               <ExternalLink className="h-4 w-4" />

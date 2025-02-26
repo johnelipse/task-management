@@ -100,7 +100,7 @@ export function TeamCreationForm({
   }
 
   return (
-    <Card className="w-full max-w-lg mx-auto">
+    <Card className="w-full max-w-lg bg-gray-950/35 backdrop-blur-md border-gray-800 text-slate-300 mx-auto">
       <CardHeader>
         <CardTitle>Create Team</CardTitle>
         <CardDescription>Set up a new team and add members</CardDescription>
@@ -133,7 +133,12 @@ export function TeamCreationForm({
             </div>
           </CardContent>
           <CardFooter className="justify-between space-x-2">
-            <Button onClick={handleCancel} type="button" variant="outline">
+            <Button
+              className="text-black bg-white hover:bg-white"
+              onClick={handleCancel}
+              type="button"
+              variant="outline"
+            >
               Cancel
             </Button>
             {loading ? (

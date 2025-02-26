@@ -167,8 +167,10 @@ const TaskCreationForm = ({
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-0 md:p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl p-4 font-bold mb-6">Create New Task</h1>
+    <div className="max-w-2xl mx-auto p-0 md:p-6 bg-gray-950 rounded-lg shadow-lg">
+      <h1 className="text-3xl p-4 text-slate-300 font-bold mb-6">
+        Create New Task
+      </h1>
       <>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
           <div>
@@ -205,8 +207,8 @@ const TaskCreationForm = ({
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-full pl-3 text-left font-normal",
-                      !selectedDate && "text-muted-foreground"
+                      "w-full pl-3 bg-gray-950 hover:bg-gray-900 border-gray-900 hover:text-gray-300 text-left font-normal",
+                      !selectedDate && "text-slate-200"
                     )}
                   >
                     {selectedDate ? (
@@ -217,7 +219,10 @@ const TaskCreationForm = ({
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent
+                  className="w-full pl-3 bg-gray-950 hover:bg-gray-900 border-gray-900 text-gray-300 text-left font-normal"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={selectedDate}
@@ -232,7 +237,7 @@ const TaskCreationForm = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1  md:grid-cols-2 gap-6">
             <div className="space-y-3 text-sm">
               <p>End Date</p>
               <Popover>
@@ -240,7 +245,7 @@ const TaskCreationForm = ({
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-full pl-3 text-left font-normal",
+                      "w-full pl-3 bg-gray-950 hover:bg-gray-900 border-gray-900 hover:text-gray-300 text-left font-normal",
                       !selectedEndDate && "text-muted-foreground"
                     )}
                   >
@@ -252,7 +257,10 @@ const TaskCreationForm = ({
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent
+                  className="w-full pl-3 bg-gray-950 hover:bg-gray-900 border-gray-900 text-gray-300 text-left font-normal"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={selectedEndDate}
@@ -308,6 +316,7 @@ const TaskCreationForm = ({
                 href="/dashboard/members/new"
               /> */}
               <MultiSelect
+                className="bg-gray-950 border hover:bg-transparent"
                 options={filteredMembers}
                 onChange={handleMemberSelection}
               />
@@ -333,13 +342,13 @@ const TaskCreationForm = ({
             ) : (
               <Button type="submit">Submit Task</Button>
             )}
-            <Button
+            {/* <Button
               type="button"
               variant="outline"
               onClick={() => form.reset()}
             >
               Reset
-            </Button>
+            </Button> */}
             {/* <Button
               type="button"
               variant="secondary"

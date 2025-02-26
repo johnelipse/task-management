@@ -158,8 +158,8 @@ export default function TableHeader({
   }
   return (
     <div className=" mb-1">
-      <div className="flex text-white justify-between items-center border-b border-gray-200 dark:border-gray-600 py-3">
-        <h2 className="scroll-m-20  text-2xl font-semibold tracking-tight first:mt-0">
+      <div className="flex text-white justify-between items-center border-b border-gray-900 dark:border-gray-600 py-3">
+        <h2 className="scroll-m-20 text-[1.3rem] md:text-2xl font-semibold tracking-tight first:mt-0">
           {title}({data.length})
         </h2>
         <div className="ml-auto flex items-center gap-2">
@@ -169,7 +169,7 @@ export default function TableHeader({
             variant="outline"
             className="h-8 text-black gap-1"
           >
-            <FaFileExcel className="h-3.5 w-3.5" />
+            <FaFileExcel className="w-2 h-2 md:h-3.5 md:w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Export
             </span>
@@ -184,7 +184,7 @@ export default function TableHeader({
                   variant="outline"
                   className="h-8 text-black gap-1"
                 >
-                  <RiFileExcel2Line className="h-3.5 w-3.5" />
+                  <RiFileExcel2Line className="w-2 h-2 md:h-3.5 md:w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                     Import
                   </span>
@@ -373,9 +373,9 @@ export default function TableHeader({
               )}
             </Dialog>
           )}
-          <Button size="sm" asChild className="h-8 gap-1">
+          <Button size="sm" asChild className="md:h-8 gap-1">
             <Link href={href}>
-              <PlusCircle className="h-3.5 w-3.5" />
+              <PlusCircle className="w-2 h-2 md:h-3.5 md:w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 {linkTitle}
               </span>

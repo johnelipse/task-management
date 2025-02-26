@@ -53,25 +53,31 @@ export function UserDropdownMenu({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative h-12 w-full justify-start gap-2 px-4"
+          className="relative hover:bg-transparent h-12 w-full justify-start gap-2 px-4"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage src={avatarUrl} alt={username} />
             <AvatarFallback>{username[0]}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col items-start">
-            <span className="text-sm font-medium">{username}</span>
+            <span className="text-sm text-blue-800 font-medium">
+              {username}
+            </span>
             <span className="text-xs text-muted-foreground">{email}</span>
           </div>
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent
+        className="w-56 border-gray-900 bg-gray-900/30 backdrop-blur-2xl text-slate-300"
+        align="end"
+        forceMount
+      >
         <DropdownMenuItem onClick={handleUpgrade} className="cursor-pointer">
           <Sparkles className="mr-2 h-4 w-4" />
           <span>Upgrade to Pro</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-gray-900" />
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
@@ -86,7 +92,7 @@ export function UserDropdownMenu({
             <span>Notifications</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-gray-900" />
         <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>

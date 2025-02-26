@@ -145,12 +145,14 @@ export default function TeamMemberForm({
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-10 shadow-2xl max-w-4xl mx-auto px-4 py-4"
+        className="space-y-10 shadow-xl bg-gray-950 max-w-4xl mx-auto px-4 py-4"
       >
         {/* Personal Details Section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Personal Details</h2>
-          <div className="flex flex-col-reverse gap-3">
+          <h2 className="text-xl font-semibold text-slate-200">
+            Personal Details
+          </h2>
+          <div className="flex flex-col-reverse gap-6">
             <div className="grid gap-3  md:grid-cols-3">
               <TextInput
                 register={register}
@@ -178,20 +180,36 @@ export default function TeamMemberForm({
               </div>
             </div>
 
-            <div className="px-0 md:px-16">
-              <ImageInput
-                title="Member Image"
-                imageUrl={imageUrl}
-                setImageUrl={setImageUrl}
-                endpoint="categoryImage"
-              />
+            <div className="px-0 flex justify-between">
+              <div className="mb-4 p-3 text-slate-300 rounded-md text-sm">
+                <h1 className="font-bold text-slate-300 text-xl">
+                  Instructions for Uploading an Image:
+                </h1>
+                <ul className="list-disc mt-4 space-y-3 list-inside text-slate-300">
+                  <li>Accepted formats: JPG, PNG, WEBP.</li>
+                  <li>Recommended dimensions: 500x500px (or higher).</li>
+                  <li>File size should not exceed 2MB.</li>
+                  <li>Ensure clarity and centered focus.</li>
+                  <li>Avoid watermarks or unnecessary text.</li>
+                </ul>
+              </div>
+              <div className="w-[50%]">
+                <ImageInput
+                  title="Member Image"
+                  imageUrl={imageUrl}
+                  setImageUrl={setImageUrl}
+                  endpoint="categoryImage"
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Professional Details Section */}
         <div className="space-y-8">
-          <h2 className="text-xl font-semibold">Professional Details</h2>
+          <h2 className="text-xl font-semibold text-slate-300">
+            Professional Details
+          </h2>
           <div className="grid gap-6 md:grid-cols-2">
             <TextInput
               register={register}
@@ -233,13 +251,13 @@ export default function TeamMemberForm({
             </div>
 
             <div className="space-y-3 text-sm">
-              <p>Date Joined</p>
+              <p className="text-slate-300">Date Joined</p>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-full pl-3 text-left font-normal",
+                      "w-full pl-3 bg-gray-950 hover:bg-transparent hover:text-slate-300 border-gray-800 text-slate-300 text-left font-normal",
                       !selectedDate && "text-muted-foreground"
                     )}
                   >
@@ -251,7 +269,10 @@ export default function TeamMemberForm({
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent
+                  className="w-auto border-gray-800 bg-gray-950 text-slate-300 p-0"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={selectedDate}
@@ -269,7 +290,9 @@ export default function TeamMemberForm({
 
         {/* Additional Information Section */}
         <div className="space-y-8">
-          <h2 className="text-xl font-semibold">Additional Information</h2>
+          <h2 className="text-xl font-semibold text-slate-300">
+            Additional Information
+          </h2>
           <div className="grid gap-6">
             {/* <FormField
               control={form.control}

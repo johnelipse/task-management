@@ -68,9 +68,12 @@ export default function ActionColumn({
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        className="bg-gray-900/40 backdrop-blur-lg text-slate-300 border-gray-900"
+        align="end"
+      >
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="bg-gray-900" />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             {/* <DropdownMenuItem className="text-red-600 hover:text-red-700 transition-all duration-500 cursor-pointer">
@@ -85,7 +88,7 @@ export default function ActionColumn({
               <span>Delete</span>
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-gray-900/40 backdrop-blur-lg text-slate-300 border-gray-900">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -94,7 +97,9 @@ export default function ActionColumn({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="text-black bg-slate-300 hover:bg-slate-300">
+                Cancel
+              </AlertDialogCancel>
               <Button variant={"destructive"} onClick={() => handleDelete()}>
                 Permanently Delete
               </Button>

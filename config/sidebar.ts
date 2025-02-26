@@ -37,35 +37,35 @@ export const sidebarLinks: ISidebarLink[] = [
     dropdown: false,
     permission: "dashboard.read",
   },
-  {
-    title: "Users",
-    icon: Users,
-    href: "/dashboard/users",
-    dropdown: true,
-    permission: "users.read",
-    dropdownMenu: [
-      {
-        title: "Users",
-        href: "/dashboard/users",
-        permission: "users.read",
-      },
-      {
-        title: "Roles",
-        href: "/dashboard/users/roles",
-        permission: "roles.read",
-      },
-      {
-        title: "Change Password",
-        href: "/dashboard/change-password",
-        permission: "roles.read",
-      },
-      {
-        title: "Profile",
-        href: "/dashboard/profile",
-        permission: "roles.read",
-      },
-    ],
-  },
+  // {
+  //   title: "Users",
+  //   icon: Users,
+  //   href: "/dashboard/users",
+  //   dropdown: true,
+  //   permission: "users.read",
+  //   dropdownMenu: [
+  //     {
+  //       title: "Users",
+  //       href: "/dashboard/users",
+  //       permission: "users.read",
+  //     },
+  //     {
+  //       title: "Roles",
+  //       href: "/dashboard/users/roles",
+  //       permission: "roles.read",
+  //     },
+  //     {
+  //       title: "Change Password",
+  //       href: "/dashboard/change-password",
+  //       permission: "roles.read",
+  //     },
+  //     {
+  //       title: "Profile",
+  //       href: "/dashboard/profile",
+  //       permission: "roles.read",
+  //     },
+  //   ],
+  // },
   {
     title: "Inventory",
     icon: BaggageClaim,
@@ -73,16 +73,16 @@ export const sidebarLinks: ISidebarLink[] = [
     href: "/dashboard/inventory/products",
     permission: "products.read",
     dropdownMenu: [
-      {
-        title: "Categories",
-        href: "/dashboard/inventory/categories",
-        permission: "categories.read",
-      },
-      {
-        title: "Products",
-        href: "/dashboard/inventory/products",
-        permission: "products.read",
-      },
+      // {
+      //   title: "Categories",
+      //   href: "/dashboard/inventory/categories",
+      //   permission: "categories.read",
+      // },
+      // {
+      //   title: "Products",
+      //   href: "/dashboard/inventory/products",
+      //   permission: "products.read",
+      // },
       {
         title: "Departments",
         href: "/dashboard/departments",
@@ -105,39 +105,39 @@ export const sidebarLinks: ISidebarLink[] = [
       },
     ],
   },
-  {
-    title: "Sales",
-    icon: CircleDollarSign,
-    dropdown: true,
-    href: "/dashboard/sales",
-    permission: "sales.read",
-    dropdownMenu: [
-      {
-        title: "Sales",
-        href: "/dashboard/sales",
-        permission: "sales.read",
-      },
-      {
-        title: "Customers",
-        href: "/dashboard/sales/customers",
-        permission: "customers.read",
-      },
-    ],
-  },
-  {
-    title: "Blogs",
-    icon: Book,
-    dropdown: false,
-    href: "/dashboard/blogs",
-    permission: "blogs.read",
-  },
-  {
-    title: "Orders",
-    href: "/dashboard/orders",
-    icon: BarChart2,
-    dropdown: false,
-    permission: "orders.read",
-  },
+  // {
+  //   title: "Sales",
+  //   icon: CircleDollarSign,
+  //   dropdown: true,
+  //   href: "/dashboard/sales",
+  //   permission: "sales.read",
+  //   dropdownMenu: [
+  //     {
+  //       title: "Sales",
+  //       href: "/dashboard/sales",
+  //       permission: "sales.read",
+  //     },
+  //     {
+  //       title: "Customers",
+  //       href: "/dashboard/sales/customers",
+  //       permission: "customers.read",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Blogs",
+  //   icon: Book,
+  //   dropdown: false,
+  //   href: "/dashboard/blogs",
+  //   permission: "blogs.read",
+  // },
+  // {
+  //   title: "Orders",
+  //   href: "/dashboard/orders",
+  //   icon: BarChart2,
+  //   dropdown: false,
+  //   permission: "orders.read",
+  // },
   {
     title: "Settings",
     href: "/dashboard/settings",

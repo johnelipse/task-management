@@ -17,7 +17,12 @@ export default function AddNewButton({ href, toolTipText }: AddNewButtonProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button asChild variant={"outline"} size={"sm"}>
+          <Button
+            asChild
+            className="bg-gray-950 border-gray-800 hover:bg-gray-950 hover:text-slate-200 text-slate-200"
+            variant={"outline"}
+            size={"sm"}
+          >
             <Link href={href}>
               <Plus className="w-4 h-4" />
             </Link>

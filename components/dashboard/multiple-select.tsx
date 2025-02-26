@@ -41,7 +41,7 @@ interface MultiSelectProps {
 }
 
 export function MultiSelect({
-  placeholder = "Select items...",
+  placeholder = "Select Members...",
   options,
   onChange,
   defaultValues = [],
@@ -149,19 +149,20 @@ export function MultiSelect({
               </>
             )}
           </div>
-          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="h-4 w-4 text-slate-200 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
-        <Command className="w-full">
+      <PopoverContent className="w-full text-slate-200 p-0 bg-gray-950 border-gray-800">
+        <Command className="w-full border-gray-800 bg-gray-950">
           <CommandInput
+            className="text-slate-200 border-none focus-visible:ring-0 focus-visible:border-none"
             placeholder="Search items..."
             value={inputValue}
             onValueChange={setInputValue}
           />
-          <CommandList>
+          <CommandList className="border-gray-800">
             <CommandEmpty>No item found.</CommandEmpty>
-            <CommandGroup className="max-h-64 overflow-auto">
+            <CommandGroup className="max-h-64 overflow-auto ">
               <CommandItem
                 value="select-all"
                 onSelect={() => {
@@ -174,6 +175,7 @@ export function MultiSelect({
                     const allValues = options.map((option) => option.value);
                     setSelected(allValues);
                     onChange?.(allValues);
+                    className = "border-gray-800 hover:text-black";
                   }
                 }}
               >
@@ -185,7 +187,9 @@ export function MultiSelect({
                       : "opacity-0"
                   )}
                 />
-                <span className="font-medium">Select All</span>
+                <span className="font-medium text-slate-200 hover:text-black">
+                  Select All
+                </span>
               </CommandItem>
 
               {options.length > 0 && <div className="my-1 h-px bg-muted" />}
@@ -195,6 +199,7 @@ export function MultiSelect({
                   key={option.value}
                   value={option.value}
                   onSelect={() => handleSelect(option.value)}
+                  className="text-slate-200"
                 >
                   <Check
                     className={cn(
