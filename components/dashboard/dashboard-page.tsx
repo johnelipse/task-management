@@ -310,8 +310,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import TaskList from "./task-list";
+import { Task } from "@prisma/client";
 
-export default function DashboardPage() {
+export default function DashboardPage({ tasks }: { tasks: Task[] }) {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [mounted, setMounted] = useState(false);
 
@@ -375,11 +376,11 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent className="relative z-10">
                 <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-300">
-                  248
+                  {tasks.length}
                 </div>
                 <div className="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-2">
-                  <TrendingUp className="h-3 w-3" />
-                  +12% from last month
+                  <TrendingUp className="h-3 w-3" />+{tasks.length} from last
+                  month
                 </div>
               </CardContent>
             </Card>

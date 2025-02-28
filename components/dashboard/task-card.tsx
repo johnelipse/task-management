@@ -154,39 +154,30 @@
 
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Calendar, Clock, ChevronDown, ChevronUp, Users } from "lucide-react";
-import type { Task } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { Member, Task, Team } from "@prisma/client";
+import { motion } from "framer-motion";
+import { Calendar, ChevronDown, ChevronUp, Clock, Users } from "lucide-react";
+import { useState } from "react";
+import UpdateStatus from "./update-status";
+import { TaskDialog } from "./task-dialog";
+import UpdatePriority from "./update-priority";
 
-interface TaskCardProps {
-  task: Task;
+export interface TaskCardProps {
+  task: Task & { team: Team };
+  members: Member[];
 }
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({
+  task,
+  members,
+}: {
+  task: (Task & { team: Team }) | any;
+  members: Member[];
+}) {
   const [expanded, setExpanded] = useState(false);
-
-  const priorityColors = {
-    high: "from-red-500 to-red-700 border-red-500 shadow-red-500/20",
-    medium: "from-amber-500 to-amber-700 border-amber-500 shadow-amber-500/20",
-    low: "from-green-500 to-green-700 border-green-500 shadow-green-500/20",
-  };
-
-  const statusColors = {
-    "in-progress": "from-blue-500 to-blue-700 border-blue-500",
-    pending: "from-purple-500 to-purple-700 border-purple-500",
-    completed: "from-emerald-500 to-emerald-700 border-emerald-500",
-  };
-
-  const statusLabels = {
-    "in-progress": "In Progress",
-    pending: "Pending",
-    completed: "Completed",
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -215,33 +206,8 @@ export default function TaskCard({ task }: TaskCardProps) {
             </h3>
             <p className="text-xs text-gray-400 font-mono">/{task.slug}</p>
           </div>
-          {task.priority === "Medium" && (
-            <Badge
-              className={cn(
-                "bg-gradient-to-r border px-3 py-1 text-white shadow-lg from-amber-500 to-amber-700 border-amber-500 shadow-amber-500/20"
-              )}
-            >
-              {task.priority.toUpperCase()}
-            </Badge>
-          )}
-          {task.priority === "High" && (
-            <Badge
-              className={cn(
-                "bg-gradient-to-r border px-3 py-1 text-white shadow-lg from-red-500 to-red-700 border-red-500 shadow-red-500/20"
-              )}
-            >
-              {task.priority.toUpperCase()}
-            </Badge>
-          )}
-          {task.priority === "Low" && (
-            <Badge
-              className={cn(
-                "bg-gradient-to-r border px-3 py-1 text-white shadow-lg from-green-500 to-green-700 border-green-500 shadow-green-500/20"
-              )}
-            >
-              {task.priority.toUpperCase()}
-            </Badge>
-          )}
+
+          <UpdatePriority task={task} priority={task.priority} />
         </div>
         <div className="mb-4">
           <p
@@ -277,33 +243,7 @@ export default function TaskCard({ task }: TaskCardProps) {
           </div>
 
           <div className="flex items-center justify-end">
-            {task.status === "Inprogress" && (
-              <Badge
-                className={cn(
-                  "bg-gradient-to-r border px-3 py-1 text-white from-blue-500 to-blue-700 border-blue-500"
-                )}
-              >
-                {task.status}
-              </Badge>
-            )}
-            {task.status === "Pending" && (
-              <Badge
-                className={cn(
-                  "bg-gradient-to-r border px-3 py-1 text-white from-purple-500 to-purple-700 border-purple-500"
-                )}
-              >
-                {task.status}
-              </Badge>
-            )}
-            {task.status === "Completed" && (
-              <Badge
-                className={cn(
-                  "bg-gradient-to-r border px-3 py-1 text-white from-emerald-500 to-emerald-700 border-emerald-500"
-                )}
-              >
-                {task.status}
-              </Badge>
-            )}
+            <UpdateStatus task={task} status={task?.status} />
           </div>
         </div>
 
@@ -326,14 +266,14 @@ export default function TaskCard({ task }: TaskCardProps) {
             <Clock className="h-3 w-3 mr-1" />
             <span>Created {formatDate(task.createdAt.toString())}</span>
           </div>
-
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             className="h-7 text-xs border-gray-700 bg-gray-900 hover:bg-gray-800 hover:text-blue-400"
           >
             Details
-          </Button>
+          </Button> */}
+          <TaskDialog members={members} myTask={task} />
         </div>
       </div>
 

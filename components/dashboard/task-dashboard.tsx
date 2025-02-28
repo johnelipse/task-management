@@ -152,7 +152,7 @@ export default function TaskDashboard({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 * index }}
             >
-              <TaskCard task={task} />
+              <TaskCard members={members} task={task} />
             </motion.div>
           ))}
         </motion.div>
