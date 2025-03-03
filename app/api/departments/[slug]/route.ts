@@ -7,18 +7,18 @@ export async function GET(
 ) {
   const { slug } = await params;
   try {
-    const tasks = await db.task.findUnique({
+    const department = await db.department.findUnique({
       where: {
         slug,
       },
       include: {
-        team: true,
+        teams: true,
       },
     });
     return NextResponse.json(
       {
         message: "Fetch",
-        data: tasks,
+        data: department,
       },
       { status: 200 }
     );
@@ -41,7 +41,7 @@ export async function PATCH(
   const { slug } = await params;
   try {
     const data = await req.json();
-    const updatedData = await db.task.update({
+    const updatedData = await db.department.update({
       where: {
         slug,
       },
@@ -72,7 +72,7 @@ export async function DELETE(
 ) {
   const { slug } = await params;
   try {
-    await db.task.delete({
+    await db.department.delete({
       where: {
         slug,
       },

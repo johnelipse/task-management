@@ -33,12 +33,13 @@ import { Textarea } from "@/components/ui/textarea";
 import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
 import { TeamProps } from "@/types/types";
-import { Department } from "@prisma/client";
+import { Department, Team } from "@prisma/client";
 import { useState } from "react";
 import FormSelectInput from "../FormInputs/FormSelectInput";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Loader } from "lucide-react";
+import { updateTeam } from "@/actions/teams";
 
 // const formSchema = z.object({
 //   name: z.string().min(1, "Team name is required"),
@@ -48,17 +49,30 @@ import { Loader } from "lucide-react";
 
 export function TeamCreationForm({
   departments,
+  initialData,
 }: {
   departments: Department[];
+  initialData?: (Team & { Department: Department }) | null | any;
 }) {
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<TeamProps>();
+  } = useForm<TeamProps>({
+    defaultValues: {
+      name: initialData?.name,
+      slug: initialData?.slug,
+      description: initialData?.description,
+      departmentId: initialData?.departmentId as string,
+    },
+  });
   const router = useRouter();
-  const [selectedDepartment, setSelectedDepartment] = useState<any>("");
+  const [selectedDepartment, setSelectedDepartment] = useState<any>(
+    initialData
+      ? { value: initialData.departmentId, label: initialData.Department.name }
+      : ""
+  );
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
   const selectDepartment = departments.map((department) => ({
@@ -73,29 +87,43 @@ export function TeamCreationForm({
   async function onSubmit(data: TeamProps) {
     data.departmentId = selectedDepartment.value;
     data.slug = data.name.split(" ").join("-").toLowerCase();
-    try {
-      setLoading(true);
-      const res = await fetch("/api/teams", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (res.status === 201) {
+    if (initialData) {
+      try {
+        setLoading(true);
+        await updateTeam(initialData.slug, data);
         setLoading(false);
-        reset();
+        toast.success("Team updated successfully.");
         router.push("/dashboard/teams");
-        toast.success("Team created successfully.");
-      } else if (res.status === 409) {
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-        setErr("Team already exists.");
-        toast.error("Team already exists.");
+        toast.error("Something went wrong.");
       }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      toast.error("Something went wrong");
+    } else {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/teams", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.status === 201) {
+          setLoading(false);
+          reset();
+          router.push("/dashboard/teams");
+          toast.success("Team created successfully.");
+        } else if (res.status === 409) {
+          setLoading(false);
+          setErr("Team already exists.");
+          toast.error("Team already exists.");
+        }
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        toast.error("Something went wrong");
+      }
     }
   }
 
@@ -148,10 +176,13 @@ export function TeamCreationForm({
                 className="flex gap-2 items-center"
               >
                 <Loader className="w-4 h-4 animate-spin" />
-                Creating...
+                {initialData ? "  Updating..." : "  Creating..."}
               </Button>
             ) : (
-              <Button type="submit">Create Team</Button>
+              <Button type="submit">
+                {" "}
+                {initialData ? "Update Team" : "Create Team"}
+              </Button>
             )}
           </CardFooter>
         </form>

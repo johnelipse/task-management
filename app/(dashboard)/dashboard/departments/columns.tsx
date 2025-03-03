@@ -56,13 +56,13 @@ export const columns: ColumnDef<Department>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const department = row.original;
       return (
         <ActionColumn
           row={row}
-          model="category"
-          editEndpoint={`categories/update/${category.id}`}
-          id={category.id}
+          model="department"
+          editEndpoint={`departments/update/${department.slug}`}
+          slug={department.slug}
         />
       );
     },

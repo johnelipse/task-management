@@ -1,38 +1,29 @@
 // "use client";
 
-// import { useState } from "react";
-// import { motion } from "framer-motion";
-// import { Calendar, Clock, ChevronDown, ChevronUp, Users } from "lucide-react";
 // import { Badge } from "@/components/ui/badge";
 // import { Button } from "@/components/ui/button";
 // import { cn } from "@/lib/utils";
-// import { Task, Team } from "@prisma/client";
+// import type { Member, Task, Team } from "@prisma/client";
+// import { motion } from "framer-motion";
+// import { Calendar, ChevronDown, ChevronUp, Clock, Users } from "lucide-react";
+// import { useState } from "react";
+// import UpdateStatus from "./update-status";
+// import { TaskDialog } from "./task-dialog";
+// import UpdatePriority from "./update-priority";
 
-// interface TaskCardProps {
-//   task: (Task & { team: Team }) | any;
+// export interface TaskCardProps {
+//   task: Task & { team: Team };
+//   members: Member[];
 // }
 
-// export default function TaskCard({ task }: TaskCardProps) {
+// export default function TaskCard({
+//   task,
+//   members,
+// }: {
+//   task: (Task & { team: Team }) | any;
+//   members: Member[];
+// }) {
 //   const [expanded, setExpanded] = useState(false);
-
-//   const priorityColors = {
-//     high: "from-red-500 to-red-700 border-red-500 shadow-red-500/20",
-//     medium: "from-amber-500 to-amber-700 border-amber-500 shadow-amber-500/20",
-//     low: "from-green-500 to-green-700 border-green-500 shadow-green-500/20",
-//   };
-
-//   const statusColors = {
-//     "in-progress": "from-blue-500 to-blue-700 border-blue-500",
-//     pending: "from-purple-500 to-purple-700 border-purple-500",
-//     completed: "from-emerald-500 to-emerald-700 border-emerald-500",
-//   };
-
-//   const statusLabels = {
-//     "in-progress": "In Progress",
-//     pending: "Pending",
-//     completed: "Completed",
-//   };
-
 //   const formatDate = (dateString: string) => {
 //     const date = new Date(dateString);
 //     return date.toLocaleDateString("en-US", {
@@ -62,23 +53,15 @@
 //             <p className="text-xs text-gray-400 font-mono">/{task.slug}</p>
 //           </div>
 
-//           <Badge
-//             className={cn(
-//               "bg-gradient-to-r border px-3 py-1 text-white shadow-lg"
-//               // priorityColors[task.priority]
-//             )}
-//           >
-//             {task.priority.toUpperCase()}
-//           </Badge>
+//           <UpdatePriority task={task} priority={task.priority} />
 //         </div>
-
 //         <div className="mb-4">
 //           <p
 //             className={cn("text-gray-300 text-sm", !expanded && "line-clamp-2")}
 //           >
-//             {task.taskDescription ?? ""}
+//             {task.taskDescription}
 //           </p>
-//           {(task.taskDescription ?? "").length > 100 && (
+//           {task.taskDescription && task.taskDescription.length > 100 && (
 //             <Button
 //               variant="ghost"
 //               size="sm"
@@ -106,14 +89,7 @@
 //           </div>
 
 //           <div className="flex items-center justify-end">
-//             <Badge
-//               className={cn(
-//                 "bg-gradient-to-r border px-3 py-1 text-white"
-//                 // statusColors[task.status]
-//               )}
-//             >
-//               {task.status}
-//             </Badge>
+//             <UpdateStatus task={task} status={task?.status} />
 //           </div>
 //         </div>
 
@@ -127,23 +103,16 @@
 
 //           <div className="flex items-center justify-end">
 //             <Users className="h-3 w-3 mr-1 text-purple-400" />
-//             <span>{task.team.name}</span>
+//             <span>{task.memberIds.length} members</span>
 //           </div>
 //         </div>
 
 //         <div className="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-xs text-gray-500">
 //           <div className="flex items-center">
 //             <Clock className="h-3 w-3 mr-1" />
-//             <span>Created {formatDate(task.createdAt)}</span>
+//             <span>Created {formatDate(task.createdAt.toString())}</span>
 //           </div>
-
-//           <Button
-//             variant="outline"
-//             size="sm"
-//             className="h-7 text-xs border-gray-700 bg-gray-900 hover:bg-gray-800 hover:text-blue-400"
-//           >
-//             Details
-//           </Button>
+//           <TaskDialog members={members} myTask={task} />
 //         </div>
 //       </div>
 
@@ -159,11 +128,24 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Member, Task, Team } from "@prisma/client";
 import { motion } from "framer-motion";
-import { Calendar, ChevronDown, ChevronUp, Clock, Users } from "lucide-react";
+import {
+  Calendar,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Edit,
+  Loader,
+  Trash,
+  Users,
+} from "lucide-react";
 import { useState } from "react";
 import UpdateStatus from "./update-status";
 import { TaskDialog } from "./task-dialog";
 import UpdatePriority from "./update-priority";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { deleteTask } from "@/actions/tasks";
 
 export interface TaskCardProps {
   task: Task & { team: Team };
@@ -178,6 +160,7 @@ export default function TaskCard({
   members: Member[];
 }) {
   const [expanded, setExpanded] = useState(false);
+  const router = useRouter();
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -186,6 +169,21 @@ export default function TaskCard({
       year: "numeric",
     });
   };
+  const [loading, setLoading] = useState(false);
+
+  async function handleDelete(slug: string) {
+    try {
+      setLoading(true);
+      await deleteTask(slug);
+      toast.success("Task deleted successfully.");
+      setLoading(false);
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+      setLoading(false);
+    }
+  }
 
   return (
     <motion.div
@@ -261,18 +259,31 @@ export default function TaskCard({
           </div>
         </div>
 
-        <div className="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-xs text-gray-500">
-          <div className="flex items-center">
+        <div className="mt-4 pt-3 border-t border-gray-800 flex gap-4 items-center w-full  text-xs text-gray-500 justify-center">
+          {/* <div className="flex items-center">
             <Clock className="h-3 w-3 mr-1" />
             <span>Created {formatDate(task.createdAt.toString())}</span>
-          </div>
-          {/* <Button
-            variant="outline"
+          </div> */}
+          <Button asChild variant="secondary" size="sm" className="h-7 text-xs">
+            <Link href={`/dashboard/tasks/${task.slug}`}>
+              <Edit className="h-3 w-3" />
+            </Link>
+          </Button>
+
+          <Button
+            disabled={loading}
+            variant="destructive"
             size="sm"
-            className="h-7 text-xs border-gray-700 bg-gray-900 hover:bg-gray-800 hover:text-blue-400"
+            onClick={() => handleDelete(task.slug)}
+            className="h-7 text-xs"
           >
-            Details
-          </Button> */}
+            {loading ? (
+              <Loader className="h-3 w-3 animate-spin" />
+            ) : (
+              <Trash className="h-3 w-3" />
+            )}
+          </Button>
+
           <TaskDialog members={members} myTask={task} />
         </div>
       </div>

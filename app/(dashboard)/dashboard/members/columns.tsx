@@ -75,13 +75,13 @@ export const columns: ColumnDef<(Member & { Team: Team }) | any>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const member = row.original;
       return (
         <ActionColumn
           row={row}
-          model="category"
-          editEndpoint={`categories/update/${category.id}`}
-          id={category.id}
+          model="member"
+          editEndpoint={`members/update/${member.id}`}
+          id={member.id}
         />
       );
     },

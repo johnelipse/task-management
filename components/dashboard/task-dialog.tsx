@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Member, Task, Team } from "@prisma/client";
 import { TaskCardProps } from "./task-card";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface TaskMember {
   id: string;
@@ -140,71 +141,80 @@ export function TaskDialog({
           Details
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[550px] bg-gradient-to-br from-gray-950 to-gray-900 border-gray-800 text-gray-100 shadow-lg shadow-cyan-900/20">
-        <div className="space-y-6 py-2">
-          {/* Task Name */}
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-1">
-              {myTask.taskName}
-            </h2>
-          </div>
-
-          {/* Status and Priority */}
-          <div className="flex flex-wrap gap-3">
-            <Badge className={`${getStatusVariant(myTask.status)} font-medium`}>
-              {myTask.status}
-            </Badge>
-            <div className="flex items-center gap-1.5">
-              <span className="text-gray-400 text-sm">Priority:</span>
-              <span
-                className={`font-medium ${getPriorityColor(myTask.priority)}`}
-              >
-                {myTask.priority}
-              </span>
+      <ScrollArea>
+        <DialogContent className="sm:max-w-[550px] bg-gradient-to-br scrollbar-hide overflow-y-auto h-[25rem]  from-gray-950 to-gray-900 border-gray-800 text-gray-100 shadow-lg shadow-cyan-900/20">
+          <div className="space-y-6 py-2">
+            {/* Task Name */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-1">
+                {myTask.taskName}
+              </h2>
             </div>
-          </div>
 
-          {/* Description */}
-          <div className="space-y-1.5">
-            <h3 className="text-sm font-semibold text-gray-300">Description</h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              {myTask.taskDescription}
-            </p>
-          </div>
+            {/* Status and Priority */}
+            <div className="flex flex-wrap gap-3">
+              <Badge
+                className={`${getStatusVariant(myTask.status)} font-medium`}
+              >
+                {myTask.status}
+              </Badge>
+              <div className="flex items-center gap-1.5">
+                <span className="text-gray-400 text-sm">Priority:</span>
+                <span
+                  className={`font-medium ${getPriorityColor(myTask.priority)}`}
+                >
+                  {myTask.priority}
+                </span>
+              </div>
+            </div>
 
-          {/* Department */}
-          <div className="space-y-1.5">
-            <h3 className="text-sm font-semibold text-gray-300">Department</h3>
-            <p className="text-gray-300">{myTask.department}</p>
-          </div>
-
-          {/* Dates */}
-          <div className="grid grid-cols-2 gap-4">
+            {/* Description */}
             <div className="space-y-1.5">
               <h3 className="text-sm font-semibold text-gray-300">
-                Start Date
+                Description
               </h3>
-              <p className="text-gray-300">{formatDate(myTask.startDate)}</p>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {myTask.taskDescription}
+              </p>
             </div>
+
+            {/* Department */}
             <div className="space-y-1.5">
-              <h3 className="text-sm font-semibold text-gray-300">End Date</h3>
-              <p className="text-gray-300">{formatDate(myTask.endDate)}</p>
+              <h3 className="text-sm font-semibold text-gray-300">
+                Department
+              </h3>
+              <p className="text-gray-300">{myTask.department}</p>
             </div>
-          </div>
 
-          {/* Team */}
-          <div className="space-y-1.5">
-            <h3 className="text-sm font-semibold text-gray-300">Team</h3>
-            <p className="text-gray-300">{myTask.team.name}</p>
-          </div>
+            {/* Dates */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-semibold text-gray-300">
+                  Start Date
+                </h3>
+                <p className="text-gray-300">{formatDate(myTask.startDate)}</p>
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-sm font-semibold text-gray-300">
+                  End Date
+                </h3>
+                <p className="text-gray-300">{formatDate(myTask.endDate)}</p>
+              </div>
+            </div>
 
-          {/* Team Members */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-300">
-              Team Members
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {/* {taskMembers.map((member) => (
+            {/* Team */}
+            <div className="space-y-1.5">
+              <h3 className="text-sm font-semibold text-gray-300">Team</h3>
+              <p className="text-gray-300">{myTask.team.name}</p>
+            </div>
+
+            {/* Team Members */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-300">
+                Team Members
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {/* {taskMembers.map((member) => (
                 <div
                   key={member.id}
                   className="flex items-center gap-2 bg-gray-800/50 rounded-full pl-1 pr-3 py-1"
@@ -231,52 +241,53 @@ export function TaskDialog({
                   </div>
                 </div>
               ))} */}
-              {taskMembers.map((member) => (
-                <div
-                  key={member.id}
-                  className="group relative flex items-center gap-3 bg-gradient-to-r from-gray-800/80 to-gray-800/40 rounded-lg p-3 border border-gray-800/50 hover:border-cyan-900/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {taskMembers.map((member) => (
+                  <div
+                    key={member.id}
+                    className="group relative flex items-center gap-3 bg-gradient-to-r from-gray-800/80 to-gray-800/40 rounded-lg p-3 border border-gray-800/50 hover:border-cyan-900/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                  <Avatar className="h-10 w-10 ring-2 ring-gray-700/50 group-hover:ring-cyan-700/30 transition-all duration-300">
-                    <AvatarImage
-                      src={member.image as string}
-                      alt={member.fullName}
-                    />
-                    <AvatarFallback className="bg-gradient-to-br from-gray-700 to-gray-800 text-white">
-                      {member.fullName
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
+                    <Avatar className="h-10 w-10 ring-2 ring-gray-700/50 group-hover:ring-cyan-700/30 transition-all duration-300">
+                      <AvatarImage
+                        src={member.image as string}
+                        alt={member.fullName}
+                      />
+                      <AvatarFallback className="bg-gradient-to-br from-gray-700 to-gray-800 text-white">
+                        {member.fullName
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
 
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-sm font-medium text-white truncate group-hover:text-cyan-300 transition-colors duration-300">
-                      {member.fullName}
-                    </span>
-                    <div className="flex  flex-col gap-1">
-                      <span className="text-xs text-gray-400">
-                        {member.email}
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-sm font-medium text-white truncate group-hover:text-cyan-300 transition-colors duration-300">
+                        {member.fullName}
                       </span>
-                      {/* <span className="inline-block h-1.5 w-1.5 rounded-full bg-cyan-500/50"></span> */}
-                      <span className="text-xs text-gray-400">
-                        {member.phone}
-                      </span>
+                      <div className="flex  flex-col gap-1">
+                        <span className="text-xs text-gray-400">
+                          {member.email}
+                        </span>
+                        {/* <span className="inline-block h-1.5 w-1.5 rounded-full bg-cyan-500/50"></span> */}
+                        <span className="text-xs text-gray-400">
+                          {member.phone}
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* <div className="ml-auto">
+                    {/* <div className="ml-auto">
                     <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center group-hover:bg-gray-700 transition-colors duration-300">
                       <span className="text-cyan-400 text-xs">+</span>
                     </div>
                   </div> */}
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </DialogContent>
+        </DialogContent>
+      </ScrollArea>
     </Dialog>
   );
 }

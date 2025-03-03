@@ -40,14 +40,31 @@ import TextArea from "../FormInputs/TextAreaInput";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { Department } from "@prisma/client";
+import { updateDepartment } from "@/actions/departments";
 
-export function DepartmentCreationForm() {
+export function DepartmentCreationForm({
+  initialData,
+}: {
+  initialData?: Department | null;
+}) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<DepartmentProps>();
+  } = useForm<DepartmentProps>({
+    defaultValues: {
+      budget: initialData?.budget,
+      code: initialData?.code,
+      description: initialData?.description,
+      employeeCapacity: initialData?.employeeCapacity,
+      isActive: initialData?.isActive,
+      location: initialData?.location,
+      name: initialData?.name,
+      slug: initialData?.slug,
+    },
+  });
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
@@ -59,29 +76,43 @@ export function DepartmentCreationForm() {
     data.budget = Number(data.budget);
     data.employeeCapacity = Number(data.employeeCapacity);
     data.slug = data.name.split(" ").join("-").toLowerCase();
-    try {
-      setLoading(true);
-      const res = await fetch("/api/departments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (res.status === 201) {
+    if (initialData) {
+      try {
+        setLoading(true);
+        await updateDepartment(initialData.slug, data);
         setLoading(false);
-        reset();
-        toast.success("Department created successfully.");
+        toast.success("Department updated successfully.");
         router.push("/dashboard/departments");
-      } else if (res.status === 409) {
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-        setErr("Department already exists.");
-        toast.error("Department already exists.");
+        toast.error("Something went wrong.");
       }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      toast.error("Something went wrong.");
+    } else {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/departments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.status === 201) {
+          setLoading(false);
+          reset();
+          toast.success("Department created successfully.");
+          router.push("/dashboard/departments");
+        } else if (res.status === 409) {
+          setLoading(false);
+          setErr("Department already exists.");
+          toast.error("Department already exists.");
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        toast.error("Something went wrong.");
+      }
     }
   }
 
@@ -91,9 +122,13 @@ export function DepartmentCreationForm() {
         <div className="flex text-slate-300 items-center space-x-4">
           <Building2 className="h-8 w-8" />
           <div>
-            <CardTitle>Create Department</CardTitle>
+            <CardTitle>
+              {initialData ? "Update Department" : "Create Department"}
+            </CardTitle>
             <CardDescription>
-              Add a new department to your organization
+              {initialData
+                ? "Update your department in your organization"
+                : "Add a new department to your organization"}
             </CardDescription>
           </div>
         </div>
@@ -199,10 +234,12 @@ export function DepartmentCreationForm() {
                 className="flex gap-2 items-center"
               >
                 <Loader className="w-4 h-4 animate-spin" />
-                Creating...
+                {initialData ? "  Updating..." : "  Creating..."}
               </Button>
             ) : (
-              <Button type="submit">Create Department</Button>
+              <Button type="submit">
+                {initialData ? "Update Department" : "Create Department"}
+              </Button>
             )}
           </CardFooter>
         </form>

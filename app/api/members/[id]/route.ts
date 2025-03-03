@@ -3,22 +3,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { slug } = await params;
+  const { id } = await params;
   try {
-    const tasks = await db.task.findUnique({
+    const member = await db.member.findUnique({
       where: {
-        slug,
+        id,
       },
       include: {
-        team: true,
+        Team: true,
       },
     });
     return NextResponse.json(
       {
         message: "Fetch",
-        data: tasks,
+        data: member,
       },
       { status: 200 }
     );
@@ -36,14 +36,14 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { slug } = await params;
+  const { id } = await params;
   try {
     const data = await req.json();
-    const updatedData = await db.task.update({
+    const updatedData = await db.member.update({
       where: {
-        slug,
+        id,
       },
       data,
     });
@@ -68,13 +68,13 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { slug } = await params;
+  const { id } = await params;
   try {
-    await db.task.delete({
+    await db.member.delete({
       where: {
-        slug,
+        id,
       },
     });
     return NextResponse.json(

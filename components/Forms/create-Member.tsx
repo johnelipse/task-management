@@ -5,15 +5,6 @@ import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-// import {
-//   Form,
-//   FormControl,
-//   FormDescription,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -27,10 +18,11 @@ import ImageInput from "../FormInputs/ImageInput";
 import TextInput from "../FormInputs/TextInput";
 import TextArea from "../FormInputs/TextAreaInput";
 import { MemberProps } from "@/types/types";
-import { Department, Team } from "@prisma/client";
+import { Department, Member, Team } from "@prisma/client";
 import FormSelectInput from "../FormInputs/FormSelectInput";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { updateMember } from "@/actions/members";
 
 // const skills = [
 //   "JavaScript",
@@ -52,14 +44,22 @@ const employmentTypes = ["Full-time", "Part-time", "Contract"];
 export default function TeamMemberForm({
   departments,
   teams,
+  initialData,
 }: {
   departments: Department[];
   teams: Team[];
+  initialData?: (Member & { Team: Team }) | null | any;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  // const [selectedDate, setSelectedDate] = useState<any>(
+  //   initialData.dateJoined || ""
+  // );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    initialData?.dateJoined ? new Date(initialData.dateJoined) : undefined
+  );
+
   const initialImage = "/placeholder.png";
-  const [imageUrl, setImageUrl] = useState(initialImage);
+  const [imageUrl, setImageUrl] = useState(initialData?.image || initialImage);
   const [filteredTeams, setFilteredTeams] = useState<any[]>([]);
   const router = useRouter();
   const {
@@ -67,44 +67,81 @@ export default function TeamMemberForm({
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<MemberProps>();
-  const [selectedDepartment, setSelectedDepartment] = useState<any>("");
+  } = useForm<MemberProps>({
+    defaultValues: {
+      fullName: initialData?.fullName,
+      dateJoined: initialData?.dateJoined,
+      department: initialData?.department,
+      description: initialData?.description,
+      email: initialData?.email,
+      employeeId: initialData?.employeeId,
+      employmentType: initialData?.employmentType,
+      image: initialData?.image as string,
+      jobTitle: initialData?.jobTitle,
+      phone: initialData?.phone,
+      teamId: initialData?.teamId as string,
+    },
+  });
+  const [selectedDepartment, setSelectedDepartment] = useState<any>(
+    initialData?.department
+      ? { value: initialData.department, label: initialData.department }
+      : ""
+  );
   const selectDepartment = departments.map((department) => ({
-    value: department.id,
+    value: department.name,
     label: department.name,
   }));
-  const [selectedEmploymentType, setSelectedEmploymentType] = useState<any>("");
+  const [selectedEmploymentType, setSelectedEmploymentType] = useState<any>(
+    initialData
+      ? { value: initialData.employmentType, label: initialData.employmentType }
+      : ""
+  );
   const employmentTypeOptions = employmentTypes.map((type) => ({
     value: type,
     label: type,
   }));
 
-  const [selectedteam, setSelectedteam] = useState<any>("");
+  const [selectedteam, setSelectedteam] = useState<any>(
+    initialData?.teamId && initialData?.Team?.name
+      ? { value: initialData.teamId, label: initialData.Team.name }
+      : ""
+  );
   const [err, setErr] = useState("");
-  const selecteteam = teams.map((team) => ({
-    value: team.id,
-    label: team.name,
-  }));
 
   useEffect(() => {
-    if (selectedDepartment) {
-      // Filter teams by the selected department ID
-      const teamsInDepartment = teams.filter(
-        (team) => team.departmentId === selectedDepartment.value
-      );
-      setFilteredTeams(
-        teamsInDepartment.map((team) => ({
-          value: team.id,
-          label: team.name,
-        }))
-      );
+    if (selectedDepartment && selectedDepartment.value) {
+      // Get department ID based on department name
+      const departmentId = departments.find(
+        (d) => d.name === selectedDepartment.value
+      )?.id;
 
-      // Reset selected team when department changes
-      setSelectedteam("");
+      if (departmentId) {
+        // Filter teams by the selected department ID
+        const teamsInDepartment = teams.filter(
+          (team) => team.departmentId === departmentId
+        );
+
+        setFilteredTeams(
+          teamsInDepartment.map((team) => ({
+            value: team.id,
+            label: team.name,
+          }))
+        );
+
+        // Only reset selected team if the department changes and the current team doesn't belong to that department
+        if (initialData?.teamId) {
+          const teamExists = teamsInDepartment.some(
+            (team) => team.id === initialData.teamId
+          );
+          if (!teamExists) {
+            setSelectedteam("");
+          }
+        }
+      }
     } else {
       setFilteredTeams([]);
     }
-  }, [selectedDepartment, teams]);
+  }, [selectedDepartment, teams, departments, initialData]);
   function handleCancel() {
     router.push("/dashboard/members");
   }
@@ -115,29 +152,37 @@ export default function TeamMemberForm({
     data.dateJoined = selectedDate?.toDateString() as string;
     data.employmentType = selectedEmploymentType.value;
     data.image = imageUrl;
-    try {
+    if (initialData) {
       setIsSubmitting(true);
-      const res = await fetch("/api/members", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (res.status === 201) {
-        setIsSubmitting(false);
-        toast.success("Member created successfully.");
-        setImageUrl(initialImage);
-        reset();
-        router.push("/dashboard/members");
-      } else if (res.status === 409) {
-        setIsSubmitting(false);
-        setErr("Member Member already exists in this team.");
-        toast.error("Member Member already exists in this team.");
+      await updateMember(initialData.id, data);
+      setIsSubmitting(false);
+      toast.success("Member updated successfully.");
+      router.push("/dashboard/members");
+    } else {
+      try {
+        setIsSubmitting(true);
+        const res = await fetch("/api/members", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.status === 201) {
+          setIsSubmitting(false);
+          toast.success("Member created successfully.");
+          setImageUrl(initialImage);
+          reset();
+          router.push("/dashboard/members");
+        } else if (res.status === 409) {
+          setIsSubmitting(false);
+          setErr("Member Member already exists in this team.");
+          toast.error("Member Member already exists in this team.");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.");
     }
   }
 
@@ -294,112 +339,31 @@ export default function TeamMemberForm({
             Additional Information
           </h2>
           <div className="grid gap-6">
-            {/* <FormField
-              control={form.control}
-              name="skills"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Skills</FormLabel>
-                  <FormControl>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value?.length > 0
-                              ? `${field.value.length} selected`
-                              : "Select skills"}
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
-                        <Command className="w-full">
-                          <CommandInput placeholder="Search skills..." />
-                          <CommandList>
-                            <CommandEmpty>No skill found.</CommandEmpty>
-                            <CommandGroup>
-                              <ScrollArea className="h-64">
-                                {skills.map((skill) => (
-                                  <CommandItem
-                                    value={skill}
-                                    key={skill}
-                                    onSelect={() => {
-                                      const values = new Set(field.value);
-                                      if (values.has(skill)) {
-                                        values.delete(skill);
-                                      } else {
-                                        values.add(skill);
-                                      }
-                                      field.onChange(Array.from(values));
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        field.value?.includes(skill)
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {skill}
-                                  </CommandItem>
-                                ))}
-                              </ScrollArea>
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </FormControl>
-                  <div className="mt-2">
-                    {field.value?.map((skill) => (
-                      <Badge key={skill} className="mr-2 mb-2">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
             <TextArea
               register={register}
               errors={errors}
               label="Short Bio"
               name="description"
             />
-
-            {/* <FormField
-              control={form.control}
-              name="linkedinProfile"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>LinkedIn Profile</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://linkedin.com/in/username"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
           </div>
         </div>
 
         <div className="flex flex-row-reverse justify-between gap-4">
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isSubmitting ? "Submitting..." : "Submit Registration"}
-          </Button>
+          {initialData ? (
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {isSubmitting ? "Updating..." : "Update Member"}
+            </Button>
+          ) : (
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {isSubmitting ? "Submitting..." : "Submit Registration"}
+            </Button>
+          )}
           <Button
             onClick={handleCancel}
             type="button"

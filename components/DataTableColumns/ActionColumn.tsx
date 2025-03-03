@@ -25,18 +25,23 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { deleteSaving } from "@/actions/savings";
 import { deleteUser } from "@/actions/users";
+import { deleteDepartment } from "@/actions/departments";
+import { deleteTeam } from "@/actions/teams";
+import { deleteMember } from "@/actions/members";
 
 type ActionColumnProps = {
   row: any;
   model: any;
   editEndpoint: string;
-  id: string | undefined;
+  slug?: string | undefined;
+  id?: string | undefined;
   // revPath: string;
 };
 export default function ActionColumn({
   row,
   model,
   editEndpoint,
+  slug = "",
   id = "",
 }: ActionColumnProps) {
   const isActive = row.isActive;
@@ -50,6 +55,24 @@ export default function ActionColumn({
         toast.success(`${model} Deleted Successfully`);
       } else if (model === "user") {
         const res = await deleteUser(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      } else if (model === "department") {
+        const res = await deleteDepartment(slug);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      } else if (model === "team") {
+        const res = await deleteTeam(slug);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      } else if (model === "member") {
+        const res = await deleteMember(id);
         if (res?.ok) {
           window.location.reload();
         }
