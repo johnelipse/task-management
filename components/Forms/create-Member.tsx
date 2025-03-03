@@ -225,7 +225,7 @@ export default function TeamMemberForm({
               </div>
             </div>
 
-            <div className="px-0 flex justify-between">
+            <div className="px-0 flex-col md:flex-row flex justify-between">
               <div className="mb-4 p-3 text-slate-300 rounded-md text-sm">
                 <h1 className="font-bold text-slate-300 text-xl">
                   Instructions for Uploading an Image:
@@ -233,7 +233,7 @@ export default function TeamMemberForm({
                 <ul className="list-disc mt-4 space-y-3 list-inside text-slate-300">
                   <li>Accepted formats: JPG, PNG, WEBP.</li>
                   <li>Recommended dimensions: 500x500px (or higher).</li>
-                  <li>File size should not exceed 2MB.</li>
+                  <li>File size should not exceed 1MB.</li>
                   <li>Ensure clarity and centered focus.</li>
                   <li>Avoid watermarks or unnecessary text.</li>
                 </ul>
