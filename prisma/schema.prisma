@@ -202,3 +202,12 @@ model Task {
  
 }
 
+
+model Notification {
+  id          String   @id @default(cuid())
+  message     String
+  statusText  String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

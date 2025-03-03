@@ -23,15 +23,22 @@ import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { NotificationMenu } from "../NotificationMenu";
 import { UserDropdownMenu } from "../UserDropdownMenu";
+import Image from "next/image";
+import { Notification } from "@prisma/client";
 // import { NotificationMenu } from "../frontend/NotificationMenu";
 // import { Notification } from "@prisma/client";
 
 interface SidebarProps {
   session: Session;
-  notifications?: Notification[];
+  // notifications?: Notification[];
+  allNotifications: Notification[];
 }
 
-export default function Sidebar({ session, notifications = [] }: SidebarProps) {
+export default function Sidebar({
+  session,
+  allNotifications,
+}: // notifications = [],
+SidebarProps) {
   const router = useRouter();
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
     null
@@ -75,8 +82,17 @@ export default function Sidebar({ session, notifications = [] }: SidebarProps) {
     <div className="fixed top-0 left-0 h-full w-[220px] lg:w-[260px] border-r border-gray-900 bg-black/40 hidden backdrop-blur-md md:block overflow-y-auto">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex flex-shrink-0 h-14 items-center border-b border-gray-900 px-4 lg:h-[60px] lg:px-6">
-          <Logo href="/dashboard" />
-          <NotificationMenu notifications={notifications} />
+          {/* <Logo href="/dashboard" /> */}
+          <Link href="/dashboard">
+            <Image
+              width={149}
+              height={48}
+              src="/logo.png"
+              className="w-13 h-13"
+              alt="logo"
+            />
+          </Link>
+          <NotificationMenu allNotifications={allNotifications} />
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">

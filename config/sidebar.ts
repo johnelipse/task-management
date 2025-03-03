@@ -148,25 +148,25 @@ export const sidebarLinks: ISidebarLink[] = [
   {
     title: "Reports",
     icon: BarChart4,
-    dropdown: true,
-    href: "/dashboard/reports/products",
+    dropdown: false,
+    href: "/dashboard/reports",
     permission: "reports.read",
-    dropdownMenu: [
-      {
-        title: "Product Report",
-        href: "/dashboard/reports/products",
-        permission: "reports.read",
-      },
-      {
-        title: "Inventory Report",
-        href: "/dashboard/reports/inventory",
-        permission: "reports.read",
-      },
-      {
-        title: "Customers Report",
-        href: "/dashboard/reports/customers",
-        permission: "reports.read",
-      },
-    ],
+    // dropdownMenu: [
+    //   {
+    //     title: "Product Report",
+    //     href: "/dashboard/reports/products",
+    //     permission: "reports.read",
+    //   },
+    //   {
+    //     title: "Inventory Report",
+    //     href: "/dashboard/reports/inventory",
+    //     permission: "reports.read",
+    //   },
+    //   {
+    //     title: "Customers Report",
+    //     href: "/dashboard/reports/customers",
+    //     permission: "reports.read",
+    //   },
+    // ],
   },
 ];

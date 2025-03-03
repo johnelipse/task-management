@@ -18,6 +18,7 @@ import { signOut } from "next-auth/react";
 import { sidebarLinks } from "@/config/sidebar";
 import { usePermission } from "@/hooks/usePermissions";
 import { UserDropdownMenu } from "../UserDropdownMenu";
+import Image from "next/image";
 
 // export default function Navbar({ session }: { session: Session }) {
 //   const router = useRouter();
@@ -212,7 +213,10 @@ export default function Navbar({ session }: { session: Session }) {
             className="flex flex-col w-[260px] bg-gray-950"
           >
             <nav className="grid gap-1 text-lg font-medium">
-              <Logo href="/dashboard" full={false} />
+              {/* <Logo href="/dashboard" full={false} /> */}
+              <Link href="/dashboard">
+                <Image width={149} height={48} src="/logo.png" alt="logo" />
+              </Link>
 
               {/* Render mobile navigation links */}
               {mobileLinks.map((item, i) => {

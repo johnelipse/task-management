@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import Logo from "../global/Logo";
+import Image from "next/image";
 export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [emailErr, setEmailErr] = useState<string | null>(null);
@@ -50,15 +51,18 @@ export default function RegisterForm() {
     }
   }
   return (
-    <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
+    <div className="w-full bg-gray-950 lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid  gap-6 mt-10 md:mt-0">
           <div className="absolute left-1/3 top-14 md:top-5 md:left-5">
-            <Logo />
+            {/* <Logo /> */}
+            <Image width={149} height={48} src="/logo.png" alt="logo" />
           </div>
           <div className="grid gap-2 text-center mt-10 md:mt-0">
-            <h1 className="text-3xl font-bold">Create an account</h1>
-            <p className="text-muted-foreground text-sm">
+            <h1 className="text-3xl font-bold text-slate-300">
+              Create an account
+            </h1>
+            <p className="text-muted-foreground text-sm text-slate-300">
               Create your <span className="text-blue-600">Next Admin</span>{" "}
               Account today to get started
             </p>

@@ -78,6 +78,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Session } from "next-auth";
 
 export function HeroSection() {
   const containerVariants = {

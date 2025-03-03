@@ -1,3 +1,4 @@
+import { getAllNotifications } from "@/actions/notifications";
 import Navbar from "@/components/dashboard/Navbar";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { authOptions } from "@/config/auth";
@@ -14,12 +15,13 @@ export default async function DashboardLayout({
   if (!session) {
     redirect("/login");
   }
+  const allNotifications = await getAllNotifications();
   return (
     <div className="min-h-screen bg-black w-full ">
-      <Sidebar session={session} />
-      <div className="md:ml-[220px] bg-black lg:ml-[280px]">
+      <Sidebar allNotifications={allNotifications} session={session} />
+      <div className="md:ml-[220px] bg-black lg:ml-[260px]">
         <Navbar session={session} />
-        <div className="p-4">{children}</div>
+        <div className="p-2 md:p-4">{children}</div>
       </div>
     </div>
   );

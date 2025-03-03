@@ -615,6 +615,17 @@ const TaskCreationForm = ({
           router.push("/dashboard/tasks");
           router.refresh();
         }
+        const taskData = await res.json();
+        await fetch("/api/notifications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: `New task "${data.taskName}" has been created.`,
+            statusText: "New Task Created",
+          }),
+        });
       } catch (error) {
         console.log(error);
         toast.error("Failed to create the task.");

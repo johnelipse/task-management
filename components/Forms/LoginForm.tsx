@@ -15,6 +15,7 @@ import PasswordInput from "../FormInputs/PasswordInput";
 import SubmitButton from "../FormInputs/SubmitButton";
 import Logo from "../global/Logo";
 import CustomCarousel from "../frontend/custom-carousel";
+import Image from "next/image";
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const {
@@ -58,14 +59,17 @@ export default function LoginForm() {
     }
   }
   return (
-    <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
+    <div className="w-full bg-gray-950 lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 relative ">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[400px] gap-6 mt-10 md:mt-0">
           <div className="absolute left-1/3 top-14 md:top-5 md:left-5">
-            <Logo />
+            {/* <Logo /> */}
+            <Image width={149} height={48} src="/logo.png" alt="logo" />
           </div>
           <div className="grid gap-2  mt-10 md:mt-0">
-            <h1 className="text-3xl font-bold">Login to your Account</h1>
+            <h1 className="text-3xl font-bold text-slate-300">
+              Login to your Account
+            </h1>
             <p className="text-muted-foreground text-sm">
               Welcome Back to <span className="text-blue-600">Next Admin</span>
             </p>

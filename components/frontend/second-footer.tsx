@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Facebook, Linkedin, Twitter } from "lucide-react";
+import Image from "next/image";
 
 export function SecondFooter() {
   return (
@@ -11,7 +12,7 @@ export function SecondFooter() {
           {/* Logo and Description */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2">
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -24,7 +25,8 @@ export function SecondFooter() {
                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                 <path d="m9 12 2 2 4-4" />
               </svg>
-              <span className="text-xl font-semibold text-white">To-DO</span>
+              <span className="text-xl font-semibold text-white">To-DO</span> */}
+              <Image width={149} height={48} src="/logo.png" alt="logo" />
             </div>
             <p className="mt-4 text-sm">
               Bring your team's work together in one shared space.

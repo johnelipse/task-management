@@ -16,7 +16,7 @@ export default async function HomeLayout({
     <div className="bg-white overflow-hidden">
       {/* <PromoBanner /> */}
       {/* <SiteHeader session={session} /> */}
-      <SecondHeader />
+      <SecondHeader session={session} />
       {children}
       {/* <Footer /> */}
       <SecondFooter />

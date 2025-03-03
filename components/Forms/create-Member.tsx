@@ -238,7 +238,7 @@ export default function TeamMemberForm({
                   <li>Avoid watermarks or unnecessary text.</li>
                 </ul>
               </div>
-              <div className="w-[50%]">
+              <div className="w-full md:w-[50%]">
                 <ImageInput
                   title="Member Image"
                   imageUrl={imageUrl}

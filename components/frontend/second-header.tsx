@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { Session } from "next-auth";
 
-export function SecondHeader() {
+export function SecondHeader({ session }: { session: Session | null }) {
   return (
     <header className="fixed top-0 z-50 w-full px-4 py-3">
       <div className="mx-auto max-w-7xl">
@@ -10,7 +12,7 @@ export function SecondHeader() {
           <div className="container flex h-14 items-center justify-between px-4">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -25,7 +27,8 @@ export function SecondHeader() {
                   <path d="m9 12 2 2 4-4" />
                 </svg>
                 <span className="text-lg font-semibold text-white">To-DO</span>
-              </div>
+              </div> */}
+              <Image width={149} height={48} src="/logo.png" alt="logo" />
             </Link>
 
             {/* Navigation */}
@@ -43,15 +46,24 @@ export function SecondHeader() {
 
             {/* Auth Buttons */}
             <div className="flex items-center gap-4">
+              {session?.user ? (
+                ""
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="text-sm display text-gray-400 hover:text-gray-400 hover:bg-transparent"
+                >
+                  Sign In
+                </Button>
+              )}
               <Button
-                variant="ghost"
-                className="text-sm display text-gray-400 hover:text-gray-400 hover:bg-transparent"
+                asChild
+                className="group bg-gradient-to-r rounded-full from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600"
               >
-                Sign In
-              </Button>
-              <Button className="group bg-gradient-to-r rounded-full from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600">
-                Sign Up Free
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <Link href={session?.user ? "/dashboard" : "/register"}>
+                  {session?.user ? "Dashboard" : "Sign Up Free"}
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
             </div>
           </div>
