@@ -1,20 +1,22 @@
-import { getDashboardOverview } from "@/actions/analytics";
-import { getAllSavings } from "@/actions/savings";
+import { getAllDepartments } from "@/actions/departments";
+import { getAllMembers } from "@/actions/members";
 import { getAllTasks } from "@/actions/tasks";
+import { getAllTeams } from "@/actions/teams";
 import DashboardPage from "@/components/dashboard/dashboard-page";
-import DashboardMain from "@/components/dashboard/DashboardMain";
-import OverViewCard from "@/components/OverViewCard";
-import { DashboardWelcome } from "@/components/WelcomeBanner";
-import { getAuthenticatedUser } from "@/config/useAuth";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
-  const analytics = (await getDashboardOverview()) || [];
-  const user = await getAuthenticatedUser();
   const tasks = await getAllTasks();
+  const departments = await getAllDepartments();
+  const teams = (await getAllTeams()) || [];
+  const members = (await getAllMembers()) || [];
   return (
     <main>
-      <DashboardPage tasks={tasks} />
+      <DashboardPage
+        departments={departments}
+        tasks={tasks}
+        teamData={teams}
+        members={members}
+      />
       {/* <DashboardMain /> */}
     </main>
   );
