@@ -2,11 +2,12 @@
 import { ResetPasswordEmail } from "@/components/email-templates/reset-password";
 import { db } from "@/prisma/db";
 import { UserProps } from "@/types/types";
-import { compare, compareSync, hash, hashSync } from "bcrypt-ts";
+import { compareSync, hashSync } from "bcrypt-ts";
 import { revalidatePath } from "next/cache";
 import { PasswordProps } from "@/components/Forms/ChangePasswordForm";
 import { Resend } from "resend";
 import { generateToken } from "@/lib/token";
+import { UpdateProps } from "@/components/dashboard/settings-page";
 // import { generateNumericToken } from "@/lib/token";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -105,6 +106,20 @@ export async function createUser(data: UserProps) {
     };
   }
 }
+
+export async function updateUser(data: UpdateProps, id: string) {
+  try {
+    const updatedUser = await db.user.update({
+      where: {
+        id,
+      },
+      data,
+    });
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function getAllMembers() {
   try {
     const members = await db.user.findMany({
@@ -163,6 +178,7 @@ export async function getUserById(id: string) {
     return user;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
 export async function sendResetLink(email: string) {
@@ -232,10 +248,19 @@ export async function updateUserPassword(id: string, data: PasswordProps) {
   if (existingUser && existingUser.password) {
     // if user exists and password exists
     passwordMatch = compareSync(data.oldPassword, existingUser.password);
+    const passwordSimilar = compareSync(
+      data.newPassword,
+      existingUser.password
+    );
+    if (passwordSimilar) {
+      return { error: "You can not enter the same password", status: 409 };
+    }
   }
+
   if (!passwordMatch) {
     return { error: "Old Password Incorrect", status: 403 };
   }
+
   const hashedPassword = hashSync(data.newPassword, 10);
   try {
     const updatedUser = await db.user.update({
@@ -246,8 +271,8 @@ export async function updateUserPassword(id: string, data: PasswordProps) {
         password: hashedPassword,
       },
     });
-    revalidatePath("/dashboard/clients");
-    return { error: null, status: 200 };
+    revalidatePath("/dashboard");
+    return { error: null, updatedUser, status: 200 };
   } catch (error) {
     console.log(error);
   }
