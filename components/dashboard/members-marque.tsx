@@ -54,7 +54,7 @@ const ReviewCard = ({ member }: { member: Member }) => {
     >
       <div className="flex flex-row items-center gap-2">
         <img
-          className="rounded-full w-8 h-8 object-none"
+          className="rounded-full w-8 h-8 object-cover"
           width="32"
           height="32"
           alt={member.fullName}
