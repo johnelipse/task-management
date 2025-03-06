@@ -6,7 +6,6 @@ import { getAllDepartments } from "@/actions/departments";
 
 export default async function page() {
   const departments = (await getAllDepartments()) || [];
-  // console.log(departments);
   return (
     <div className="p-0">
       <TableHeader

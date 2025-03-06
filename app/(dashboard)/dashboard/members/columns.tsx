@@ -1,11 +1,5 @@
 "use client";
-
-import Image from "next/image";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import DateColumn from "@/components/DataTableColumns/DateColumn";
 import ImageColumn from "@/components/DataTableColumns/ImageColumn";
 import SortableColumn from "@/components/DataTableColumns/SortableColumn";
 import { ColumnDef } from "@tanstack/react-table";
@@ -66,12 +60,6 @@ export const columns: ColumnDef<(Member & { Team: Team }) | any>[] = [
       return <p>{teamName.Team.name}</p>;
     },
   },
-
-  // {
-  //   accessorKey: "createdAt",
-  //   header: "Date Created",
-  //   cell: ({ row }) => <DateColumn row={row} accessorKey="createdAt" />,
-  // },
   {
     id: "actions",
     cell: ({ row }) => {

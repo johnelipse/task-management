@@ -51,9 +51,6 @@ export default function TaskDashboard({
     if (filters.department !== "all") {
       result = result.filter((task) => task.department === filters.department);
     }
-    // if (filters.priority !== "all") {
-    //   result = result.filter((task) => task.priority === filters.priority);
-    // }
 
     if (filters.priority !== "all") {
       // Capitalize the first letter of the filter priority to match database format
@@ -62,10 +59,6 @@ export default function TaskDashboard({
         filters.priority.slice(1).toLowerCase();
       result = result.filter((task) => task.priority === capitalizedPriority);
     }
-
-    // if (filters.status !== "all") {
-    //   result = result.filter((task) => task.status === filters.status);
-    // }
     if (filters.status !== "all") {
       // Capitalize the first letter of the filter priority to match database format
       const capitalizedPriority =

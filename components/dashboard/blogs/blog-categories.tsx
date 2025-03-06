@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { generateSlug } from "@/lib/generateSlug";
-import { createBlogCategory } from "@/actions/blogs";
 import { BlogCategory } from "@prisma/client";
 
 export default function BlogCategoryList({
@@ -35,7 +34,7 @@ export default function BlogCategoryList({
       slug: generateSlug(newCategory),
     };
     try {
-      await createBlogCategory(data);
+      // await createBlogCategory(data);
     } catch (error) {
       console.log(error);
     }

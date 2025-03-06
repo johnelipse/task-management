@@ -23,22 +23,6 @@ import FormSelectInput from "../FormInputs/FormSelectInput";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { updateMember } from "@/actions/members";
-
-// const skills = [
-//   "JavaScript",
-//   "React",
-//   "Node.js",
-//   "Python",
-//   "Java",
-//   "SQL",
-//   "Project Management",
-//   "Communication",
-//   "Leadership",
-//   "Problem Solving",
-//   "Agile",
-//   "DevOps",
-// ];
-
 const employmentTypes = ["Full-time", "Part-time", "Contract"];
 
 export default function TeamMemberForm({
@@ -51,9 +35,6 @@ export default function TeamMemberForm({
   initialData?: (Member & { Team: Team }) | null | any;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [selectedDate, setSelectedDate] = useState<any>(
-  //   initialData.dateJoined || ""
-  // );
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     initialData?.dateJoined ? new Date(initialData.dateJoined) : undefined
   );

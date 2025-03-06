@@ -6,7 +6,6 @@ import { getAllTeams } from "@/actions/teams";
 
 export default async function page() {
   const teams = (await getAllTeams()) || [];
-  // console.log(departments);
   return (
     <div className="">
       <TableHeader

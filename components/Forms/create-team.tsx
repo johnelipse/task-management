@@ -41,12 +41,6 @@ import toast from "react-hot-toast";
 import { Loader } from "lucide-react";
 import { updateTeam } from "@/actions/teams";
 
-// const formSchema = z.object({
-//   name: z.string().min(1, "Team name is required"),
-//   description: z.string().min(1, "Description is required"),
-//   department: z.string().min(1, "Department is required"),
-// });
-
 export function TeamCreationForm({
   departments,
   initialData,

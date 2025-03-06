@@ -18,7 +18,7 @@ import { Blog } from "@prisma/client";
 import { generateSlug } from "@/lib/generateSlug";
 import toast from "react-hot-toast";
 import TextArea from "@/components/FormInputs/TextAreaInput";
-import { updateBlogContent, updateMetaData } from "@/actions/blogs";
+// import { updateBlogContent, updateMetaData } from "@/actions/blogs";
 import { Loader2 } from "lucide-react";
 export type MetaPros = {
   description: string;
@@ -54,7 +54,7 @@ export default function BlogEditForm({
     setLoading(true);
     try {
       data.thumbnail = imageUrl;
-      await updateMetaData(editingId, data);
+      // await updateMetaData(editingId, data);
       setLoading(false);
       toast.success("Updated Successfully!");
       reset();
@@ -68,7 +68,7 @@ export default function BlogEditForm({
   async function handleUpdateContent() {
     setLoading(true);
     try {
-      await updateBlogContent(editingId, content);
+      // await updateBlogContent(editingId, content);
       setLoading(false);
       toast.success("Updated successfully");
     } catch (error) {

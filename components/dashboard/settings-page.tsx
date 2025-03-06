@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Menu, X } from "lucide-react";
+import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -31,22 +31,10 @@ export type PasswordProps = {
   newPassword: string;
 };
 export default function SettingsPage({ userData }: { userData: User | null }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const initialImage = "/placeholder.png";
   const [imageUrl, setImageUrl] = useState(userData?.image || initialImage);
   const [activeSection, setActiveSection] = useState("profile");
   const { data: session, update } = useSession();
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const setSection = (section: string) => {
-    setActiveSection(section);
-    if (window.innerWidth < 768) {
-      setIsSidebarOpen(false);
-    }
-  };
 
   const {
     register,
@@ -120,86 +108,6 @@ export default function SettingsPage({ userData }: { userData: User | null }) {
   return (
     <div className="dark min-h-screen bg-black text-white">
       <div className="flex min-h-screen">
-        {/* Sidebar */}
-        {/* <aside
-          className={`bg-zinc-950 border-r border-zinc-800 w-64 flex-shrink-0 overflow-y-auto transition-all duration-300 ease-in-out ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 fixed md:relative h-full z-20 flex flex-col`}
-        >
-          <div className="py-6 px-4">
-            <div className="flex flex-col gap-1">
-              <div className="text-sm font-medium text-zinc-400 px-2 py-1.5">
-                Settings
-              </div>
-              <Button
-                variant={activeSection === "profile" ? "secondary" : "ghost"}
-                className={`justify-start ${
-                  activeSection === "profile"
-                    ? "bg-zinc-800 text-white"
-                    : "text-zinc-400"
-                }`}
-                onClick={() => setSection("profile")}
-              >
-                <User2 className="mr-2 h-4 w-4" />
-                Profile
-              </Button>
-
-              <Button
-                variant={
-                  activeSection === "customization" ? "secondary" : "ghost"
-                }
-                className={`justify-start ${
-                  activeSection === "customization"
-                    ? "bg-zinc-800 text-white"
-                    : "text-zinc-400"
-                }`}
-                onClick={() => setSection("customization")}
-              >
-                <PanelLeft className="mr-2 h-4 w-4" />
-                Task Customization
-              </Button>
-            </div>
-          </div>
-          <div className="mt-auto p-4 border-t border-zinc-800">
-            <div className="flex items-center gap-3 mb-4">
-              <div>
-                <div className="font-medium text-sm">John Doe</div>
-                <div className="text-xs text-zinc-400">
-                  john.doe@example.com
-                </div>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-950/30"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
-          </div>
-        </aside> */}
-
-        {/* Mobile sidebar toggle */}
-        <button
-          className="fixed bottom-4 left-4 z-30 md:hidden bg-purple-600 text-white p-3 rounded-full shadow-lg"
-          onClick={toggleSidebar}
-        >
-          {isSidebarOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
-
-        {/* Mobile sidebar overlay */}
-        {isSidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/80 z-10 md:hidden"
-            onClick={toggleSidebar}
-            aria-hidden="true"
-          />
-        )}
-
         {/* Main content */}
         <main className="flex-1 overflow-y-auto bg-zinc-900 p-4 md:p-6">
           <div className="max-w-4xl mx-auto">
@@ -225,18 +133,20 @@ export default function SettingsPage({ userData }: { userData: User | null }) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      <div className="flex flex-col md:flex-row gap-6 items-start">
+                      <div className="flex flex-col md:flex-row gap-6  w-full">
                         <div className="flex flex-col items-center gap-2">
-                          <ImageInput
-                            title="Profile Image"
-                            imageUrl={imageUrl}
-                            setImageUrl={setImageUrl}
-                            endpoint="categoryImage"
-                          />
+                          <div className="w-full">
+                            <ImageInput
+                              title="Profile Image"
+                              imageUrl={imageUrl}
+                              setImageUrl={setImageUrl}
+                              endpoint="categoryImage"
+                            />
+                          </div>
                         </div>
                         <div className="">
                           <div className="grid grid-cols-1 md:grid-cols-1 space-y-4 gap-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                               <TextInput
                                 register={register}
                                 errors={errors}

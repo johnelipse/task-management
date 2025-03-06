@@ -1456,34 +1456,6 @@ export default function MembersReport({
           </Table>
         </CardContent>
       </Card>
-
-      {/* <Card className="bg-gray-950 border-gray-800">
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <CardDescription className="text-gray-400">Latest actions from team members</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <Avatar className="h-8 w-8 border border-gray-800">
-                  <AvatarFallback className="bg-gray-800 text-gray-300 text-xs">
-                    {activity.memberInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid gap-1">
-                  <p className="text-sm">
-                    <span className="font-medium">{activity.member}</span>
-                    <span className="text-gray-400"> {activity.action} </span>
-                    <span className="font-medium text-purple-400">"{activity.task}"</span>
-                  </p>
-                  <p className="text-xs text-gray-400">{activity.time}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card> */}
     </div>
   );
 }

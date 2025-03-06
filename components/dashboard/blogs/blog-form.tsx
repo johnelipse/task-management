@@ -1,5 +1,4 @@
 "use client";
-import { createNewBlog } from "@/actions/blogs";
 import FormSelectInput from "@/components/FormInputs/FormSelectInput";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,18 +52,18 @@ export function BlogCreateForm({
       authorTitle: "",
     };
     console.log(data);
-    try {
-      const res = await createNewBlog(data);
-      console.log(res);
-      if (res && res.id) {
-        setLoading(false);
-        router.push(`/dashboard/blogs/update/${res.id}`);
-        toast.success("Blog created successfully");
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    // try {
+    //   // const res = await createNewBlog(data);
+    //   console.log(res);
+    //   if (res && res.id) {
+    //     setLoading(false);
+    //     router.push(`/dashboard/blogs/update/${res.id}`);
+    //     toast.success("Blog created successfully");
+    //   }
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log(error);
+    // }
   };
   return (
     <Dialog>

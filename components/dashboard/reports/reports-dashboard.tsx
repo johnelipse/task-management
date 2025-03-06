@@ -77,29 +77,6 @@ export default function ReportsDashboard({
                   className="w-full bg-gray-950 border-gray-800 pl-9 text-gray-300 placeholder:text-gray-500 focus:border-purple-600"
                 />
               </div>
-              {/* <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 border-gray-800 bg-gray-950 text-gray-300 hover:bg-gray-900 hover:text-white"
-                >
-                  Last 7 days
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 border-gray-800 bg-gray-950 text-gray-300 hover:bg-gray-900 hover:text-white"
-                >
-                  Last 30 days
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 border-gray-800 bg-gray-950 text-gray-300 hover:bg-gray-900 hover:text-white"
-                >
-                  Custom
-                </Button>
-              </div> */}
             </div>
 
             <Tabs
