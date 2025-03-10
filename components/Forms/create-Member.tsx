@@ -63,15 +63,15 @@ export default function TeamMemberForm({
       teamId: initialData?.teamId as string,
     },
   });
-  const [selectedDepartment, setSelectedDepartment] = useState<any>(
-    initialData?.department
-      ? { value: initialData.department, label: initialData.department }
-      : ""
-  );
-  const selectDepartment = departments.map((department) => ({
-    value: department.name,
-    label: department.name,
-  }));
+  // const [selectedDepartment, setSelectedDepartment] = useState<any>(
+  //   initialData?.department
+  //     ? { value: initialData.department, label: initialData.department }
+  //     : ""
+  // );
+  // const selectDepartment = departments.map((department) => ({
+  //   value: department.name,
+  //   label: department.name,
+  // }));
   const [selectedEmploymentType, setSelectedEmploymentType] = useState<any>(
     initialData
       ? { value: initialData.employmentType, label: initialData.employmentType }
@@ -89,46 +89,46 @@ export default function TeamMemberForm({
   );
   const [err, setErr] = useState("");
 
-  useEffect(() => {
-    if (selectedDepartment && selectedDepartment.value) {
-      // Get department ID based on department name
-      const departmentId = departments.find(
-        (d) => d.name === selectedDepartment.value
-      )?.id;
+  // useEffect(() => {
+  //   if (selectedDepartment && selectedDepartment.value) {
+  //     // Get department ID based on department name
+  //     // const departmentId = departments.find(
+  //     //   (d) => d.name === selectedDepartment.value
+  //     // )?.id;
 
-      if (departmentId) {
-        // Filter teams by the selected department ID
-        const teamsInDepartment = teams.filter(
-          (team) => team.departmentId === departmentId
-        );
+  //     // if (departmentId) {
+  //     //   // Filter teams by the selected department ID
+  //     //   // const teamsInDepartment = teams.filter(
+  //     //   //   (team) => team.departmentId === departmentId
+  //     //   // );
 
-        setFilteredTeams(
-          teamsInDepartment.map((team) => ({
-            value: team.id,
-            label: team.name,
-          }))
-        );
+  //     //   // setFilteredTeams(
+  //     //   //   teamsInDepartment.map((team) => ({
+  //     //   //     value: team.id,
+  //     //   //     label: team.name,
+  //     //   //   }))
+  //     //   // );
 
-        // Only reset selected team if the department changes and the current team doesn't belong to that department
-        if (initialData?.teamId) {
-          const teamExists = teamsInDepartment.some(
-            (team) => team.id === initialData.teamId
-          );
-          if (!teamExists) {
-            setSelectedteam("");
-          }
-        }
-      }
-    } else {
-      setFilteredTeams([]);
-    }
-  }, [selectedDepartment, teams, departments, initialData]);
+  //     //   // Only reset selected team if the department changes and the current team doesn't belong to that department
+  //     //   // if (initialData?.teamId) {
+  //     //   //   const teamExists = teamsInDepartment.some(
+  //     //   //     (team) => team.id === initialData.teamId
+  //     //   //   );
+  //     //   //   if (!teamExists) {
+  //     //   //     setSelectedteam("");
+  //     //   //   }
+  //     //   // }
+  //     // }
+  //   } else {
+  //     setFilteredTeams([]);
+  //   }
+  // }, [selectedDepartment, teams, departments, initialData]);
   function handleCancel() {
     router.push("/dashboard/members");
   }
   async function onSubmit(data: MemberProps) {
     data.employeeId = `EMP-${Math.floor(100000 + Math.random() * 900000)}`;
-    data.department = selectedDepartment.label;
+    // data.department = selectedDepartment.label;
     data.teamId = selectedteam.value;
     data.dateJoined = selectedDate?.toDateString() as string;
     data.employmentType = selectedEmploymentType.value;
@@ -244,7 +244,7 @@ export default function TeamMemberForm({
               name="jobTitle"
             />
 
-            <div>
+            {/* <div>
               <FormSelectInput
                 label="All Departments"
                 options={selectDepartment}
@@ -253,7 +253,7 @@ export default function TeamMemberForm({
                 toolTipText="Add Departments"
                 href="/dashboard/departments/new"
               />
-            </div>
+            </div> */}
 
             <div>
               <FormSelectInput

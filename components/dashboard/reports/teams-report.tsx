@@ -77,9 +77,9 @@ export default function TeamsReport({
         : 0;
 
     // Find department
-    const department = departments.find(
-      (dept) => dept.id === team.departmentId
-    );
+    // const department = departments.find(
+    //   (dept) => dept.id === team.departmentId
+    // );
 
     // Create performance data - simulated based on task completion dates
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
@@ -115,7 +115,7 @@ export default function TeamsReport({
     return {
       id: team.id,
       name: team.name,
-      department: department?.name || "Unassigned",
+      // department: department?.name || "Unassigned",
       totalTasks,
       completedTasks,
       overdueTasks,
@@ -146,16 +146,16 @@ export default function TeamsReport({
   const [departmentFilter, setDepartmentFilter] = useState("all");
 
   // Get unique departments from processed data
-  const uniqueDepartments = Array.from(
-    new Set(processedTeamData.map((team) => team.department))
-  );
+  // const uniqueDepartments = Array.from(
+  //   new Set(processedTeamData.map((team) => team.department))
+  // );
 
-  const filteredTeams =
-    departmentFilter === "all"
-      ? processedTeamData
-      : processedTeamData.filter(
-          (team) => team.department === departmentFilter
-        );
+  // const filteredTeams =
+  //   departmentFilter === "all"
+  //     ? processedTeamData
+  //     : processedTeamData.filter(
+  //         (team) => team.department === departmentFilter
+  //       );
 
   const selectedTeamData = processedTeamData.find(
     (team) => team.id === selectedTeam
@@ -172,11 +172,11 @@ export default function TeamsReport({
             </SelectTrigger>
             <SelectContent className="bg-gray-950 border-gray-800 text-slate-300">
               <SelectItem value="all">All Departments</SelectItem>
-              {uniqueDepartments.map((dept) => (
+              {/* {uniqueDepartments.map((dept) => (
                 <SelectItem key={dept} value={dept}>
                   {dept}
                 </SelectItem>
-              ))}
+              ))} */}
             </SelectContent>
           </Select>
         </div>
@@ -189,7 +189,7 @@ export default function TeamsReport({
               Total Teams
             </CardDescription>
             <CardTitle className="text-2xl text-slate-300">
-              {filteredTeams.length}
+              {/* {filteredTeams.length} */}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -206,7 +206,7 @@ export default function TeamsReport({
               Total Tasks
             </CardDescription>
             <CardTitle className="text-2xl text-slate-300">
-              {filteredTeams.reduce((acc, team) => acc + team.totalTasks, 0)}
+              {/* {filteredTeams.reduce((acc, team) => acc + team.totalTasks, 0)} */}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -222,15 +222,15 @@ export default function TeamsReport({
               Completed Tasks
             </CardDescription>
             <CardTitle className="text-2xl text-slate-300">
-              {filteredTeams.reduce(
+              {/* {filteredTeams.reduce(
                 (acc, team) => acc + team.completedTasks,
                 0
-              )}
+              )} */}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-sm text-purple-400 flex items-center">
-              <span>
+              {/* <span>
                 {filteredTeams.reduce((acc, team) => acc + team.totalTasks, 0) >
                 0
                   ? Math.round(
@@ -246,7 +246,7 @@ export default function TeamsReport({
                     )
                   : 0}
                 % completion rate
-              </span>
+              </span> */}
             </div>
           </CardContent>
         </Card>
@@ -257,7 +257,7 @@ export default function TeamsReport({
               Overdue Tasks
             </CardDescription>
             <CardTitle className="text-2xl text-slate-300">
-              {filteredTeams.reduce((acc, team) => acc + team.overdueTasks, 0)}
+              {/* {filteredTeams.reduce((acc, team) => acc + team.overdueTasks, 0)} */}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -364,7 +364,7 @@ export default function TeamsReport({
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <p className="text-sm text-gray-400">Department</p>
-                    <p className="font-medium">{selectedTeamData.department}</p>
+                    {/* <p className="font-medium">{selectedTeamData.department}</p> */}
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm text-gray-400">Members</p>
@@ -542,7 +542,7 @@ export default function TeamsReport({
                 <TableHead>Efficiency</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            {/* <TableBody>
               {filteredTeams
                 .sort((a, b) => b.efficiency - a.efficiency)
                 .map((team) => (
@@ -605,7 +605,7 @@ export default function TeamsReport({
                     </TableCell>
                   </TableRow>
                 ))}
-            </TableBody>
+            </TableBody> */}
           </Table>
         </CardContent>
       </Card>

@@ -96,15 +96,15 @@ const TaskCreationForm = ({
 
   const [filteredTeams, setFilteredTeams] = useState<any[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<any[]>([]);
-  const [selectedDepartment, setSelectedDepartment] = useState<any>(
-    initialData?.department
-      ? { value: initialData.department, label: initialData.department }
-      : ""
-  );
-  const selectDepartment = departments.map((department) => ({
-    value: department.name,
-    label: department.name,
-  }));
+  // const [selectedDepartment, setSelectedDepartment] = useState<any>(
+  //   initialData?.department
+  //     ? { value: initialData.department, label: initialData.department }
+  //     : ""
+  // );
+  // const selectDepartment = departments.map((department) => ({
+  //   value: department.name,
+  //   label: department.name,
+  // }));
   const [selectedteam, setSelectedteam] = useState<any>(
     initialData?.teamId
       ? { value: initialData.teamId, label: initialData.team?.name }
@@ -127,30 +127,30 @@ const TaskCreationForm = ({
   const [loading, setLoading] = useState(false);
 
   // Filter teams based on selected department
-  useEffect(() => {
-    if (selectedDepartment && selectedDepartment.value) {
-      // Get department ID based on department name
-      const departmentId = departments.find(
-        (d) => d.name === selectedDepartment.value
-      )?.id;
+  // useEffect(() => {
+  //   if (selectedDepartment && selectedDepartment.value) {
+  //     // Get department ID based on department name
+  //     const departmentId = departments.find(
+  //       (d) => d.name === selectedDepartment.value
+  //     )?.id;
 
-      if (departmentId) {
-        // Filter teams by the selected department ID
-        const teamsInDepartment = teams.filter(
-          (team) => team.departmentId === departmentId
-        );
+  //     if (departmentId) {
+  //       // Filter teams by the selected department ID
+  //       // const teamsInDepartment = teams.filter(
+  //       //   (team) => team.departmentId === departmentId
+  //       // );
 
-        setFilteredTeams(
-          teamsInDepartment.map((team) => ({
-            value: team.id,
-            label: team.name,
-          }))
-        );
-      }
-    } else {
-      setFilteredTeams([]);
-    }
-  }, [selectedDepartment, teams, departments]);
+  //       // setFilteredTeams(
+  //       //   teamsInDepartment.map((team) => ({
+  //       //     value: team.id,
+  //       //     label: team.name,
+  //       //   }))
+  //       // );
+  //     }
+  //   } else {
+  //     setFilteredTeams([]);
+  //   }
+  // }, [selectedDepartment, teams, departments]);
 
   // Filter members based on selected team
   useEffect(() => {
@@ -184,7 +184,7 @@ const TaskCreationForm = ({
     data.teamId = selectedteam.value;
     data.priority = selectedPriority.label;
     data.status = selectedStatus.label;
-    data.department = selectedDepartment.label;
+    // data.department = selectedDepartment.label;
     data.slug = data.taskName.split(" ").join("-").toLowerCase();
 
     if (initialData) {
@@ -352,7 +352,7 @@ const TaskCreationForm = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            {/* <div>
               <FormSelectInput
                 label="All Departments"
                 options={selectDepartment}
@@ -361,7 +361,7 @@ const TaskCreationForm = ({
                 toolTipText="Add Departments"
                 href="/dashboard/departments/new"
               />
-            </div>
+            </div> */}
 
             <div>
               <FormSelectInput

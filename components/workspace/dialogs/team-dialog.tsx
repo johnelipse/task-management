@@ -1,32 +1,41 @@
 "use client";
+
+import type React from "react";
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
+
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import TextInput from "../FormInputs/TextInput";
-import TextArea from "../FormInputs/TextAreaInput";
-import { TeamProps } from "@/types/types";
-import { Department, Team } from "@prisma/client";
-import { useState } from "react";
-import FormSelectInput from "../FormInputs/FormSelectInput";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { Loader } from "lucide-react";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import type { TeamProps } from "@/types/types";
+import type { Department, Team } from "@prisma/client";
 import { updateTeam } from "@/actions/teams";
+import TextInput from "@/components/FormInputs/TextInput";
+import TextArea from "@/components/FormInputs/TextAreaInput";
 
-export function TeamCreationForm({
-  departments,
+interface TeamDialogProps {
+  workspaceId: string;
+  initialData?: Team;
+  trigger: React.ReactNode;
+}
+
+export function TeamDialog({
+  workspaceId,
   initialData,
-}: {
-  departments: Department[];
-  initialData?: (Team & { Department: Department }) | null | any;
-}) {
+  trigger,
+}: TeamDialogProps) {
+  const [open, setOpen] = useState(false);
   const {
     register,
     reset,
@@ -37,28 +46,18 @@ export function TeamCreationForm({
       name: initialData?.name,
       slug: initialData?.slug,
       description: initialData?.description,
-      // departmentId: initialData?.departmentId as string,
+      workspaceId: initialData?.workspaceId as string,
     },
   });
   const router = useRouter();
-  const [selectedDepartment, setSelectedDepartment] = useState<any>(
-    initialData
-      ? { value: initialData.departmentId, label: initialData.Department.name }
-      : ""
-  );
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
-  const selectDepartment = departments.map((department) => ({
-    value: department.id,
-    label: department.name,
-  }));
-
   function handleCancel() {
-    router.push("/dashboard/teams");
+    setOpen(false);
   }
 
   async function onSubmit(data: TeamProps) {
-    // data.departmentId = selectedDepartment.value;
+    data.workspaceId = workspaceId;
     data.slug = data.name.split(" ").join("-").toLowerCase();
     if (initialData) {
       try {
@@ -66,7 +65,9 @@ export function TeamCreationForm({
         await updateTeam(initialData.slug, data);
         setLoading(false);
         toast.success("Team updated successfully.");
-        router.push("/dashboard/teams");
+        router.refresh();
+        // window.location.reload();
+        setOpen(false);
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -85,8 +86,10 @@ export function TeamCreationForm({
         if (res.status === 201) {
           setLoading(false);
           reset();
-          router.push("/dashboard/teams");
           toast.success("Team created successfully.");
+          router.refresh();
+          //   window.location.reload();
+          setOpen(false);
         } else if (res.status === 409) {
           setLoading(false);
           setErr("Team already exists.");
@@ -101,14 +104,19 @@ export function TeamCreationForm({
   }
 
   return (
-    <Card className="w-full max-w-lg bg-gray-950/35 backdrop-blur-md border-gray-800 text-slate-300 mx-auto">
-      <CardHeader>
-        <CardTitle>Create Team</CardTitle>
-        <CardDescription>Set up a new team and add members</CardDescription>
-      </CardHeader>
-      <div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="sm:max-w-lg bg-gray-950/35 backdrop-blur-md border-gray-800 text-slate-300">
+        <DialogHeader>
+          <DialogTitle>
+            {initialData ? "Update Team" : "Create Team"}
+          </DialogTitle>
+          <DialogDescription>
+            Set up a new team and add members
+          </DialogDescription>
+        </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+          <div className="space-y-4 py-4">
             <TextInput
               register={register}
               errors={errors}
@@ -122,7 +130,7 @@ export function TeamCreationForm({
               name="description"
             />
 
-            <div>
+            {/* <div>
               <FormSelectInput
                 label="All Departments"
                 options={selectDepartment}
@@ -131,9 +139,9 @@ export function TeamCreationForm({
                 toolTipText="Add Departments"
                 href="/dashboard/departments/new"
               />
-            </div>
-          </CardContent>
-          <CardFooter className="justify-between space-x-2">
+            </div> */}
+          </div>
+          <DialogFooter className="justify-between space-x-2">
             <Button
               className="text-black bg-white hover:bg-white"
               onClick={handleCancel}
@@ -153,13 +161,12 @@ export function TeamCreationForm({
               </Button>
             ) : (
               <Button type="submit">
-                {" "}
                 {initialData ? "Update Team" : "Create Team"}
               </Button>
             )}
-          </CardFooter>
+          </DialogFooter>
         </form>
-      </div>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

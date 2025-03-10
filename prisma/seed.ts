@@ -115,8 +115,8 @@ async function cleanDatabase() {
       console.log("Deleted users:", deleteUsers.count);
 
       // Finally delete all roles
-      const deleteRoles = await tx.role.deleteMany({});
-      console.log("Deleted roles:", deleteRoles.count);
+      // const deleteRoles = await tx.role.deleteMany({});
+      // console.log("Deleted roles:", deleteRoles.count);
     });
 
     console.log("Database cleanup completed.");
@@ -132,25 +132,25 @@ async function seedDatabase() {
 
     // Create admin role with all permissions
     console.log("Creating admin role...");
-    const adminRole = await db.role.create({
-      data: {
-        displayName: "Administrator",
-        roleName: "admin",
-        description: "Full system access",
-        permissions: allPermissions,
-      },
-    });
+    // const adminRole = await db.role.create({
+    //   data: {
+    //     displayName: "Administrator",
+    //     roleName: "admin",
+    //     description: "Full system access",
+    //     permissions: allPermissions,
+    //   },
+    // });
 
     // Create user role with limited permissions
     console.log("Creating user role...");
-    const userRole = await db.role.create({
-      data: {
-        displayName: "User",
-        roleName: "user",
-        description: "Basic user access",
-        permissions: userPermissions,
-      },
-    });
+    // const userRole = await db.role.create({
+    //   data: {
+    //     displayName: "User",
+    //     roleName: "user",
+    //     description: "Basic user access",
+    //     permissions: userPermissions,
+    //   },
+    // });
 
     // Create admin user
     console.log("Creating admin user...");

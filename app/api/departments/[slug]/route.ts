@@ -11,9 +11,6 @@ export async function GET(
       where: {
         slug,
       },
-      include: {
-        teams: true,
-      },
     });
     return NextResponse.json(
       {

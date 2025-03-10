@@ -1,39 +1,41 @@
+import { authOptions } from "@/config/auth";
 import { db } from "@/prisma/db";
-import { DepartmentProps } from "@/types/types";
-
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const data: DepartmentProps = await req.json();
+  const data = await req.json();
   try {
-    const { slug } = data;
-    const existingDepartment = await db.department.findUnique({
+    const { name } = data;
+    const existingWorkspace = await db.workspace.findUnique({
       where: {
-        slug,
+        name,
       },
     });
-    if (existingDepartment) {
+    if (existingWorkspace) {
       return NextResponse.json(
         {
           data: null,
-          error: "Department already exists",
+          error: "Workspace already exists.",
         },
         { status: 409 }
       );
     }
-    const newDepartment = await db.department.create({
+    const newWorkspace = await db.workspace.create({
       data,
     });
     return NextResponse.json(
-      { message: "Created Department", data: newDepartment },
+      {
+        data: newWorkspace,
+        message: "Created",
+      },
       { status: 201 }
     );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Failed to create department.",
-        error: "Something went wrong.",
+        error: "Something went wrong",
       },
       { status: 500 }
     );
@@ -41,16 +43,18 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  const id = session?.user.id;
   try {
-    const departments = await db.department.findMany({
-      orderBy: {
-        createdAt: "desc",
+    const workspaces = await db.workspace.findMany({
+      where: {
+        ownerId: id,
       },
     });
     return NextResponse.json(
       {
-        message: "created",
-        data: departments,
+        data: workspaces,
+        message: "Fetched",
       },
       { status: 200 }
     );
@@ -58,8 +62,7 @@ export async function GET() {
     console.log(error);
     return NextResponse.json(
       {
-        message: "Failed",
-        error: "something went wrong",
+        error: "Something went wrong",
       },
       { status: 500 }
     );

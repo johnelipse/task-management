@@ -12,7 +12,7 @@ export async function GET(
         slug,
       },
       include: {
-        Department: true,
+        Workspace: true,
       },
     });
     return NextResponse.json(

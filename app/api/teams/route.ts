@@ -43,7 +43,7 @@ export async function GET() {
         createdAt: "desc",
       },
       include: {
-        Department: true,
+        Workspace: true,
       },
     });
     return NextResponse.json(

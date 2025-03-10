@@ -1,13 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import FormHeader from "./FormHeader";
 import { useRouter } from "next/navigation";
@@ -21,13 +14,12 @@ import {
   Options,
   SelectValue,
 } from "react-tailwindcss-select/dist/components/type";
-import { Role, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import FormFooter from "./FormFooter";
 import { createUser } from "@/actions/users";
 import { Lock } from "lucide-react";
 import PasswordInput from "../FormInputs/PasswordInput";
 import TextInput from "../FormInputs/TextInput";
-import FormSelectInput from "../FormInputs/FormSelectInput";
 import ImageInput from "../FormInputs/ImageInput";
 type UserFormProps = {
   editingId?: string | undefined;
@@ -37,8 +29,8 @@ type UserFormProps = {
 export default function UserForm({
   editingId,
   initialData,
-  // roles,
-}: UserFormProps) {
+}: // roles,
+UserFormProps) {
   const {
     register,
     handleSubmit,

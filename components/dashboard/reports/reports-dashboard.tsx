@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Download, RefreshCw, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import DepartmentsReport from "./department-reports";
+// import DepartmentsReport from "./department-reports";
 import TeamsReport from "./teams-report";
 import TasksReport from "./task-reports";
 import MembersReport from "./members-reports";
@@ -113,11 +113,11 @@ export default function ReportsDashboard({
               </TabsList>
 
               <TabsContent value="departments" className="space-y-4">
-                <DepartmentsReport
+                {/* <DepartmentsReport
                   departments={departments}
                   tasks={tasks}
                   teamData={teamData}
-                />
+                /> */}
               </TabsContent>
 
               <TabsContent value="teams" className="space-y-4">

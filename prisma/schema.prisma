@@ -43,42 +43,42 @@ enum UserRole {
   SERVICE_PROVIDER
 }
 
-model Role {
-  id          String   @id @default(cuid())
-  displayName String // Human-readable name (e.g., "Store Manager")
-  roleName    String   @unique // System name (e.g., "store_manager")
-  description String?
-  permissions String[] // Array of permission strings
-  // users       User[]   @relation("UserRoles")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+// model Role {
+//   id          String   @id @default(cuid())
+//   displayName String // Human-readable name (e.g., "Store Manager")
+//   roleName    String   @unique // System name (e.g., "store_manager")
+//   description String?
+//   permissions String[] // Array of permission strings
+//   // users       User[]   @relation("UserRoles")
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
 
-  @@index([roleName])
-}
+//   @@index([roleName])
+// }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String
   firstName     String
   lastName      String
-  phone         String    @unique
-  email         String    @unique
+  phone         String      @unique
+  email         String      @unique
   emailVerified DateTime?
   image         String?
   jobTitle      String?
-  // roles         Role[]    @relation("UserRoles") // Updated to support multiple roles
-  role          UserRole  @default(USER)
+  role          UserRole    @default(USER)
   password      String?
-  status        Boolean   @default(true)
+  status        Boolean     @default(true)
   accounts      Account[]
   sessions      Session[]
   savings       Saving[]
   blogs         Blog[]
-  isVerfied     Boolean   @default(false)
+  isVerfied     Boolean     @default(false)
   token         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   // roleId        String?
+  Workspace     Workspace[]
 }
 
 model Category {
@@ -140,7 +140,6 @@ model Department {
   slug             String   @unique
   code             String
   description      String
-  teams            Team[]
   location         String
   budget           Int
   employeeCapacity Int
@@ -158,8 +157,8 @@ model Team {
   tasks        Task[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  Department   Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
-  departmentId String?
+  Workspace    Workspace?  @relation(fields: [workspaceId], references: [id],onDelete: Cascade)
+  workspaceId  String?
 }
 
 model Member {
@@ -178,36 +177,50 @@ model Member {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  Team   Team?   @relation(fields: [teamId], references: [id],onDelete: Cascade)
+  Team   Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId String?
 }
 
-
-
 model Task {
-  id              String    @id @default(cuid())
+  id              String   @id @default(cuid())
   taskName        String
-  slug            String  @unique
+  slug            String   @unique
   taskDescription String?
   priority        String
-  department     String
-  memberIds      String[]
-  startDate         String
+  department      String
+  memberIds       String[]
+  startDate       String
   endDate         String
   status          String
-  team            Team      @relation(fields: [teamId], references: [id])
+  team            Team     @relation(fields: [teamId], references: [id])
   teamId          String
-   createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
- 
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
-
 model Notification {
-  id          String   @id @default(cuid())
-  message     String
-  statusText  String
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  message    String
+  statusText String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum Visibility {
+  private
+  public
+}
+
+model Workspace {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  ownerId     String
+  themeColor  String
+  visibility  Visibility @default(private)
+  owner       User       @relation(fields: [ownerId], references: [id])
+  teams       Team[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
