@@ -16,9 +16,14 @@ import { useWorkspace } from "@/context/workspace-context";
 import UpdateForm from "./update-workspace";
 import { TeamDialog } from "./dialogs/team-dialog";
 import { Team } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 export default function WorkspaceBoards({ teams }: { teams: Team[] }) {
   const { selectedWorkspace } = useWorkspace();
+  const router = useRouter();
+  function returnDetailedPage(slug: string) {
+    router.push(`/team/${slug}`);
+  }
 
   // If no workspace is selected, show a placeholder or loading state
   if (!selectedWorkspace) {
@@ -141,8 +146,9 @@ export default function WorkspaceBoards({ teams }: { teams: Team[] }) {
             {workspaceTeams.map((team) => {
               return (
                 <div
+                  onClick={() => returnDetailedPage(team.slug)}
                   key={team.id}
-                  className="bg-green-800 rounded-lg p-4 h-32 flex flex-col justify-between relative group"
+                  className="bg-green-800 rounded-lg cursor-pointer p-4 h-32 flex flex-col justify-between relative group"
                 >
                   <h3 className="text-white font-medium">{team.name}</h3>
                   <div className="absolute bottom-3 left-4">
