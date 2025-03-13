@@ -37,7 +37,7 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
           </AccordionTrigger>
           <AccordionContent>
             <div className="py-2">
-              <p className="text-sm text-slate-300">{task.taskDescription}</p>
+              {/* <p className="text-sm text-slate-300">{task.taskDescription}</p> */}
               <div className="mt-2">
                 <span className="text-xs text-slate-400">Status: </span>
                 <Badge

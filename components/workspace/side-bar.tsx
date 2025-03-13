@@ -159,8 +159,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useWorkspace } from "@/context/workspace-context";
+import { Session } from "next-auth";
+import { UserDropdownMenu } from "../UserDropdownMenu";
 
-export default function Sidebar() {
+export default function Sidebar({ session }: { session: Session }) {
   const { workspaces, selectedWorkspace, setSelectedWorkspace } =
     useWorkspace();
 
@@ -270,7 +272,7 @@ export default function Sidebar() {
         </nav>
       </div>
       <div className="p-4 border-t border-zinc-800">
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <Image
             src="/placeholder.svg?height=40&width=40"
             width={40}
@@ -282,7 +284,15 @@ export default function Sidebar() {
             <p className="text-sm font-medium">Alex Morgan</p>
             <p className="text-xs text-zinc-400">Product Designer</p>
           </div>
-        </div>
+        </div> */}
+        <UserDropdownMenu
+          username={session?.user?.name ?? ""}
+          email={session?.user?.email ?? ""}
+          avatarUrl={
+            session?.user?.image ??
+            "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20(54)-NX3G1KANQ2p4Gupgnvn94OQKsGYzyU.png"
+          }
+        />
       </div>
     </div>
   );

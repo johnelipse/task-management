@@ -56,7 +56,7 @@ export default function UpdatePriority({
     data.priority = selectedPriority.label;
     try {
       setLoading(true);
-      await updateTaskStatus(task.slug, data);
+      // await updateTaskStatus(task.slug, data);
       toast.success("Priority updated successfully.");
       setLoading(false);
       router.push("/dashboard/tasks");

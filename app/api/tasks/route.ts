@@ -1,29 +1,52 @@
-import { FormData } from "@/components/Forms/create-task";
 import { db } from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const data: FormData = await req.json();
+// export async function POST(req: NextRequest) {
+//   const data: FormData = await req.json();
+//   try {
+//     const newTask = await db.task.create({
+//       data,
+//     });
+//     return NextResponse.json(
+//       {
+//         message: "Created",
+//         data: newTask,
+//       },
+//       { status: 201 }
+//     );
+//   } catch (error) {
+//     console.log(error);
+//     return NextResponse.json(
+//       {
+//         message: "Failed to create",
+//         error: "Something went wrong",
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+export async function POST(request: NextRequest) {
   try {
-    const newTask = await db.task.create({
-      data,
-    });
-    return NextResponse.json(
-      {
-        message: "Created",
-        data: newTask,
+    const data = await request.json();
+    const task = await db.task.create({
+      data: {
+        taskName: data.taskName,
+        priority: data.priority,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        status: data.status,
+        teamId: data.teamId,
       },
+    });
+
+    return NextResponse.json(
+      { message: "Created", data: task },
       { status: 201 }
     );
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      {
-        message: "Failed to create",
-        error: "Something went wrong",
-      },
-      { status: 500 }
-    );
+    console.error("Error creating task:", error);
+    return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }
 

@@ -598,9 +598,9 @@ export default function TasksReport({
   // Calculate task status counts
   const statusCounts = {
     completed: tasks.filter((task) => task.status === "Completed").length,
-    inProgress: tasks.filter((task) => task.status === "In Progress").length,
-    notStarted: tasks.filter((task) => task.status === "Not Started").length,
-    overdue: tasks.filter((task) => task.status === "Overdue").length,
+    // inProgress: tasks.filter((task) => task.status === "In Progress").length,
+    // notStarted: tasks.filter((task) => task.status === "Not Started").length,
+    // overdue: tasks.filter((task) => task.status === "Overdue").length,
   };
 
   // Calculate priority counts
@@ -613,9 +613,9 @@ export default function TasksReport({
   // Prepare data for pie charts
   const statusPieData = [
     { name: "Completed", value: statusCounts.completed, color: "#10b981" },
-    { name: "In Progress", value: statusCounts.inProgress, color: "#3b82f6" },
-    { name: "Not Started", value: statusCounts.notStarted, color: "#8b5cf6" },
-    { name: "Overdue", value: statusCounts.overdue, color: "#f97316" },
+    // { name: "In Progress", value: statusCounts.inProgress, color: "#3b82f6" },
+    // { name: "Not Started", value: statusCounts.notStarted, color: "#8b5cf6" },
+    // { name: "Overdue", value: statusCounts.overdue, color: "#f97316" },
   ];
 
   const priorityPieData = [
@@ -652,8 +652,8 @@ export default function TasksReport({
     }
 
     if (task.status === "Completed") acc[formattedDate].completed++;
-    else if (task.status === "In Progress") acc[formattedDate].inProgress++;
-    else if (task.status === "Not Started") acc[formattedDate].notStarted++;
+    // else if (task.status === "In Progress") acc[formattedDate].inProgress++;
+    // else if (task.status === "Not Started") acc[formattedDate].notStarted++;
 
     return acc;
   }, {});
@@ -667,11 +667,11 @@ export default function TasksReport({
 
   // Apply filters
   const filteredTasks = tasks.filter((task) => {
-    return (
-      (statusFilter === "all" || task.status === statusFilter) &&
-      (priorityFilter === "all" || task.priority === priorityFilter) &&
-      (departmentFilter === "all" || task.department === departmentFilter)
-    );
+    // return (
+    //   (statusFilter === "all" || task.status === statusFilter) &&
+    //   (priorityFilter === "all" || task.priority === priorityFilter) &&
+    //   (departmentFilter === "all" || task.department === departmentFilter)
+    // );
   });
 
   // Get team name by teamId
@@ -772,9 +772,9 @@ export default function TasksReport({
             <CardDescription className="text-gray-400">
               In Progress
             </CardDescription>
-            <CardTitle className="text-2xl text-slate-300">
+            {/* <CardTitle className="text-2xl text-slate-300">
               {statusCounts.inProgress}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
           <CardContent>
             <div className="text-sm text-blue-400 flex items-center">
@@ -787,9 +787,9 @@ export default function TasksReport({
         <Card className="bg-gray-950 border-gray-800">
           <CardHeader className="pb-2">
             <CardDescription className="text-gray-400">Overdue</CardDescription>
-            <CardTitle className="text-2xl text-slate-300">
+            {/* <CardTitle className="text-2xl text-slate-300">
               {statusCounts.overdue}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
           <CardContent>
             <div className="text-sm text-orange-400 flex items-center">
@@ -997,8 +997,8 @@ export default function TasksReport({
                   // Calculate completion rate based on status
                   let completionRate = 0;
                   if (task.status === "Completed") completionRate = 100;
-                  else if (task.status === "In Progress") completionRate = 50;
-                  else if (task.status === "Overdue") completionRate = 75;
+                  // else if (task.status === "In Progress") completionRate = 50;
+                  // else if (task.status === "Overdue") completionRate = 75;
 
                   return (
                     <TableRow
@@ -1008,9 +1008,9 @@ export default function TasksReport({
                       <TableCell className="font-medium">
                         {task.taskName}
                       </TableCell>
-                      <TableCell>{task.department}</TableCell>
+                      {/* <TableCell>{task.department}</TableCell>
                       <TableCell>{getTeamName(task.teamId)}</TableCell>
-                      <TableCell>{getMemberNames(task.memberIds)}</TableCell>
+                      <TableCell>{getMemberNames(task.memberIds)}</TableCell> */}
                       <TableCell>
                         <Badge
                           className={`
@@ -1028,7 +1028,7 @@ export default function TasksReport({
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge
+                        {/* <Badge
                           className={`
                         ${
                           task.status === "Completed"
@@ -1042,16 +1042,16 @@ export default function TasksReport({
                       `}
                         >
                           {task.status}
-                        </Badge>
+                        </Badge> */}
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         <div className="flex items-center">
                           {task.status === "Overdue" && (
                             <Clock className="h-4 w-4 mr-1 text-orange-400" />
                           )}
                           {task.endDate}
                         </div>
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>
                         <div className="w-full">
                           <Progress

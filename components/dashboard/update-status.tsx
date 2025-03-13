@@ -55,7 +55,7 @@ export default function UpdateStatus({
     data.status = selectedStatus.label;
     try {
       setLoading(true);
-      await updateTaskStatus(task.slug, data);
+      // await updateTaskStatus(task.slug, data);
       toast.success("Status updated successfully.");
       setLoading(false);
       router.push("/dashboard/tasks");

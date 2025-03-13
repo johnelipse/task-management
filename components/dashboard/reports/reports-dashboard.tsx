@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Download, RefreshCw, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 // import DepartmentsReport from "./department-reports";
-import TeamsReport from "./teams-report";
+// import TeamsReport from "./teams-report";
 import TasksReport from "./task-reports";
 import MembersReport from "./members-reports";
 import { Department, Member, Task, Team } from "@prisma/client";
@@ -121,12 +121,12 @@ export default function ReportsDashboard({
               </TabsContent>
 
               <TabsContent value="teams" className="space-y-4">
-                <TeamsReport
+                {/* <TeamsReport
                   departments={departments}
                   tasks={tasks}
                   teamData={teamData}
                   members={members}
-                />
+                /> */}
               </TabsContent>
 
               <TabsContent value="tasks" className="space-y-4">

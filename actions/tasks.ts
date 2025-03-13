@@ -15,8 +15,8 @@ export async function getAllTasks() {
     return [];
   }
 }
-export async function getSingleTask(slug: string) {
-  const api = `${baseUrl}/api/tasks/${slug}`;
+export async function getSingleTask(id: string) {
+  const api = `${baseUrl}/api/tasks/${id}`;
   try {
     const res = await fetch(api, { cache: "no-store" });
     const tasks = await res.json();
@@ -25,8 +25,8 @@ export async function getSingleTask(slug: string) {
     return null;
   }
 }
-export async function updateTaskStatus(slug: string, data: SelectProps) {
-  const api = `${baseUrl}/api/tasks/${slug}`;
+export async function updateTaskStatus(id: string, data: SelectProps) {
+  const api = `${baseUrl}/api/tasks/${id}`;
   try {
     const res = await fetch(api, {
       method: "PATCH",
@@ -41,8 +41,8 @@ export async function updateTaskStatus(slug: string, data: SelectProps) {
     return null;
   }
 }
-export async function updateTask(slug: string, data: FormData) {
-  const api = `${baseUrl}/api/tasks/${slug}`;
+export async function updateTask(id: string, data: FormData) {
+  const api = `${baseUrl}/api/tasks/${id}`;
   try {
     const res = await fetch(api, {
       method: "PATCH",
@@ -58,8 +58,8 @@ export async function updateTask(slug: string, data: FormData) {
   }
 }
 
-export async function deleteTask(slug: string) {
-  const api = `${baseUrl}/api/tasks/${slug}`;
+export async function deleteTask(id: string) {
+  const api = `${baseUrl}/api/tasks/${id}`;
   try {
     await fetch(api, {
       method: "DELETE",

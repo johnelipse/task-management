@@ -861,71 +861,71 @@ export default function MembersReport({
   const [performanceFilter, setPerformanceFilter] = useState("all");
 
   // Calculate task assignments and completion for each member
-  const memberTaskStats = members.map((member) => {
-    const memberTasks = tasks.filter((task) =>
-      task.memberIds.includes(member.id)
-    );
-    const completedTasks = memberTasks.filter(
-      (task) => task.status === "Completed"
-    );
-    const overdueTasks = memberTasks.filter(
-      (task) => task.status === "Overdue"
-    );
+  // const memberTaskStats = members.map((member) => {
+  //   const memberTasks = tasks.filter((task) =>
+  //     // task.memberIds.includes(member.id)
+  //   );
+  // const completedTasks = memberTasks.filter(
+  //   (task) => task.status === "Completed"
+  // );
+  // const overdueTasks = memberTasks.filter(
+  //   // (task) => task.status === "Overdue"
+  // );
 
-    // Calculate completion rate and performance
-    const completionRate =
-      memberTasks.length > 0
-        ? Math.round((completedTasks.length / memberTasks.length) * 100)
-        : 0;
+  // Calculate completion rate and performance
+  // const completionRate =
+  //   memberTasks.length > 0
+  //     ? Math.round((completedTasks.length / memberTasks.length) * 100)
+  //     : 0;
 
-    // Performance is a weighted score based on completion rate and other factors
-    // For simplicity, we'll use completion rate with a small random factor
-    const performance = Math.min(
-      100,
-      Math.round(completionRate * (1 + Math.random() * 0.2))
-    );
+  // Performance is a weighted score based on completion rate and other factors
+  // For simplicity, we'll use completion rate with a small random factor
+  // const performance = Math.min(
+  //   100,
+  //   Math.round(completionRate * (1 + Math.random() * 0.2))
+  // );
 
-    return {
-      ...member,
-      assignedTasks: memberTasks.length,
-      completedTasks: completedTasks.length,
-      overdueTasks: overdueTasks.length,
-      completionRate,
-      performance,
-    };
-  });
+  //   return {
+  //     ...member,
+  //     assignedTasks: memberTasks.length,
+  //     completedTasks: completedTasks.length,
+  //     // overdueTasks: overdueTasks.length,
+  //     completionRate,
+  //     performance,
+  //   };
+  // });
 
   // Calculate member statistics
-  const memberStats = {
-    total: members.length,
-    totalAssigned: memberTaskStats.reduce(
-      (acc, member) => acc + member.assignedTasks,
-      0
-    ),
-    totalCompleted: memberTaskStats.reduce(
-      (acc, member) => acc + member.completedTasks,
-      0
-    ),
-    totalOverdue: memberTaskStats.reduce(
-      (acc, member) => acc + member.overdueTasks,
-      0
-    ),
-  };
+  // const memberStats = {
+  //   total: members.length,
+  //   totalAssigned: memberTaskStats.reduce(
+  //     (acc, member) => acc + member.assignedTasks,
+  //     0
+  //   ),
+  //   totalCompleted: memberTaskStats.reduce(
+  //     (acc, member) => acc + member.completedTasks,
+  //     0
+  //   ),
+  //   totalOverdue: memberTaskStats.reduce(
+  //     (acc, member) => acc + member.overdueTasks,
+  //     0
+  //   ),
+  // };
 
   // Prepare data for charts
-  const completionRateData = memberTaskStats
-    .filter((member) => member.assignedTasks > 0)
-    .map((member) => ({
-      name: member.fullName.split(" ")[0],
-      completionRate: member.completionRate,
-    }));
+  // const completionRateData = memberTaskStats
+  //   .filter((member) => member.assignedTasks > 0)
+  //   .map((member) => ({
+  //     name: member.fullName.split(" ")[0],
+  //     completionRate: member.completionRate,
+  //   }));
 
-  const performanceData = memberTaskStats
-    .filter((member) => member.assignedTasks > 0)
-    .map((member) => ({
-      name: member.fullName.split(" ")[0],
-      performance: member.performance,
-    }));
+  // const performanceData = memberTaskStats
+  //   .filter((member) => member.assignedTasks > 0)
+  //   .map((member) => ({
+  //     name: member.fullName.split(" ")[0],
+  //     performance: member.performance,
+  //   }));
 
   // Prepare data for department distribution
   const departmentCounts = departments
@@ -951,75 +951,75 @@ export default function MembersReport({
   const uniqueRoles = [...new Set(members.map((m) => m.jobTitle))];
 
   // Apply filters
-  const filteredMembers = memberTaskStats.filter((member) => {
-    return (
-      (roleFilter === "all" || member.jobTitle === roleFilter) &&
-      (departmentFilter === "all" || member.department === departmentFilter) &&
-      (performanceFilter === "all" ||
-        (performanceFilter === "high" && member.performance >= 90) ||
-        (performanceFilter === "medium" &&
-          member.performance >= 80 &&
-          member.performance < 90) ||
-        (performanceFilter === "low" && member.performance < 80))
-    );
-  });
+  // const filteredMembers = memberTaskStats.filter((member) => {
+  //   return (
+  //     (roleFilter === "all" || member.jobTitle === roleFilter) &&
+  //     (departmentFilter === "all" || member.department === departmentFilter) &&
+  //     (performanceFilter === "all" ||
+  //       (performanceFilter === "high" && member.performance >= 90) ||
+  //       (performanceFilter === "medium" &&
+  //         member.performance >= 80 &&
+  //         member.performance < 90) ||
+  //       (performanceFilter === "low" && member.performance < 80))
+  //   );
+  // });
 
   // Generate recent activity based on tasks
-  const recentActivity = tasks
-    .filter((task) => task.status !== "Not Started")
-    .map((task) => {
-      const assignedMembers = members.filter((m) =>
-        task.memberIds.includes(m.id)
-      );
-      if (assignedMembers.length === 0) return null;
+  // const recentActivity = tasks
+  //   .filter((task) => task.status !== "Not Started")
+  //   .map((task) => {
+  //     const assignedMembers = members.filter((m) =>
+  //       task.memberIds.includes(m.id)
+  //     );
+  //     if (assignedMembers.length === 0) return null;
 
-      const member = assignedMembers[0];
-      let action = "Started task";
-      let timeAgo = "recently";
+  //     const member = assignedMembers[0];
+  //     let action = "Started task";
+  //     let timeAgo = "recently";
 
-      if (task.status === "Completed") {
-        action = "Completed task";
-        // Convert endDate to relative time
-        const endDate = new Date(task.endDate);
-        const now = new Date();
-        const diffDays = Math.round(
-          (now.getTime() - endDate.getTime()) / (1000 * 60 * 60 * 24)
-        );
+  //     if (task.status === "Completed") {
+  //       action = "Completed task";
+  //       // Convert endDate to relative time
+  //       const endDate = new Date(task.endDate);
+  //       const now = new Date();
+  //       const diffDays = Math.round(
+  //         (now.getTime() - endDate.getTime()) / (1000 * 60 * 60 * 24)
+  //       );
 
-        if (diffDays <= 0) timeAgo = "today";
-        else if (diffDays === 1) timeAgo = "1 day ago";
-        else if (diffDays < 7) timeAgo = `${diffDays} days ago`;
-        else timeAgo = "over a week ago";
-      } else if (task.status === "In Progress") {
-        // Convert startDate to relative time
-        const startDate = new Date(task.startDate);
-        const now = new Date();
-        const diffDays = Math.round(
-          (now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-        );
+  //       if (diffDays <= 0) timeAgo = "today";
+  //       else if (diffDays === 1) timeAgo = "1 day ago";
+  //       else if (diffDays < 7) timeAgo = `${diffDays} days ago`;
+  //       else timeAgo = "over a week ago";
+  //     } else if (task.status === "In Progress") {
+  //       // Convert startDate to relative time
+  //       const startDate = new Date(task.startDate);
+  //       const now = new Date();
+  //       const diffDays = Math.round(
+  //         (now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+  //       );
 
-        if (diffDays <= 0) timeAgo = "today";
-        else if (diffDays === 1) timeAgo = "1 day ago";
-        else if (diffDays < 7) timeAgo = `${diffDays} days ago`;
-        else timeAgo = "over a week ago";
-      } else if (task.status === "Overdue") {
-        action = "Working on";
-        timeAgo = "overdue task";
-      }
+  //       if (diffDays <= 0) timeAgo = "today";
+  //       else if (diffDays === 1) timeAgo = "1 day ago";
+  //       else if (diffDays < 7) timeAgo = `${diffDays} days ago`;
+  //       else timeAgo = "over a week ago";
+  //     } else if (task.status === "Overdue") {
+  //       action = "Working on";
+  //       timeAgo = "overdue task";
+  //     }
 
-      return {
-        member: member.fullName,
-        memberInitials: member.fullName
-          .split(" ")
-          .map((n) => n[0])
-          .join(""),
-        action,
-        task: task.taskName,
-        time: timeAgo,
-      };
-    })
-    .filter(Boolean)
-    .slice(0, 8);
+  //     return {
+  //       member: member.fullName,
+  //       memberInitials: member.fullName
+  //         .split(" ")
+  //         .map((n) => n[0])
+  //         .join(""),
+  //       action,
+  //       task: task.taskName,
+  //       time: timeAgo,
+  //     };
+  //   })
+  //   .filter(Boolean)
+  //   .slice(0, 8);
 
   // Get team name by member
   const getTeamName = (member: Member) => {
@@ -1081,9 +1081,9 @@ export default function MembersReport({
             <CardDescription className="text-gray-400">
               Total Members
             </CardDescription>
-            <CardTitle className="text-2xl text-slate-200">
+            {/* <CardTitle className="text-2xl text-slate-200">
               {memberStats.total}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
           <CardContent>
             <div className="text-sm text-blue-400 flex items-center">
@@ -1098,11 +1098,11 @@ export default function MembersReport({
             <CardDescription className="text-gray-400">
               Assigned Tasks
             </CardDescription>
-            <CardTitle className="text-2xl text-slate-200">
+            {/* <CardTitle className="text-2xl text-slate-200">
               {memberStats.totalAssigned}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
-          <CardContent>
+          {/* <CardContent>
             <div className="text-sm text-purple-400 flex items-center">
               <span>
                 Avg{" "}
@@ -1110,7 +1110,7 @@ export default function MembersReport({
                 per member
               </span>
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
 
         <Card className="bg-gray-950 border-gray-800">
@@ -1118,11 +1118,11 @@ export default function MembersReport({
             <CardDescription className="text-gray-400">
               Completed Tasks
             </CardDescription>
-            <CardTitle className="text-2xl text-slate-200">
+            {/* <CardTitle className="text-2xl text-slate-200">
               {memberStats.totalCompleted}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
-          <CardContent>
+          {/* <CardContent>
             <div className="text-sm text-green-400 flex items-center">
               <CheckCircle className="h-4 w-4 mr-1" />
               <span>
@@ -1135,7 +1135,7 @@ export default function MembersReport({
                 % completion rate
               </span>
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
 
         <Card className="bg-gray-950 border-gray-800">
@@ -1143,9 +1143,9 @@ export default function MembersReport({
             <CardDescription className="text-gray-400">
               Overdue Tasks
             </CardDescription>
-            <CardTitle className="text-2xl text-slate-200">
+            {/* <CardTitle className="text-2xl text-slate-200">
               {memberStats.totalOverdue}
-            </CardTitle>
+            </CardTitle> */}
           </CardHeader>
           <CardContent>
             <div className="text-sm text-orange-400 flex items-center">
@@ -1164,7 +1164,7 @@ export default function MembersReport({
               Task completion percentage by member
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          {/* <CardContent>
             <div className="h-[250px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1210,7 +1210,7 @@ export default function MembersReport({
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
 
         <Card className="bg-gray-950 border-gray-800">
@@ -1220,7 +1220,7 @@ export default function MembersReport({
               Overall performance score by member
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          {/* <CardContent>
             <div className="h-[250px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1266,7 +1266,7 @@ export default function MembersReport({
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
 
         <Card className="bg-gray-950 border-gray-800">
@@ -1323,7 +1323,7 @@ export default function MembersReport({
             Members with highest performance ratings
           </CardDescription>
         </CardHeader>
-        <CardContent className="text-slate-300">
+        {/* <CardContent className="text-slate-300">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {memberTaskStats
               .filter((member) => member.assignedTasks > 0)
@@ -1377,15 +1377,15 @@ export default function MembersReport({
                 </Card>
               ))}
           </div>
-        </CardContent>
+        </CardContent> */}
       </Card>
 
       <Card className="bg-gray-950 border-gray-800">
         <CardHeader>
           <CardTitle>Members Overview</CardTitle>
-          <CardDescription className="text-gray-400">
+          {/* <CardDescription className="text-gray-400">
             Showing {filteredMembers.length} of {members.length} members
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
         <CardContent>
           <Table>
@@ -1401,7 +1401,7 @@ export default function MembersReport({
                 <TableHead className="text-gray-300">Performance</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            {/* <TableBody>
               {filteredMembers.map((member) => (
                 <TableRow
                   key={member.id}
@@ -1452,7 +1452,7 @@ export default function MembersReport({
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+            </TableBody> */}
           </Table>
         </CardContent>
       </Card>

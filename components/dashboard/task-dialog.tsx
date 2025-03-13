@@ -118,17 +118,17 @@ export function TaskDialog({
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
-  useEffect(() => {
-    if (myTask.memberIds && myTask.memberIds.length > 0 && members.length > 0) {
-      // Filter members that match the memberIds in the task
-      const filteredMembers = members.filter((member) =>
-        myTask.memberIds.includes(member.id)
-      );
-      setTaskMembers(filteredMembers);
-    } else {
-      setTaskMembers([]);
-    }
-  }, [myTask.memberIds, members]);
+  // useEffect(() => {
+  //   if (myTask.memberIds && myTask.memberIds.length > 0 && members.length > 0) {
+  //     // Filter members that match the memberIds in the task
+  //     const filteredMembers = members.filter((member) =>
+  //       myTask.memberIds.includes(member.id)
+  //     );
+  //     setTaskMembers(filteredMembers);
+  //   } else {
+  //     setTaskMembers([]);
+  //   }
+  // }, [myTask.memberIds, members]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -173,9 +173,9 @@ export function TaskDialog({
               <h3 className="text-sm font-semibold text-gray-300">
                 Description
               </h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              {/* <p className="text-gray-300 text-sm leading-relaxed">
                 {myTask.taskDescription}
-              </p>
+              </p> */}
             </div>
 
             {/* Department */}
@@ -183,7 +183,7 @@ export function TaskDialog({
               <h3 className="text-sm font-semibold text-gray-300">
                 Department
               </h3>
-              <p className="text-gray-300">{myTask.department}</p>
+              {/* <p className="text-gray-300">{myTask.department}</p> */}
             </div>
 
             {/* Dates */}
