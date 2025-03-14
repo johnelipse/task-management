@@ -109,10 +109,10 @@ export function TeamDialog({
       <DialogContent className="sm:max-w-lg bg-gray-950/35 backdrop-blur-md border-gray-800 text-slate-300">
         <DialogHeader>
           <DialogTitle>
-            {initialData ? "Update Team" : "Create Team"}
+            {initialData ? "Update Board" : "Create Board"}
           </DialogTitle>
           <DialogDescription>
-            Set up a new team and add members
+            Set up a new board and add tasks
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -12,22 +12,6 @@ export function SecondHeader({ session }: { session: Session | null }) {
           <div className="container flex h-14 items-center justify-between px-4">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              {/* <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6 text-white"
-                >
-                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-                <span className="text-lg font-semibold text-white">To-DO</span>
-              </div> */}
               <Image width={149} height={48} src="/logo.png" alt="logo" />
             </Link>
 
@@ -60,7 +44,7 @@ export function SecondHeader({ session }: { session: Session | null }) {
                 asChild
                 className="group bg-gradient-to-r rounded-full from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600"
               >
-                <Link href={session?.user ? "/dashboard" : "/register"}>
+                <Link href={session?.user ? "/workspace/boards" : "/register"}>
                   {session?.user ? "Dashboard" : "Sign Up Free"}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
