@@ -17,19 +17,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import TaskList from "./task-list";
-import type { Department, Member, Task, Team } from "@prisma/client";
-import { MembersMarque } from "./members-marque";
+import type { Department, Task, Team } from "@prisma/client";
 
 export default function DashboardPage({
   departments,
   tasks,
   teamData,
-  members,
 }: {
   departments: Department[];
   tasks: Task[];
   teamData: Team[];
-  members: Member[];
 }) {
   // Task statistics
   const completedTasks = tasks.filter(
@@ -453,7 +450,7 @@ export default function DashboardPage({
                         <span className="text-sm text-slate-300">
                           Team Members
                         </span>
-                        <Badge
+                        {/* <Badge
                           variant="outline"
                           className="bg-slate-700/50 text-slate-300 border-slate-600"
                         >
@@ -463,15 +460,15 @@ export default function DashboardPage({
                             ).length
                           }{" "}
                           members
-                        </Badge>
+                        </Badge> */}
                       </div>
 
                       <div className="relative w-full overflow-hidden">
-                        <MembersMarque
+                        {/* <MembersMarque
                           members={members
                             .filter((member) => member.teamId === team.id)
                             .slice(0, 5)}
-                        />
+                        /> */}
                       </div>
 
                       <div className="pt-2">

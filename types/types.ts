@@ -1,5 +1,3 @@
-import { User } from "@prisma/client";
-
 export type CategoryProps = {
   title: string;
   slug: string;
@@ -21,6 +19,7 @@ export type UserProps = {
   image: string;
   email: string;
   password: string;
+  WorkspaceIds: string[];
 };
 export type LoginProps = {
   email: string;
@@ -108,3 +107,7 @@ export interface Task {
   team: string;
   createdAt: string;
 }
+
+export type workspaceIdProps = {
+  WorkspaceId: string;
+};

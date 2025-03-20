@@ -13,10 +13,18 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 import TextInput from "../FormInputs/TextInput";
 import PasswordInput from "../FormInputs/PasswordInput";
 import SubmitButton from "../FormInputs/SubmitButton";
-import Logo from "../global/Logo";
 import CustomCarousel from "../frontend/custom-carousel";
 import Image from "next/image";
-export default function LoginForm() {
+import { Invitation, User } from "@prisma/client";
+import { updateUserWorkspaceIds } from "@/actions/users";
+import { DeleteInvitationByToken } from "@/actions/invitations";
+export default function LoginForm({
+  allUsers,
+  invitations,
+}: {
+  allUsers: User[];
+  invitations: Invitation[];
+}) {
   const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
@@ -29,9 +37,27 @@ export default function LoginForm() {
   const [passErr, setPassErr] = useState("");
   const router = useRouter();
   async function onSubmit(data: LoginProps) {
+    const user = allUsers.find((user) => user.email === data.email);
+    const invitationEmail = invitations.find(
+      (invitation) => invitation.email === data.email
+    );
+    const token = invitationEmail?.inviteToken
+      ? invitationEmail.inviteToken
+      : "";
+    const workspaceId = invitationEmail?.workspaceId
+      ? invitationEmail.workspaceId
+      : "";
+    const userId = user?.id ? user?.id : "";
     try {
       setLoading(true);
       setPassErr("");
+
+      if (workspaceId && userId) {
+        await updateUserWorkspaceIds(workspaceId, userId);
+      }
+      if (token) {
+        await DeleteInvitationByToken(token);
+      }
       console.log("Attempting to sign in with credentials:", data);
       const loginData = await signIn("credentials", {
         ...data,

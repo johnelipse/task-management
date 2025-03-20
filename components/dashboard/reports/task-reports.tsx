@@ -578,18 +578,16 @@ import {
 } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { AlertTriangle, CheckCircle, Clock, Hourglass } from "lucide-react";
-import type { Department, Member, Task, Team } from "@prisma/client";
+import type { Department, Task, Team } from "@prisma/client";
 
 export default function TasksReport({
   departments,
   tasks,
   teamData,
-  members,
 }: {
   departments: Department[];
   tasks: Task[];
   teamData: Team[];
-  members: Member[];
 }) {
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
@@ -681,10 +679,6 @@ export default function TasksReport({
   };
 
   // Get member names by memberIds
-  const getMemberNames = (memberIds: string[]) => {
-    const assignedMembers = members.filter((m) => memberIds.includes(m.id));
-    return assignedMembers.map((m) => m.fullName).join(", ");
-  };
 
   return (
     <div className="space-y-6">

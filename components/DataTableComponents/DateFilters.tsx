@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Select from "react-tailwindcss-select";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
-import { months } from "../Forms/SavingForm";
 
 export default function DateFilters({
   data,
@@ -27,7 +26,7 @@ export default function DateFilters({
   };
   return (
     <div className="w-full">
-      <Select
+      {/* <Select
         value={selectedFilter}
         onChange={handleChange}
         options={months}
@@ -47,7 +46,7 @@ export default function DateFilters({
                 : `text-gray-200 hover:bg-gray-800`
             }`,
         }}
-      />
+      /> */}
     </div>
   );
 }

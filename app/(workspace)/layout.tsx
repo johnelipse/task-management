@@ -1,4 +1,4 @@
-import { getAllWorkspaces } from "@/actions/workspace";
+import { getAllWorkspaces, getUserWorkspaces } from "@/actions/workspace";
 import HeaderComponent from "@/components/workspace/header-comp";
 import Sidebar from "@/components/workspace/side-bar";
 import { authOptions } from "@/config/auth";
@@ -12,11 +12,11 @@ export default async function WorkspaceLayout({
 }: {
   children: ReactNode;
 }) {
-  const workspaces = await getAllWorkspaces();
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
+  const workspaces = await getUserWorkspaces(session.user.id);
   return (
     <WorkspaceProvider initialWorkspaces={workspaces}>
       <div className={`min-h-screen bg-black text-white `}>

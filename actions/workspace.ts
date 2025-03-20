@@ -1,5 +1,6 @@
 "use server";
 
+import { db } from "@/prisma/db";
 import { Workspace } from "@prisma/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -28,5 +29,35 @@ export async function updateWorkspace(id: string, data: any) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function getUserWorkspaces(userId: string) {
+  try {
+    // First get the user with their workspace IDs
+    const user = await db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        WorkspaceIds: true,
+      },
+    });
+
+    if (!user) return [];
+
+    // Then fetch the actual workspace objects based on those IDs
+    const workspaces = await db.workspace.findMany({
+      where: {
+        id: {
+          in: user.WorkspaceIds,
+        },
+      },
+    });
+
+    return workspaces;
+  } catch (error) {
+    console.error("Error fetching user workspaces:", error);
+    return [];
   }
 }

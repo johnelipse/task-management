@@ -1,7 +1,7 @@
 "use server";
 import { ResetPasswordEmail } from "@/components/email-templates/reset-password";
 import { db } from "@/prisma/db";
-import { UserProps } from "@/types/types";
+import { UserProps, workspaceIdProps } from "@/types/types";
 import { compareSync, hashSync } from "bcrypt-ts";
 import { revalidatePath } from "next/cache";
 import { PasswordProps } from "@/components/Forms/ChangePasswordForm";
@@ -25,7 +25,16 @@ const DEFAULT_USER_ROLE = {
 };
 
 export async function createUser(data: UserProps) {
-  const { email, password, firstName, lastName, name, phone, image } = data;
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    name,
+    phone,
+    image,
+    WorkspaceIds,
+  } = data;
 
   try {
     // Use a transaction for atomic operations
@@ -80,6 +89,7 @@ export async function createUser(data: UserProps) {
           name,
           phone,
           image,
+          WorkspaceIds,
           // roles: {
           //   connect: {
           //     id: defaultRole.id,
@@ -120,6 +130,25 @@ export async function updateUser(data: UpdateProps, id: string) {
     console.log(error);
   }
 }
+
+export async function updateUserWorkspaceIds(workspaceId: string, id: string) {
+  try {
+    const updatedUser = await db.user.update({
+      where: {
+        id,
+      },
+      data: {
+        WorkspaceIds: {
+          push: workspaceId,
+        },
+      },
+    });
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getAllMembers() {
   try {
     const members = await db.user.findMany({
@@ -147,7 +176,7 @@ export async function getAllUsers() {
     return users;
   } catch (error) {
     console.error("Error fetching the count:", error);
-    return 0;
+    return [];
   }
 }
 

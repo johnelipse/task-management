@@ -16,7 +16,13 @@ import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import Logo from "../global/Logo";
 import Image from "next/image";
-export default function RegisterForm() {
+import { Invitation } from "@prisma/client";
+import { DeleteInvitationByToken } from "@/actions/invitations";
+export default function RegisterForm({
+  invitations,
+}: {
+  invitations: Invitation[];
+}) {
   const [loading, setLoading] = useState(false);
   const [emailErr, setEmailErr] = useState<string | null>(null);
   const {
@@ -28,18 +34,35 @@ export default function RegisterForm() {
   const router = useRouter();
   async function onSubmit(data: UserProps) {
     setLoading(true);
+    const invitationEmail = invitations.find(
+      (invitation) => invitation.email === data.email
+    );
+    // if (invitationEmail && invitationEmail.workspaceId) {
+    //   data.WorkspaceIds?.push(invitationEmail.workspaceId);
+    // }
+    // console.log(invitationEmail?.workspaceId);
+    data.WorkspaceIds = invitationEmail?.workspaceId
+      ? [invitationEmail.workspaceId]
+      : [];
+    const token = invitationEmail?.inviteToken
+      ? invitationEmail.inviteToken
+      : "";
+
     data.name = `${data.firstName} ${data.lastName}`;
     data.image =
       "https://utfs.io/f/59b606d1-9148-4f50-ae1c-e9d02322e834-2558r.png";
     try {
       const res = await createUser(data);
+      if (token) {
+        await DeleteInvitationByToken(token);
+      }
       if (res.status === 409) {
         setLoading(false);
         setEmailErr(res.error);
       } else if (res.status === 200) {
         setLoading(false);
         toast.success("Account Created successfully");
-        router.push("/");
+        router.push("/login");
       } else {
         setLoading(false);
         toast.error("Something went wrong");

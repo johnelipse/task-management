@@ -1,6 +1,5 @@
 "use server";
 import { SelectProps } from "@/components/dashboard/update-status";
-import { FormData } from "@/components/Forms/create-task";
 import { Task, Team } from "@prisma/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

@@ -103,12 +103,12 @@ async function cleanDatabase() {
       await tx.account.deleteMany({});
 
       // Delete all Blogs and Blog cats (if you have them)
-      await tx.blog.deleteMany({});
-      await tx.blogCategory.deleteMany({});
+      // await tx.blog.deleteMany({});
+      // await tx.blogCategory.deleteMany({});
 
       // Delete all Savings and Categories  (if you have them)
-      await tx.saving.deleteMany({});
-      await tx.category.deleteMany({});
+      // await tx.saving.deleteMany({});
+      // await tx.category.deleteMany({});
 
       // Now safely delete all users
       const deleteUsers = await tx.user.deleteMany({});

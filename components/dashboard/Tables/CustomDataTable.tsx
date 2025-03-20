@@ -18,15 +18,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Category } from "@prisma/client";
 import { getNormalDate } from "@/lib/getNormalDate";
 
-export default function CustomDataTable({
-  categories,
-}: {
-  categories: Category[];
-}) {
-  console.log(categories);
+export default function CustomDataTable() {
   return (
     <Card>
       <CardContent>
@@ -45,7 +39,7 @@ export default function CustomDataTable({
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          {/* <TableBody>
             {categories.map((category) => {
               const date = getNormalDate(category.createdAt);
               return (
@@ -62,12 +56,6 @@ export default function CustomDataTable({
                   <TableCell className="font-medium">
                     {category.title}
                   </TableCell>
-                  {/* <TableCell>
-                    <Badge variant="outline">
-                      {category.status ? "Active" : "Disabled"}
-                    </Badge>
-                  </TableCell> */}
-
                   <TableCell className="hidden md:table-cell">{date}</TableCell>
                   <TableCell>
                     <DropdownMenu>
@@ -91,7 +79,7 @@ export default function CustomDataTable({
                 </TableRow>
               );
             })}
-          </TableBody>
+          </TableBody> */}
         </Table>
       </CardContent>
       <CardFooter>

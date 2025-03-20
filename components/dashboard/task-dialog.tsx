@@ -249,7 +249,7 @@ export function TaskDialog({
                     <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                     <Avatar className="h-10 w-10 ring-2 ring-gray-700/50 group-hover:ring-cyan-700/30 transition-all duration-300">
-                      <AvatarImage
+                      {/* <AvatarImage
                         src={member.image as string}
                         alt={member.fullName}
                       />
@@ -258,13 +258,13 @@ export function TaskDialog({
                           .split(" ")
                           .map((n) => n[0])
                           .join("")}
-                      </AvatarFallback>
+                      </AvatarFallback> */}
                     </Avatar>
 
                     <div className="flex flex-col min-w-0">
-                      <span className="text-sm font-medium text-white truncate group-hover:text-cyan-300 transition-colors duration-300">
+                      {/* <span className="text-sm font-medium text-white truncate group-hover:text-cyan-300 transition-colors duration-300">
                         {member.fullName}
-                      </span>
+                      </span> */}
                       <div className="flex  flex-col gap-1">
                         <span className="text-xs text-gray-400">
                           {member.email}

@@ -48,18 +48,6 @@ enum StatusTypes {
   Completed
 }
 
-// model Role {
-//   id          String   @id @default(cuid())
-//   displayName String // Human-readable name (e.g., "Store Manager")
-//   roleName    String   @unique // System name (e.g., "store_manager")
-//   description String?
-//   permissions String[] // Array of permission strings
-//   // users       User[]   @relation("UserRoles")
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-
-//   @@index([roleName])
-// }
 
 model User {
   id            String      @id @default(cuid())
@@ -76,68 +64,13 @@ model User {
   status        Boolean     @default(true)
   accounts      Account[]
   sessions      Session[]
-  savings       Saving[]
-  blogs         Blog[]
   isVerfied     Boolean     @default(false)
   token         String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  // roleId        String?
-  Workspace     Workspace[]
+  WorkspaceIds     String[]
 }
 
-model Category {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  imageUrl    String?
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-}
-
-model Saving {
-  id          String    @id @default(cuid())
-  amount      Int
-  month       String
-  name        String
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  paymentDate DateTime  @default(now())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-}
-
-model Blog {
-  id            String       @id @default(cuid())
-  title         String
-  slug          String       @unique
-  description   String?      @db.Text // Meta description for SEO
-  thumbnail     String?
-  content       String?      @db.Text
-  published     Boolean?     @default(false)
-  featured      Boolean?     @default(false)
-  author        User         @relation(fields: [authorId], references: [id])
-  authorId      String
-  authorName    String
-  authorImage   String?
-  authorTitle   String?
-  category      BlogCategory @relation(fields: [categoryId], references: [id])
-  categoryId    String
-  categoryTitle String
-  readingTime   Int? // Estimated reading time in minutes
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-}
-
-model BlogCategory {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  slug      String   @unique
-  blogs     Blog[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 model Department {
   id               String   @id @default(cuid())
@@ -168,10 +101,12 @@ model Team {
 
 model Member {
   id             String   @id @default(cuid())
-  fullName       String
+  name          String
+  firstName     String
+  lastName      String
+  phone         String      @unique
+  email         String      @unique
   image          String?
-  email          String   @unique
-  phone          String   @unique
   jobTitle       String
   // tasks       TaskMember[]
   department     String
@@ -195,7 +130,7 @@ model Task {
   startDate       String
   endDate         String
   status          StatusTypes @default(Pending)
-  team            Team     @relation(fields: [teamId], references: [id])
+  team            Team     @relation(fields: [teamId], references: [id],onDelete: Cascade)
   teamId          String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -222,8 +157,16 @@ model Workspace {
   ownerId     String
   themeColor  String
   visibility  Visibility @default(private)
-  owner       User       @relation(fields: [ownerId], references: [id])
   teams       Team[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+model Invitation {
+    id                String     @id @default(cuid())
+    email             String
+    workspaceId       String
+    inviteToken             String @unique
+    createdAt         DateTime   @default(now())
+    updatedAt         DateTime   @updatedAt
 }

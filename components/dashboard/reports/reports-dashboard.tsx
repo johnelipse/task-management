@@ -8,18 +8,15 @@ import { Input } from "@/components/ui/input";
 // import DepartmentsReport from "./department-reports";
 // import TeamsReport from "./teams-report";
 import TasksReport from "./task-reports";
-import MembersReport from "./members-reports";
-import { Department, Member, Task, Team } from "@prisma/client";
+import { Department, Task, Team } from "@prisma/client";
 export default function ReportsDashboard({
   departments,
   tasks,
   teamData,
-  members,
 }: {
   departments: Department[];
   tasks: Task[];
   teamData: Team[];
-  members: Member[];
 }) {
   const [activeTab, setActiveTab] = useState("departments");
 
@@ -134,17 +131,15 @@ export default function ReportsDashboard({
                   departments={departments}
                   tasks={tasks}
                   teamData={teamData}
-                  members={members}
                 />
               </TabsContent>
 
               <TabsContent value="members" className="space-y-4">
-                <MembersReport
+                {/* <MembersReport
                   departments={departments}
                   tasks={tasks}
                   teamData={teamData}
-                  members={members}
-                />
+                /> */}
               </TabsContent>
             </Tabs>
           </div>
