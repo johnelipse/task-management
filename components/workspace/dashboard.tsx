@@ -10,6 +10,7 @@ import StatsCards from "./stats-cards";
 import TaskCompletionChart from "./task-comp-cards";
 import MemberActivityChart from "./member-activity";
 import BoardProgressChart from "./board-progress";
+import { Session } from "next-auth";
 
 export default function WorkspaceDashboard() {
   const [isDarkMode, setIsDarkMode] = useState(true);

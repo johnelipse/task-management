@@ -61,3 +61,18 @@ export async function getUserWorkspaces(userId: string) {
     return [];
   }
 }
+
+export async function DeleteWorkspaceById(id: string) {
+  const api = `${baseUrl}/api/workspace/${id}`;
+  try {
+    await fetch(api, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/app",
+      },
+      cache: "no-store",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

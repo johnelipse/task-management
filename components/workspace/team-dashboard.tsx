@@ -417,8 +417,6 @@ import {
   Star,
   Bell,
   ChevronDown,
-  Zap,
-  SlidersHorizontal,
   MoreHorizontal,
   Plus,
   X,

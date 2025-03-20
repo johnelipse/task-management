@@ -28,3 +28,31 @@ export async function PATCH(
     );
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
+  try {
+    await db.workspace.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "Deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        error: "Something went wrong",
+      },
+      { status: 500 }
+    );
+  }
+}

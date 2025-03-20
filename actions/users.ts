@@ -344,3 +344,35 @@ export async function resetUserPassword(
     console.log(error);
   }
 }
+
+export async function removeMemberFromWorkspace(
+  userId: string,
+  workspaceId: string
+) {
+  if (!workspaceId || !userId) {
+    return false;
+  }
+  try {
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      select: { WorkspaceIds: true },
+    });
+
+    if (!user) {
+      return false;
+    }
+
+    const updatedWorkspaceIds =
+      user.WorkspaceIds?.filter((id) => id !== workspaceId) || [];
+
+    // 3. Update the user with the new WorkspaceIds array
+    await db.user.update({
+      where: { id: userId },
+      data: { WorkspaceIds: updatedWorkspaceIds },
+    });
+    return true;
+  } catch (err) {
+    console.error("Error removing member from workspace:", err);
+    return false;
+  }
+}

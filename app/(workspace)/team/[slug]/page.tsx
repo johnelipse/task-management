@@ -11,6 +11,7 @@ export default async function page({
   const { slug } = await params;
   const team = await getSingleTeam(slug);
   const allTasks = await getAllTasks();
+
   return (
     <div>
       <TeamBoard team={team} allTasks={allTasks} />
