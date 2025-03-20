@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <GridBackground>
-      <div className="px-4">
+      <div className="">
         <RegisterForm invitations={invitations} />
       </div>
     </GridBackground>

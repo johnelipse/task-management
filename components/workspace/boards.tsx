@@ -47,13 +47,13 @@ export default function WorkspaceBoards({
     <div className="min-h-screen bg-black text-gray-200">
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-800 pb-6 mb-8">
+        <div className="flex  md:flex-row justify-between items-start md:items-center border-b border-gray-800 pb-6 mb-8">
           <div className="flex items-center gap-4">
             <div
               style={{
                 background: `radial-gradient(circle at top right, ${selectedWorkspace.themeColor}, transparent 90%)`,
               }}
-              className="flex-shrink-0 w-16 h-16 bg-purple-700 rounded-lg flex items-center justify-center text-white text-3xl font-bold"
+              className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 bg-purple-700 rounded-lg flex items-center justify-center text-white text-3xl font-bold"
             >
               {workspaceInitial}
             </div>
@@ -80,8 +80,16 @@ export default function WorkspaceBoards({
           {/* Replace the Button with the new WorkspaceInviteDialog */}
           <WorkspaceInviteDialog
             trigger={
-              <button className="bg-blue-600 py-2 px-2 rounded-md">
+              <button className="bg-blue-600 py-2 hidden md:block px-2 rounded-md">
                 Invite Member To Workspace
+              </button>
+            }
+            workspaceId={selectedWorkspace.id}
+          />
+          <WorkspaceInviteDialog
+            trigger={
+              <button className="bg-blue-600 block text-[1rem] md:hidden py-1 px-2 rounded-md">
+                Invite
               </button>
             }
             workspaceId={selectedWorkspace.id}

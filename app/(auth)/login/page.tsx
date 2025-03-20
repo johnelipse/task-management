@@ -17,7 +17,7 @@ export default async function page() {
   // console.log(Array.isArray(allUsers) ? allUsers.length : 0);
   return (
     <GridBackground>
-      <div className="px-4">
+      <div className="">
         <LoginForm allUsers={allUsers} invitations={invitations} />
       </div>
     </GridBackground>
