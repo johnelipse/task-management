@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
+
 import Providers from "@/components/Providers";
 // import FooterBanner from "@/components/Footer";
 const inter = Rethink_Sans({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Ronix Fit Savers",
-  description: "Join Ronix Savings Group",
+  title: "TaskFlowX",
+  description: "Join TaskFlowX and make task  managment alot more easier",
 };
 export default function RootLayout({
   children,
