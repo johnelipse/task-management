@@ -1,6 +1,6 @@
 "use server";
 import { SelectProps } from "@/components/dashboard/update-status";
-import { Task, Team } from "@prisma/client";
+import { Board, Task } from "@prisma/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const api = `${baseUrl}/api/tasks`;
@@ -9,7 +9,7 @@ export async function getAllTasks() {
   try {
     const res = await fetch(api, { cache: "no-store" });
     const tasks = await res.json();
-    return tasks.data as Task[] & { team: Team };
+    return tasks.data as Task[] & { team: Board };
   } catch (error) {
     return [];
   }
@@ -19,7 +19,7 @@ export async function getSingleTask(id: string) {
   try {
     const res = await fetch(api, { cache: "no-store" });
     const tasks = await res.json();
-    return tasks.data as Task & { team: Team };
+    return tasks.data as Task & { team: Board };
   } catch (error) {
     return null;
   }

@@ -25,6 +25,9 @@ export default function LoginForm({
   allUsers: User[];
   invitations: Invitation[];
 }) {
+  if (!allUsers && !invitations) {
+    return null;
+  }
   const [loading, setLoading] = useState(false);
   const {
     handleSubmit,

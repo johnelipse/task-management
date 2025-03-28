@@ -25,7 +25,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { deleteUser } from "@/actions/users";
 import { deleteDepartment } from "@/actions/departments";
-import { deleteTeam } from "@/actions/teams";
+import { deleteBoard } from "@/actions/boards";
 
 type ActionColumnProps = {
   row: any;
@@ -45,13 +45,7 @@ export default function ActionColumn({
   const isActive = row.isActive;
   async function handleDelete() {
     try {
-      if (model === "saving") {
-        // const res = await deleteSaving(id);
-        // if (res?.ok) {
-        //   window.location.reload();
-        // }
-        toast.success(`${model} Deleted Successfully`);
-      } else if (model === "user") {
+      if (model === "user") {
         const res = await deleteUser(id);
         if (res?.ok) {
           window.location.reload();
@@ -64,7 +58,7 @@ export default function ActionColumn({
         }
         toast.success(`${model} Deleted Successfully`);
       } else if (model === "team") {
-        const res = await deleteTeam(slug);
+        const res = await deleteBoard(slug);
         if (res?.ok) {
           window.location.reload();
         }

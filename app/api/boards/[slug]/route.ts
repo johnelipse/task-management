@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const { slug } = await params;
   try {
-    const team = await db.team.findUnique({
+    const team = await db.board.findUnique({
       where: {
         slug,
       },
@@ -41,7 +41,7 @@ export async function PATCH(
   const { slug } = await params;
   try {
     const data = await req.json();
-    const updatedData = await db.team.update({
+    const updatedData = await db.board.update({
       where: {
         slug,
       },
@@ -72,7 +72,7 @@ export async function DELETE(
 ) {
   const { slug } = await params;
   try {
-    await db.team.delete({
+    await db.board.delete({
       where: {
         slug,
       },

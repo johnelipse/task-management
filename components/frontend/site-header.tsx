@@ -171,12 +171,7 @@ export default function SiteHeader({ session }: { session: Session | null }) {
                           </p>
                         </div>
                         <Button asChild variant="secondary">
-                          <Link
-                            target="_blank"
-                            href="https://coding-school-typescript.vercel.app/give-away"
-                          >
-                            Get started
-                          </Link>
+                          <Link href="/workspace/boards">Get started</Link>
                         </Button>
                       </div>
                     </div>

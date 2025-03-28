@@ -55,29 +55,8 @@ export function WhatToDo() {
     },
   };
 
-  const progressVariants = {
-    hidden: { width: 0 },
-    visible: (value: number) => ({
-      width: `${value}%`,
-      transition: { duration: 1, ease: "easeOut" },
-    }),
-  };
-
   return (
     <div className="min-h-screen relative bg-black  p-4 md:p-8">
-      {/* <motion.div
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute h-[100%] w-[500px] z-0 left-0 top-0"
-      >
-        <Image
-          src="/images/bg/13.webp"
-          alt="backround"
-          fill
-          className="object-cover"
-        />
-      </motion.div> */}
       <motion.div
         initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -200,7 +179,7 @@ export function WhatToDo() {
               {
                 name: "Marketing Page Redesign",
                 progress: 100,
-                status: "On Track",
+                status: "Completed",
                 statusColor: "text-green-400",
                 date: "14 Mar",
                 avatar:
@@ -209,7 +188,7 @@ export function WhatToDo() {
               {
                 name: "Pitch Deck",
                 progress: 70,
-                status: "At Risk",
+                status: "In progress",
                 statusColor: "text-orange-400",
                 date: "10 Mar",
                 avatar:
@@ -218,7 +197,7 @@ export function WhatToDo() {
               {
                 name: "New iOS Development",
                 progress: 45,
-                status: "Off Track",
+                status: "Pending",
                 statusColor: "text-red-400",
                 date: "25 Mar",
                 avatar:
@@ -354,10 +333,6 @@ export function WhatToDo() {
               placeholder="name@email.com, name@email.com,..."
               className="mt-2 bg-white/5 text-black"
             />
-            {/* <p className="mt-2 text-sm text-black">
-              Your teammates will get an email that gives them access to your
-              team.
-            </p> */}
             <div className="mt-2 flex items-center justify-between">
               <button className="text-blue-400">copy link invite</button>
               <Button className="bg-gradient-to-r py-1 from-blue-500 to-purple-500">

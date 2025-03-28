@@ -1,7 +1,6 @@
 "use client";
 
-import { deleteTeam } from "@/actions/teams";
-import { DeleteWorkspaceById } from "@/actions/workspace";
+import { deleteBoard } from "@/actions/boards";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,7 +32,7 @@ export function DeleteBoardDialog({
   async function handleDelete() {
     try {
       setIsDeleting(true);
-      await deleteTeam(boardSlug);
+      await deleteBoard(boardSlug);
       toast.success("Board deleted successfully.");
       router.refresh();
       window.location.reload();

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { UserProps } from "@/types/types";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import TextInput from "../FormInputs/TextInput";
 import PasswordInput from "../FormInputs/PasswordInput";
 import SubmitButton from "../FormInputs/SubmitButton";
@@ -25,12 +25,18 @@ export default function RegisterForm({
 }) {
   const [loading, setLoading] = useState(false);
   const [emailErr, setEmailErr] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
   const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
-  } = useForm<UserProps>();
+  } = useForm<UserProps>({
+    defaultValues: {
+      email: email || "",
+    },
+  });
   const router = useRouter();
   async function onSubmit(data: UserProps) {
     setLoading(true);

@@ -373,7 +373,7 @@ const ReUsableHero: React.FC<HeroProps> = ({
               size="lg"
               className="rounded-full h-12 px-6 text-base"
             >
-              <Link href="https://coding-school-typescript.vercel.app/give-away">
+              <Link href="/workspace/boards">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

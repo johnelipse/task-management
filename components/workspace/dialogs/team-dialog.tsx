@@ -19,14 +19,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { TeamProps } from "@/types/types";
-import type { Department, Team } from "@prisma/client";
-import { updateTeam } from "@/actions/teams";
 import TextInput from "@/components/FormInputs/TextInput";
 import TextArea from "@/components/FormInputs/TextAreaInput";
+import { Board } from "@prisma/client";
+import { updateBoard } from "@/actions/boards";
 
 interface TeamDialogProps {
   workspaceId: string;
-  initialData?: Team;
+  initialData?: Board;
   trigger: React.ReactNode;
 }
 
@@ -62,7 +62,7 @@ export function TeamDialog({
     if (initialData) {
       try {
         setLoading(true);
-        await updateTeam(initialData.slug, data);
+        await updateBoard(initialData.slug, data);
         setLoading(false);
         toast.success("Team updated successfully.");
         router.refresh();
@@ -76,7 +76,7 @@ export function TeamDialog({
     } else {
       try {
         setLoading(true);
-        const res = await fetch("/api/teams", {
+        const res = await fetch("/api/boards", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export function TeamDialog({
             <TextInput
               register={register}
               errors={errors}
-              label="Team Name"
+              label="Board Name"
               name="name"
             />
             <TextArea
@@ -129,17 +129,6 @@ export function TeamDialog({
               label="Description"
               name="description"
             />
-
-            {/* <div>
-              <FormSelectInput
-                label="All Departments"
-                options={selectDepartment}
-                option={selectedDepartment}
-                setOption={setSelectedDepartment}
-                toolTipText="Add Departments"
-                href="/dashboard/departments/new"
-              />
-            </div> */}
           </div>
           <DialogFooter className="justify-between space-x-2">
             <Button

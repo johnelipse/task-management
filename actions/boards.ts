@@ -1,33 +1,33 @@
 "use server";
 
 import { TeamProps } from "@/types/types";
-import { Team } from "@prisma/client";
+import { Board } from "@prisma/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const api = `${baseUrl}/api/teams`;
+const api = `${baseUrl}/api/boards`;
 
-export async function getAllTeams() {
+export async function getAllBoards() {
   try {
     const res = await fetch(api, { cache: "no-store" });
-    const teams = await res.json();
-    return teams.data as Team[];
+    const boards = await res.json();
+    return boards.data as Board[];
   } catch (error) {
     return [];
   }
 }
 
-export async function getSingleTeam(slug: string) {
-  const api = `${baseUrl}/api/teams/${slug}`;
+export async function getSingleBoard(slug: string) {
+  const api = `${baseUrl}/api/boards/${slug}`;
   try {
     const res = await fetch(api, { cache: "no-store" });
-    const team = await res.json();
-    return team.data as Team;
+    const board = await res.json();
+    return board.data as Board;
   } catch (error) {
     return null;
   }
 }
-export async function updateTeam(slug: string, data: TeamProps) {
-  const api = `${baseUrl}/api/teams/${slug}`;
+export async function updateBoard(slug: string, data: TeamProps) {
+  const api = `${baseUrl}/api/boards/${slug}`;
   try {
     await fetch(api, {
       method: "PATCH",
@@ -40,8 +40,8 @@ export async function updateTeam(slug: string, data: TeamProps) {
     console.log(error);
   }
 }
-export async function deleteTeam(slug: string) {
-  const api = `${baseUrl}/api/teams/${slug}`;
+export async function deleteBoard(slug: string) {
+  const api = `${baseUrl}/api/boards/${slug}`;
   try {
     await fetch(api, {
       method: "DELETE",

@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const data: TeamProps = await req.json();
   try {
     const { slug } = data;
-    const existingTeam = await db.team.findUnique({
+    const existingTeam = await db.board.findUnique({
       where: {
         slug,
       },
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         { status: 409 }
       );
     }
-    const newTeam = await db.team.create({
+    const newTeam = await db.board.create({
       data,
     });
     return NextResponse.json(
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    const teams = await db.team.findMany({
+    const teams = await db.board.findMany({
       orderBy: {
         createdAt: "desc",
       },

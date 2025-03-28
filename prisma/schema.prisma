@@ -86,7 +86,7 @@ model Department {
   updatedAt        DateTime @updatedAt
 }
 
-model Team {
+model Board {
   id           String      @id @default(cuid())
   name         String
   slug         String      @unique
@@ -117,8 +117,8 @@ model Member {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  Team   Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId String?
+  Team   Board?   @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId String?
 }
 
 
@@ -130,8 +130,8 @@ model Task {
   startDate       String
   endDate         String
   status          StatusTypes @default(Pending)
-  team            Team     @relation(fields: [teamId], references: [id],onDelete: Cascade)
-  teamId          String
+  team            Board     @relation(fields: [boardId], references: [id],onDelete: Cascade)
+  boardId       String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -157,7 +157,7 @@ model Workspace {
   ownerId     String
   themeColor  String
   visibility  Visibility @default(private)
-  teams       Team[]
+  teams       Board[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }

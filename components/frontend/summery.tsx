@@ -1,145 +1,12 @@
-// import { ArrowRight } from "lucide-react";
-// import { Badge } from "@/components/ui/badge";
-// import { Button } from "@/components/ui/button";
-// import { ShineBorder } from "../magicui/shine-border";
-
-// export default function TaskManagement() {
-//   return (
-//     <div className="min-h-screen  bg-black">
-//       <div className="container mx-auto px-4 py-12 space-y-16">
-//         {/* Hero Section */}
-//         <div className="flex justify-between items-center">
-//           <div className="space-y-2">
-//             <h1 className="text-xl md:text-4xl font-bold text-white leading-tight">
-//               Improve Your
-//               <br />
-//               Task Management Workflow.
-//             </h1>
-//             <p className="text-gray-400 text-[1rem] max-w-2xl">
-//               Bring your team's work together in one shared space, choose the
-//               project view that suits your style, and collaborate no matter.
-//             </p>
-//           </div>
-//           <Button className="bg-gradient-to-r from-purple-500 rounded-full to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 ">
-//             Get Started <ArrowRight className="ml-2 h-4 w-4" />
-//           </Button>
-//         </div>
-
-//         {/* Features Grid */}
-//         <div className="grid md:grid-cols-2 gap-6">
-//           {/* Customizable Views */}
-//           <div className="bg-gray-900/60 rounded-xl py-6 px-4 space-y-6">
-//             <div className="flex space-x-2">
-//               <Badge variant="secondary" className="bg-purple-600 text-white">
-//                 Kanban
-//               </Badge>
-//               <Badge className="text-white" variant="outline">
-//                 List
-//               </Badge>
-//               <Badge className="text-white" variant="outline">
-//                 Calendar
-//               </Badge>
-//             </div>
-
-//             <div className=" grid md:grid-cols-2 gap-3">
-//               <div className="bg-gray-800/50 p-4 rounded-lg space-y-2">
-//                 <Badge className="bg-orange-500/20 text-orange-500">
-//                   Project
-//                 </Badge>
-//                 <div className="text-sm text-white">Project Team Brief</div>
-//                 <div className="text-xs text-gray-400">September 10, 2024</div>
-//                 <div className="text-xs text-gray-400">2:00 PM-3:00PM</div>
-//               </div>
-
-//               <ShineBorder
-//                 color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-//                 className="bg-gray-800/50 p-2 rounded-lg space-y-2 mr-10"
-//               >
-//                 {/* <ShineBorder
-//                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-//                   className="relative size-48 rounded-lg"
-//                 /> */}
-//                 <Badge className="bg-purple-500/20 text-purple-500">
-//                   Design
-//                 </Badge>
-//                 <div className="text-sm text-white">
-//                   Presentation To The Design Team
-//                 </div>
-//                 <div className="text-xs text-gray-400">September 10, 2024</div>
-//                 <div className="text-xs text-gray-400">2:00 PM-3:00PM</div>
-//               </ShineBorder>
-//             </div>
-
-//             <h3 className="text-xl font-semibold text-white">
-//               Customizable Views
-//             </h3>
-//             <p className="text-gray-400 text-sm">
-//               Easily switch between multiple views such as list, calendar, or
-//               kanban, allowing you to tailor your workflow to your specific
-//               needs and preferences.
-//             </p>
-//           </div>
-
-//           {/* Task Organization */}
-//           <div className="bg-gray-900/60 rounded-xl h-[15rem] p-6 space-y-6">
-//             <div className="flex flex-wrap gap-2">
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Fitness
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Work Project
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Projects Household Chores
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Personal Goals
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Finance
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Travel Planning
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Learning & Development
-//               </Badge>
-//               <Badge variant="secondary" className="flex items-center gap-2">
-//                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-//                 Health & Wellness
-//               </Badge>
-//             </div>
-
-//             <h3 className="text-xl font-semibold text-white">
-//               Task Organization
-//             </h3>
-//             <p className="text-gray-400 text-sm">
-//               Organize tasks into customizable categories like work, personal,
-//               and health, ensuring.
-//             </p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ShineBorder } from "../magicui/shine-border";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TaskManagement() {
   const [mounted, setMounted] = useState(false);
@@ -223,7 +90,9 @@ export default function TaskManagement() {
           </div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:from-purple-600 hover:to-blue-600 rounded-full relative overflow-hidden group">
-              <span className="relative z-10">Get Started</span>
+              <Link href="/workspace/boards" className="relative z-10">
+                Get Started
+              </Link>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"
                 whileHover={{ opacity: 1 }}

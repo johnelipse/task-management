@@ -1,4 +1,4 @@
-import { getAllWorkspaces, getUserWorkspaces } from "@/actions/workspace";
+import { getUserWorkspaces } from "@/actions/workspace";
 import HeaderComponent from "@/components/workspace/header-comp";
 import Sidebar from "@/components/workspace/side-bar";
 import { authOptions } from "@/config/auth";

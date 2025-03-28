@@ -34,10 +34,13 @@ export function SecondHeader({ session }: { session: Session | null }) {
                 ""
               ) : (
                 <Button
+                  asChild
                   variant="ghost"
                   className="text-sm display text-gray-400 hover:text-gray-400 hover:bg-transparent"
                 >
-                  Sign In
+                  <Link href={session?.user ? "#" : "/login"}>
+                    {session?.user ? "" : "Signin"}
+                  </Link>
                 </Button>
               )}
               <Button
@@ -46,7 +49,7 @@ export function SecondHeader({ session }: { session: Session | null }) {
               >
                 <Link href={session?.user ? "/workspace/boards" : "/register"}>
                   {session?.user ? "Dashboard" : "Sign Up Free"}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-4 w-4 hidden md:block transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
             </div>

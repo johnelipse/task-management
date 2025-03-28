@@ -1,9 +1,9 @@
 "use server";
 type AllDepartmentProps = {
-  newData: Department & { team: Team[] };
+  newData: Department & { team: Board[] };
 };
 import { DepartmentProps } from "@/types/types";
-import { Department, Team } from "@prisma/client";
+import { Board, Department } from "@prisma/client";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const api = `${baseUrl}/api/departments`;
 export async function getAllDepartments() {
