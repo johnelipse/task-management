@@ -7,11 +7,12 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { User } from "@prisma/client";
 interface TryItProps {
   email: string;
 }
 
-export function HeroSection() {
+export function HeroSection({ allUsers }: { allUsers: User[] }) {
   const {
     register,
     handleSubmit,
@@ -146,14 +147,14 @@ export function HeroSection() {
             variants={itemVariants}
             className="text-sm text-zinc-300"
           >
-            5000+ 5 stars reviews
+            {allUsers.length}+ 5 stars reviews
           </motion.span>
         </motion.div>
         <motion.h1
           variants={itemVariants}
           className="mx-auto mb-6 max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-5xl font md:text-6xl"
         >
-          Streamlined Task Management for Teams and Individuals
+          Streamlined Project Management for Teams and Individuals
         </motion.h1>
         <motion.p
           variants={itemVariants}
