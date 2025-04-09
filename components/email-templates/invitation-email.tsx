@@ -23,6 +23,7 @@ interface VercelInviteUserEmailProps {
   ownerName: string;
   ownerEmail: string;
   workspaceId: string;
+  recipientEmail: string;
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -33,6 +34,7 @@ export const InviteUserEmail = ({
   ownerName,
   ownerEmail,
   workspaceId,
+  recipientEmail,
 }: VercelInviteUserEmailProps) => {
   const previewText = `Join ${workspaceName}`;
 
@@ -69,6 +71,12 @@ export const InviteUserEmail = ({
               </Link>
               ) has invited you to the <strong>{workspaceName}</strong> team on{" "}
               <strong>TaskFlowX</strong>.
+            </Text>
+            <Text>
+              <strong>Note:</strong> Use the email that received the invitation
+              to signup if you don't have an acount or login if you already have
+              an account here is the email that recieved the invitation
+              <strong>({recipientEmail})</strong>
             </Text>
             <Section className="text-center mt-[32px] mb-[32px]">
               <Button

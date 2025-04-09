@@ -97,6 +97,7 @@ export async function POST(req: NextRequest) {
     const ownerName = session?.user.name ?? "";
     const ownerEmail = session?.user.email as string;
     const workspaceName = workspace.name;
+    const recipientEmail = email;
 
     try {
       await resend.emails.send({
@@ -109,6 +110,7 @@ export async function POST(req: NextRequest) {
           ownerName,
           ownerEmail,
           workspaceId,
+          recipientEmail,
         }),
       });
     } catch (error) {

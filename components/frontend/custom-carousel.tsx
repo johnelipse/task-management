@@ -4,19 +4,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const carouselItems = [
   {
-    image: "/images/slide-1.jpg",
-    title: "Simple Monthly Savings,",
-    subtitle: "Join Ronix Savings Group",
+    image: "https://hrty.vercel.app/vtHVCG",
+    title: "Simple Project managment process,",
+    subtitle: "Join TaskFlowX now and enjoy.",
   },
   {
-    image: "/images/slide-2.jpg",
-    title: "Healthy Habits,",
-    subtitle: "Financial & Physical Wellness",
+    image: "https://hrty.vercel.app/S4z0M6",
+    title: "Remebering all,",
+    subtitle: "what you have to do isn't easy",
   },
   {
-    image: "/images/slide-3.jpg",
-    title: "End Year Celebration,",
-    subtitle: "Reap Your Rewards in December",
+    image: "https://hrty.vercel.app/0vPuSl",
+    title: "End Year Accountability,",
+    subtitle: "Reap Your Rewards.",
   },
 ];
 

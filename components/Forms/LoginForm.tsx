@@ -140,7 +140,7 @@ export default function LoginForm({
               <div className="h-[1px] w-full bg-slate-200"></div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Button
                 onClick={() => signIn("google")}
                 variant={"outline"}
@@ -157,7 +157,7 @@ export default function LoginForm({
                 <FaGithub className="mr-2 w-6 h-6 text-slate-900 dark:text-white" />
                 Login with Github
               </Button>
-            </div>
+            </div> */}
             <p className="mt-6  text-sm text-gray-500">
               Not a Registered ?{" "}
               <Link

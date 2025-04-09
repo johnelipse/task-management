@@ -1,532 +1,408 @@
-// import { db } from "./db";
-// // import bcrypt from "bcrypt";
-
-// // Get current year for password generation
-// // const currentYear = new Date().getFullYear();
-
-// // Define all possible permissions
-// const allPermissions = [
-//   "dashboard.create",
-//   "dashboard.read",
-//   "dashboard.update",
-//   "dashboard.delete",
-
-//   "users.create",
-//   "users.read",
-//   "users.update",
-//   "users.delete",
-
-//   "roles.create",
-//   "roles.read",
-//   "roles.update",
-//   "roles.delete",
-
-//   "sales.create",
-//   "sales.read",
-//   "sales.update",
-//   "sales.delete",
-
-//   "customers.create",
-//   "customers.read",
-//   "customers.update",
-//   "customers.delete",
-
-//   "orders.create",
-//   "orders.read",
-//   "orders.update",
-//   "orders.delete",
-
-//   "reports.create",
-//   "reports.read",
-//   "reports.update",
-//   "reports.delete",
-
-//   "settings.create",
-//   "settings.read",
-//   "settings.update",
-//   "settings.delete",
-
-//   "categories.create",
-//   "categories.read",
-//   "categories.update",
-//   "categories.delete",
-
-//   "products.create",
-//   "products.read",
-//   "products.update",
-//   "products.delete",
-
-//   "blogs.create",
-//   "blogs.read",
-//   "blogs.update",
-//   "blogs.delete",
-// ];
-
-// // Define user role permissions (basic access)
-// const userPermissions = [
-//   "dashboard.read",
-//   "profile.read",
-//   "profile.update",
-//   "products.read",
-//   "orders.read",
-//   "orders.create",
-// ];
-// async function cleanDatabase() {
-//   console.log("Cleaning up existing data...");
-//   try {
-//     // Use a transaction to ensure data consistency
-//     await db.$transaction(async (tx) => {
-//       // Get all users
-//       const users = await tx.user.findMany({
-//         // include: {
-//         //   roles: true,
-//         // },
-//       });
-//       // Disconnect all roles from users
-//       for (const user of users) {
-//         if (user.role) {
-//           await tx.user.update({
-//             where: { id: user.id },
-//             data: {
-//               // roles: {
-//               //   disconnect: user.roles.map((role) => ({ id: role.id })),
-//               // },
-//             },
-//           });
-//         }
-//       }
-
-//       // Delete all sessions first (if you have them)
-//       await tx.session.deleteMany({});
-
-//       // Delete all accounts (if you have them)
-//       await tx.account.deleteMany({});
-
-//       // Delete all Blogs and Blog cats (if you have them)
-//       // await tx.blog.deleteMany({});
-//       // await tx.blogCategory.deleteMany({});
-
-//       // Delete all Savings and Categories  (if you have them)
-//       // await tx.saving.deleteMany({});
-//       // await tx.category.deleteMany({});
-
-//       // Now safely delete all users
-//       const deleteUsers = await tx.user.deleteMany({});
-//       console.log("Deleted users:", deleteUsers.count);
-
-//       // Finally delete all roles
-//       // const deleteRoles = await tx.role.deleteMany({});
-//       // console.log("Deleted roles:", deleteRoles.count);
-//     });
-
-//     console.log("Database cleanup completed.");
-//   } catch (error) {
-//     console.error("Error during cleanup:", error);
-//     throw error;
-//   }
-// }
-
-// async function seedDatabase() {
-//   try {
-//     console.log("Starting to seed new data...");
-
-//     // Create admin role with all permissions
-//     console.log("Creating admin role...");
-//     // const adminRole = await db.role.create({
-//     //   data: {
-//     //     displayName: "Administrator",
-//     //     roleName: "admin",
-//     //     description: "Full system access",
-//     //     permissions: allPermissions,
-//     //   },
-//     // });
-
-//     // Create user role with limited permissions
-//     console.log("Creating user role...");
-//     // const userRole = await db.role.create({
-//     //   data: {
-//     //     displayName: "User",
-//     //     roleName: "user",
-//     //     description: "Basic user access",
-//     //     permissions: userPermissions,
-//     //   },
-//     // });
-
-//     // Create admin user
-//     console.log("Creating admin user...");
-//     const adminPassword = `Admin@2025`;
-//     // const hashedPassword = await bcrypt.hash("Admin@2025", 10); // Use async hash
-
-//     const adminUser = await db.user.create({
-//       data: {
-//         email: "admin@admin.com",
-//         name: "System Admin",
-//         firstName: "System",
-//         lastName: "Admin",
-//         phone: "1234567890",
-//         password: adminPassword,
-//         role: "ADMIN",
-//         // roles: {
-//         //   connect: { id: adminRole.id },
-//         // },
-//       },
-//     });
-
-//     // Create regular user
-//     console.log("Creating regular user...");
-//     const userPassword = `User@2025`;
-//     // const hashedUserPassword = await bcrypt.hashSync(userPassword, 10);
-
-//     const regularUser = await db.user.create({
-//       data: {
-//         email: "user@user.com",
-//         name: "Regular User",
-//         firstName: "Regular",
-//         lastName: "User",
-//         phone: "0987654321",
-//         password: userPassword,
-//         role: "USER",
-//         // role: {
-//         //   connect: { id: userRole.id },
-//         // },
-//       },
-//     });
-
-//     console.log("Seed completed successfully!");
-//     console.log("Admin credentials:", {
-//       email: "admin@admin.com",
-//       password: adminPassword,
-//     });
-//     console.log("User credentials:", {
-//       email: "user@user.com",
-//       password: userPassword,
-//     });
-//   } catch (error) {
-//     console.error("Error during seeding:", error);
-//     throw error;
-//   }
-// }
-// async function main() {
-//   console.log("Starting database seed process...");
-
-//   try {
-//     // First clean up existing data
-//     await cleanDatabase();
-
-//     // Then seed new data
-//     await seedDatabase();
-
-//     console.log("Database seeding completed successfully!");
-//   } catch (error) {
-//     console.error("Error in main seed process:", error);
-//     throw error;
-//   }
-// }
-
-// main()
-//   .catch((e) => {
-//     console.error("Failed to seed database:", e);
-//     process.exit(1);
-//   })
-//   .finally(async () => {
-//     await db.$disconnect();
-//   });
-
-import {
-  PrismaClient,
-  StatusTypes,
-  Visibility,
-  UserRole,
-} from "@prisma/client";
-import { hash } from "bcrypt";
+import { StatusTypes, UserRole, Visibility } from "@prisma/client";
+import { hash } from "bcryptjs";
+import { randomUUID } from "crypto";
 import { db } from "./db";
 
-const prisma = new PrismaClient();
-
 async function main() {
-  console.log("Starting database seed...");
+  console.log("Starting seeding...");
 
-  // Use a transaction for the entire seeding process
-  await db.$transaction(
-    async (tx) => {
-      // Clean up existing data (in reverse order of dependencies)
-      console.log("Cleaning up existing data...");
-      await tx.task.deleteMany({});
-      await tx.member.deleteMany({}); // Assuming Member model exists based on the Board model reference
-      await tx.board.deleteMany({});
-      await tx.workspace.deleteMany({});
-      await tx.session.deleteMany({});
-      await tx.account.deleteMany({});
-      await tx.user.deleteMany({});
+  try {
+    // Execute all database operations in a transaction
+    await db.$transaction(async (tx) => {
+      //first empty the db
+      await deleteAllData(tx);
 
-      console.log("Creating new seed data...");
-      const hashedPassword = await hash("Login@2025", 10);
-      const users = [
-        {
-          name: "John Doe",
-          firstName: "John",
-          lastName: "Doe",
-          phone: "1234567890",
-          email: "john.doe@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Jane Smith",
-          firstName: "Jane",
-          lastName: "Smith",
-          phone: "9876543210",
-          email: "jane.smith@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Alice Johnson",
-          firstName: "Alice",
-          lastName: "Johnson",
-          phone: "1122334455",
-          email: "alice.johnson@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Bob Williams",
-          firstName: "Bob",
-          lastName: "Williams",
-          phone: "9988776655",
-          email: "bob.williams@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Charlie Brown",
-          firstName: "Charlie",
-          lastName: "Brown",
-          phone: "4455667788",
-          email: "charlie.brown@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          id: "cuid6",
-          name: "David Miller",
-          firstName: "David",
-          lastName: "Miller",
-          phone: "5566778899",
-          email: "david.miller@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Emily Clark",
-          firstName: "Emily",
-          lastName: "Clark",
-          phone: "6677889900",
-          email: "emily.clark@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Frank Evans",
-          firstName: "Frank",
-          lastName: "Evans",
-          phone: "7788990011",
-          email: "frank.evans@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Grace Hall",
-          firstName: "Grace",
-          lastName: "Hall",
-          phone: "8899001122",
-          email: "grace.hall@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-        {
-          name: "Henry Adams",
-          firstName: "Henry",
-          lastName: "Adams",
-          phone: "9900112233",
-          email: "henry.adams@example.com",
-          emailVerified: null,
-          image: "https://example.com/henry.jpg",
-          jobTitle: "Product Manager",
-          role: UserRole.USER,
-          password: hashedPassword,
-          status: true,
-          isVerfied: true,
-          token: null,
-          WorkspaceIds: [],
-        },
-      ];
-      for (const user of users) {
-        await db.user.upsert({
-          where: { email: user.email },
-          update: {},
-          create: user,
-        });
-      }
+      // Create users
+      const users = await createUsers(tx);
 
-      // Create workspaces for each user
-      const workspaces = [];
-      for (const user of users) {
-        if (!user.id) {
-          throw new Error(`User ${user.name} has no ID`);
-        }
-        const workspace = await tx.workspace.create({
-          data: {
-            name: `Workspace for ${user.name}`,
-            description: `This is the workspace for ${user.name}`,
-            ownerId: user.id,
-            themeColor: ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F3"][
-              Math.floor(Math.random() * 5)
-            ],
-            visibility:
-              Math.random() > 0.5 ? Visibility.public : Visibility.private,
-          },
-        });
+      // Create workspaces
+      const workspaces = await createWorkspaces(tx, users);
 
-        // Update user's WorkspaceIds array
-        await tx.user.update({
-          where: { id: user.id },
-          data: {
-            WorkspaceIds: [workspace.id],
-          },
-        });
+      // Create boards
+      const boards = await createBoards(tx, workspaces);
 
-        workspaces.push(workspace);
-        console.log(`Created workspace: ${workspace.name}`);
+      // Create tasks
+      await createTasks(tx, boards);
 
-        // Create 10 boards for each workspace
-        for (let j = 1; j <= 10; j++) {
-          const boardName = `Board ${j} for ${user.name}`;
-          const board = await tx.board.create({
-            data: {
-              name: boardName,
-              slug: `board-${j}-${user.id}`.toLowerCase().replace(/\s+/g, "-"),
-              description: `Description for board ${j} in workspace for ${user.name}`,
-              workspaceId: workspace.id,
-            },
-          });
+      // Create invitations
+      // await createInvitations(tx, workspaces);
 
-          console.log(`Created board: ${board.name}`);
+      console.log("Transaction completed successfully!");
+    });
 
-          // Create 5 tasks for each board
-          const priorities = ["Low", "Medium", "High", "Critical"];
-          const statuses = [
-            StatusTypes.Pending,
-            StatusTypes.Inprogress,
-            StatusTypes.Completed,
-          ];
+    console.log("Seeding completed successfully!");
+  } catch (error) {
+    console.error("Transaction failed:", error);
+    throw error;
+  }
+}
 
-          for (let k = 1; k <= 5; k++) {
-            const startDate = new Date();
-            startDate.setDate(
-              startDate.getDate() + Math.floor(Math.random() * 10)
-            );
+interface UserData {
+  name: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  jobTitle: string;
+}
 
-            const endDate = new Date(startDate);
-            endDate.setDate(
-              endDate.getDate() + Math.floor(Math.random() * 30) + 1
-            );
+interface CommonUserFields {
+  emailVerified: Date;
+  image: string;
+  role: UserRole;
+  password: string;
+  status: boolean;
+  isVerfied: boolean;
+  token: string;
+  WorkspaceIds: string[];
+}
 
-            const task = await tx.task.create({
-              data: {
-                taskName: `Task ${k} for ${boardName}`,
-                priority:
-                  priorities[Math.floor(Math.random() * priorities.length)],
-                startDate: startDate.toISOString().split("T")[0],
-                endDate: endDate.toISOString().split("T")[0],
-                status: statuses[Math.floor(Math.random() * statuses.length)],
-                boardId: board.id,
-              },
-            });
+async function createUsers(
+  tx: any
+): Promise<Array<UserData & CommonUserFields & { id: string }>> {
+  console.log("Creating users...");
 
-            console.log(`Created task: ${task.taskName}`);
-          }
-        }
-      }
+  const users = [];
+
+  // Create admin user
+  const adminPassword = await hash("Admin123!", 10);
+  const admin = await tx.user.create({
+    data: {
+      name: "John Admin",
+      firstName: "John",
+      lastName: "Admin",
+      phone: "+1234567890",
+      email: "admin@example.com",
+      emailVerified: new Date(),
+      image: "https://randomuser.me/api/portraits/men/1.jpg",
+      jobTitle: "System Administrator",
+      role: UserRole.ADMIN,
+      password: adminPassword,
+      status: true,
+      isVerfied: true,
+      token: randomUUID(),
+      WorkspaceIds: [],
+    },
+  });
+  users.push(admin);
+
+  // Create regular users
+  const regularUserData: UserData[] = [
+    {
+      name: "Sarah Johnson",
+      firstName: "Sarah",
+      lastName: "Johnson",
+      phone: "+1987654321",
+      email: "sarah@example.com",
+      jobTitle: "Project Manager",
     },
     {
-      // Transaction options - this timeout should be generous enough for all operations
-      timeout: 60000, // 60 seconds
-      isolationLevel: "Serializable", // Highest isolation level
-    }
-  );
+      name: "Michael Chen",
+      firstName: "Michael",
+      lastName: "Chen",
+      phone: "+1122334455",
+      email: "michael@example.com",
+      jobTitle: "Senior Developer",
+    },
+    {
+      name: "Emily Rodriguez",
+      firstName: "Emily",
+      lastName: "Rodriguez",
+      phone: "+1555666777",
+      email: "emily@example.com",
+      jobTitle: "UX Designer",
+    },
+    {
+      name: "David Kim",
+      firstName: "David",
+      lastName: "Kim",
+      phone: "+1888999000",
+      email: "david@example.com",
+      jobTitle: "Product Owner",
+    },
+  ];
 
-  console.log("Seed completed successfully!");
+  const password = await hash("User@2025", 10);
+
+  for (const userData of regularUserData) {
+    const user = await tx.user.create({
+      data: {
+        ...userData,
+        emailVerified: new Date(),
+        image: `https://hrty.vercel.app/gOh0Am`,
+        role: UserRole.USER,
+        password: password,
+        status: true,
+        isVerfied: true,
+        token: randomUUID(),
+        WorkspaceIds: [],
+      },
+    });
+    users.push(user);
+  }
+
+  console.log(`Created ${users.length} users`);
+  return users;
+}
+
+async function deleteAllData(tx: any) {
+  console.log("Deleting the existing data...");
+
+  await tx.user.deleteMany({});
+  console.log("deleted the users");
+
+  await tx.workspace.deleteMany({});
+  console.log("deleted the workspaces");
+
+  await tx.board.deleteMany({});
+  console.log("deleted the boards");
+
+  await tx.task.deleteMany({});
+  console.log("deleted the tasks");
+}
+
+async function createWorkspaces(
+  tx: any,
+  users: Array<UserData & CommonUserFields & { id: string }>
+) {
+  console.log("Creating workspaces...");
+
+  const workspaces = [];
+  const workspaceData = [
+    {
+      name: "Marketing Team",
+      description: "Workspace for all marketing related projects and tasks",
+      themeColor: "#FF5733",
+      visibility: Visibility.private,
+      ownerId: users[0].id,
+    },
+    {
+      name: "Development Team",
+      description: "Workspace for software development projects",
+      themeColor: "#33A1FF",
+      visibility: Visibility.private,
+      ownerId: users[1].id,
+    },
+    {
+      name: "Design Team",
+      description: "Workspace for design projects and assets",
+      themeColor: "#33FF57",
+      visibility: Visibility.public,
+      ownerId: users[2].id,
+    },
+    {
+      name: "Product Team",
+      description: "Workspace for product planning and roadmap",
+      themeColor: "#F3FF33",
+      visibility: Visibility.private,
+      ownerId: users[3].id,
+    },
+  ];
+
+  for (const [index, data] of workspaceData.entries()) {
+    const workspace = await tx.workspace.create({
+      data,
+    });
+
+    // Update the owner's WorkspaceIds
+    await tx.user.update({
+      where: { id: data.ownerId },
+      data: {
+        WorkspaceIds: {
+          push: workspace.id,
+        },
+      },
+    });
+
+    // Add other users to some workspaces
+    if (index < 2) {
+      for (const user of users) {
+        if (user.id !== data.ownerId) {
+          await tx.user.update({
+            where: { id: user.id },
+            data: {
+              WorkspaceIds: {
+                push: workspace.id,
+              },
+            },
+          });
+        }
+      }
+    }
+
+    workspaces.push(workspace);
+  }
+
+  console.log(`Created ${workspaces.length} workspaces`);
+  return workspaces;
+}
+
+async function createBoards(tx: any, workspaces: Array<{ id: string }>) {
+  console.log("Creating boards...");
+
+  const boards = [];
+
+  // Different board data for each workspace
+  const workspaceBoardsData = [
+    // Marketing Team boards
+    [
+      {
+        name: "Campaign Planning",
+        slug: "campaign-planning",
+        description: "Plan marketing campaigns and content calendar",
+        workspaceId: "",
+      },
+      {
+        name: "Content Creation",
+        slug: "content-creation",
+        description:
+          "Track content creation progress for blogs and social media",
+        workspaceId: "",
+      },
+      {
+        name: "Analytics Dashboard",
+        slug: "analytics-dashboard",
+        description: "Track marketing metrics and KPIs",
+        workspaceId: "",
+      },
+    ],
+    // Development Team boards
+    [
+      {
+        name: "Sprint Planning",
+        slug: "sprint-planning",
+        description: "Plan current sprint tasks and assignments",
+        workspaceId: "",
+      },
+      {
+        name: "Bug Tracker",
+        slug: "bug-tracker",
+        description: "Track and prioritize software bugs",
+        workspaceId: "",
+      },
+      {
+        name: "Feature Development",
+        slug: "feature-development",
+        description: "Track progress on new feature development",
+        workspaceId: "",
+      },
+    ],
+    // Design Team boards
+    [
+      {
+        name: "UI Components",
+        slug: "ui-components",
+        description: "Design and track UI component library",
+        workspaceId: "",
+      },
+      {
+        name: "User Research",
+        slug: "user-research",
+        description: "Organize and track user research projects",
+        workspaceId: "",
+      },
+      {
+        name: "Design System",
+        slug: "design-system",
+        description: "Maintain and update design system assets",
+        workspaceId: "",
+      },
+    ],
+    // Product Team boards
+    [
+      {
+        name: "Roadmap",
+        slug: "product-roadmap",
+        description: "Product roadmap and feature prioritization",
+        workspaceId: "",
+      },
+      {
+        name: "Customer Feedback",
+        slug: "customer-feedback",
+        description: "Track and prioritize customer feedback items",
+        workspaceId: "",
+      },
+      {
+        name: "Release Planning",
+        slug: "release-planning",
+        description: "Plan and track product releases",
+        workspaceId: "",
+      },
+    ],
+  ];
+
+  for (const [index, workspace] of workspaces.entries()) {
+    // Get the appropriate board data for this workspace (or use default if index is out of bounds)
+    const boardsData =
+      index < workspaceBoardsData.length
+        ? workspaceBoardsData[index]
+        : workspaceBoardsData[0];
+
+    for (const data of boardsData) {
+      // Set the workspace ID
+      data.workspaceId = workspace.id;
+
+      // Create the board
+      const board = await tx.board.create({
+        data,
+      });
+      boards.push(board);
+    }
+  }
+
+  console.log(`Created ${boards.length} boards`);
+  return boards;
+}
+
+async function createTasks(
+  tx: any,
+  boards: Array<{ id: string; name: string }>
+) {
+  console.log("Creating tasks...");
+
+  const priorities = ["High", "Medium", "Low"];
+  const taskCount = [];
+
+  for (const board of boards) {
+    const tasksToCreate = Math.floor(Math.random() * 5) + 3; // 3-7 tasks per board
+
+    for (let i = 0; i < tasksToCreate; i++) {
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() + Math.floor(Math.random() * 7)); // Start within a week
+
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 14) + 1); // End 1-14 days after start
+
+      const priority =
+        priorities[Math.floor(Math.random() * priorities.length)];
+      const status =
+        Object.values(StatusTypes)[
+          Math.floor(Math.random() * Object.values(StatusTypes).length)
+        ];
+
+      await tx.task.create({
+        data: {
+          taskName: `Task ${i + 1} for ${board.name}`,
+          priority,
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: endDate.toISOString().split("T")[0],
+          status,
+          boardId: board.id,
+        },
+      });
+
+      taskCount.push(1);
+    }
+  }
+
+  console.log(`Created ${taskCount.length} tasks`);
 }
 
 main()
   .catch((e) => {
-    console.error("Error during seeding:", e);
+    console.error(e);
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   });
