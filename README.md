@@ -86,6 +86,8 @@ UPLOADTHING_TOKEN=''
 
 ### 1. Set up the database
 
+--Create a folder called migrations in the prisma folder and then run this command;
+
 ```bash
 npx prisma migrate dev --name init
 ```
