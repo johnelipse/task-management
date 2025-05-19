@@ -1,6 +1,7 @@
 import { authOptions } from "@/config/auth";
 import { db } from "@/prisma/db";
 import { getServerSession } from "next-auth";
+import { signOut } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 
 // Route to handle invitation acceptance
@@ -12,6 +13,11 @@ export async function GET(
   const session = await getServerSession(authOptions);
 
   try {
+    if (session) {
+      return NextResponse.redirect(
+        new URL(`/api/auth/signout?callbackUrl=/invitation/${token}`, req.url)
+      );
+    }
     // Find the invitation
     const invitation = await db.invitation.findUnique({
       where: { inviteToken: token },
@@ -23,7 +29,7 @@ export async function GET(
 
     // Check if invitation has expired
 
-    if (!session?.user) {
+    if (!session) {
       // User is not logged in
       const userExists = await db.user.findUnique({
         where: { email: invitation.email },
