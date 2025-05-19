@@ -49,12 +49,12 @@ export async function GET(
     }
 
     // User is logged in
-    if (session.user.email !== invitation.email) {
-      // Email mismatch - show error or let them switch accounts
-      return NextResponse.redirect(
-        new URL("/invitation/email-mismatch", req.url)
-      );
-    }
+    // if (session.user.email !== invitation.email) {
+    //   // Email mismatch - show error or let them switch accounts
+    //   return NextResponse.redirect(
+    //     new URL("/invitation/email-mismatch", req.url)
+    //   );
+    // }
 
     await db.invitation.delete({
       where: { id: invitation.id },
